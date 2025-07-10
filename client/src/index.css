@@ -4,10 +4,14 @@
 
 @layer base {
   body {
-    @apply bg-gray-900 text-white;
+    @apply bg-black text-white ;
+  }
+  p{
+@apply text-gray-300 opacity-100;
   }
 }
 :root, [data-theme] {
-    background-color: rgb(17, 24, 39);
+    background-color: black;
+    
     
 }
