@@ -1,41 +1,67 @@
 import { projects } from "../data/projects";
 import { FaGithub } from "react-icons/fa";
+import { useState } from "react";
 export const Projects = () => {
+  const [index_image, setIndex_image] = useState(0);
+  const handleImageChange = (direction: "next" | "prev",projectindex:number) => {
+    if (direction === "next") {
+      setIndex_image((prev) => (prev + 1) % projects[projectindex].image.length);
+    } else {
+      setIndex_image((prev) =>
+        prev === 0 ? projects[projectindex].image.length - 1 : prev - 1
+      );
+    }
+  };
   return (
     <div className="flex flex-col p-10 -mt-60 gap-10">
         <div><div className="text-5xl font-bold uppercase w-80 whitespace-nowrap text-start">Projects</div><br/><p>Here are some of the selected projects that showcase my passion for front-end development</p></div>
-<div className=" flex flex-row justify-between">
-    <div className="w-[500px] h-[500px] bg-slate-400 flex justify-center rounded-2xl content-center"><img className="h-[100] w-[400]" src="logo.png" alt="project" /></div>
-     <div className="bg-black text-white p-6 max-w-md border border-gray-800">
+{projects.map((project, index) => (
+  <div key={index} className=" flex flex-row gap-36 mt-16">
+    <div className="w-[550px] h-[550px] bg-slate-900 flex justify-center rounded-xl center items-center relative">
+      <div className={`absolute top-2 left-2 p-2 rounded-xl  ${project.state=="completed" ?"bg-green-700": "bg-yellow-200"}`}>{project.state}</div>
+    <div id="slide1" className="carousel-item relative flex items-center justify-center">
+  <img
+    src={project.image[index_image]}
+    className="h-96 w-96 rounded-xl object-cover"
+    alt="project"
+  />
+
+  <div className="absolute inset-0 flex items-center justify-between -mx-16 ">
+    <div onClick={()=>{handleImageChange("prev",index); console.log(index)}} className="text-3xl text-white hover:scale-125 transition cursor-pointer select-none">❮</div>
+    <div onClick={()=>{handleImageChange("next",index); console.log(index)}} className="text-3xl text-white hover:scale-125 transition cursor-pointer select-none">❯</div>
+  </div>
+</div>
+
+      </div>
+    {/*project desc*/}
+    <div className="flex flex-col gap-7 mt-5 flex-nowrap max-w-xl">
+<div className="text-3xl font-bold mb-3">{project.title} </div>
+
+<p className="break-words" >{project.description}</p>
+ <div className="bg-black text-white p-6 max-w-xl border border-gray-800">
       <h2 className="text-sm font-semibold text-gray-400 mb-4">PROJECT INFO</h2>
 
-      <div className="border-t border-gray-600 py-3 flex justify-between text-sm">
-        <span className="text-gray-300">Client</span>
-        <span>World News</span>
-      </div>
+    
 
       <div className="border-t border-gray-600 py-3 flex justify-between text-sm">
         <span className="text-gray-300">Year</span>
-        <span>2022</span>
+        <span>{project.year}</span>
       </div>
 
       <div className="border-t border-gray-600 py-3 flex justify-between text-sm">
         <span className="text-gray-300">Role</span>
-        <span>Front-end Developer</span>
+        <span>{project.role}</span>
       </div>
 
-      <div className="border-t border-gray-600 pt-6">
-        <a
-          href="https://github.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center text-lime-400 hover:underline text-sm gap-2"
-        >
-          SEE ON GITHUB <FaGithub size={18} />
-        </a>
-      </div>
     </div>
+<a className="btn-primary w-fit" href="https://github.com/ZaidAR49/Green-Bridge.git"><FaGithub/> view in Github</a>
+    </div>
+    
+    
+    
+    
 </div>
+))}
       
     </div>
   );

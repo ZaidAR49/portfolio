@@ -15,3 +15,6 @@
     
     
 }
+.btn-primary {
+    @apply  bg-[#06b6d4] text-white font-semibold btn uppercase;
+}
