@@ -7,7 +7,7 @@
     @apply bg-black text-white ;
   }
   p{
-@apply text-gray-300 opacity-100;
+@apply text-gray-300 opacity-100 text-xl break-words;
   }
 }
 :root, [data-theme] {
@@ -17,4 +17,13 @@
 }
 .btn-primary {
     @apply  bg-[#06b6d4] text-white font-semibold btn uppercase;
+}
+.header-primary {
+    @apply text-6xl font-bold uppercase w-80 whitespace-nowrap text-start;
+}
+.header-secondary{
+    @apply text-4xl font-bold mb-3;
+}
+.header-tertiary{
+    @apply text-2xl font-bold mb-3;
 }

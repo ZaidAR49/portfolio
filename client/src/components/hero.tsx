@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FaReact, FaNodeJs, FaHtml5, FaCss3Alt } from "react-icons/fa";
 import { SiPostgresql, SiTailwindcss, SiJavascript, SiTypescript } from "react-icons/si";
+import { userInfo } from "../data/about";
 export const Hero = () => {
   const navigate = useNavigate();
   const techIcons = [
@@ -32,13 +33,14 @@ export const Hero = () => {
   ];
   return (
     <>
-  
-    <div className="hero min-h-screen -mt-20">
+  <div >
+    
+    <div className="hero min-h-screen ">
       <div className="hero-content text-start flex-row justify-between gap-96 ">
         <div className="max-w-md">
-          <h1 className="text-5xl font-bold uppercase w-80 whitespace-nowrap">Hi, I'm Zaid Radaideh</h1>
+          <h1 className="header-primary">Hi, I'm <br /> {userInfo.name}</h1>
           <p className="py-6">
-             I’m a passionate <strong>Software Engineer</strong> focused on creating beautiful, high-performance web applications 
+             I’m a passionate <strong>Software Engineer</strong> {userInfo.descHero}
           </p>
           <div className="btn-primary" onClick={()=>{navigate("/contact")}}>Contact me</div>
 
@@ -53,7 +55,7 @@ export const Hero = () => {
     <div>
          
        <div className="flex justify-center ">
-          <div className="carousel carousel-center rounded-box  opacity-60 mt-10 max-w-screen-md">
+          <div className="carousel carousel-center rounded-box  opacity-60 my-10 max-w-screen-md">
           
       {techIcons.map((tech, index) => (
         <div key={index} className="carousel-item w-24 h-24 flex flex-col items-center justify-center">
@@ -65,10 +67,11 @@ export const Hero = () => {
     
        </div>
     </div>
+  </div>
     {/*line and space*/}
  
        <div className="w-full h-px bg-white opacity-30"></div>
-      <div className="h-80"></div>
+      
     </>
   );
 };
