@@ -27,3 +27,6 @@
 .header-tertiary{
     @apply text-2xl font-bold mb-3;
 }
+.text-as-link{
+    @apply text-cyan-300 cursor-pointer underline text-xl;
+}
