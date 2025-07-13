@@ -4,10 +4,10 @@
 
 @layer base {
   body {
-    @apply bg-black text-white ;
+    @apply bg-black text-white;
   }
   p{
-@apply text-gray-300 opacity-100 text-xl break-words;
+    @apply text-gray-300 opacity-100 text-base sm:text-lg lg:text-xl break-words;
   }
 }
 :root, [data-theme] {
@@ -16,17 +16,17 @@
     
 }
 .btn-primary {
-    @apply  bg-[#06b6d4] text-white font-semibold btn uppercase;
+    @apply bg-[#06b6d4] text-white font-semibold btn uppercase text-sm sm:text-base;
 }
 .header-primary {
-    @apply text-6xl font-bold uppercase w-80 whitespace-nowrap text-start;
+    @apply font-bold uppercase whitespace-nowrap text-start;
 }
 .header-secondary{
-    @apply text-4xl font-bold mb-3;
+    @apply font-bold mb-3;
 }
 .header-tertiary{
-    @apply text-2xl font-bold mb-3;
+    @apply font-bold mb-3;
 }
 .text-as-link{
-    @apply text-cyan-300 cursor-pointer underline text-xl;
+    @apply text-cyan-300 cursor-pointer underline text-base sm:text-lg lg:text-xl;
 }

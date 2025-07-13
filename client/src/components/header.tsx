@@ -1,8 +1,9 @@
-//import { useState } from "react";
-import { FaHome, FaUser, FaEnvelope,FaProjectDiagram} from "react-icons/fa";
+import { useState } from "react";
+import { FaHome, FaUser, FaEnvelope,FaProjectDiagram, FaBars, FaTimes} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const routes = [{
     name: "Home",
@@ -26,21 +27,59 @@ export const Header = () => {
     path: "contact"
 },
 ];
+
+const handleNavigation = (path: string) => {
+    navigate("/"+path);
+    setIsMenuOpen(false);
+};
+
   return (
     <>
-      <div className=" text-white p-4 flex flex-row  items-center justify-between">
+      <div className="text-white p-4 flex flex-row items-center justify-between">
         <div>
-          <img className="rounded-full w-16 h-16 " src="/logo.png" alt="" />
+          <img className="rounded-full w-12 h-12 sm:w-16 sm:h-16" src="/logo.png" alt="" />
         </div>
-    <div className="flex flex-row gap-16 items-center p-3">
-        {routes.map((route) => {
-        return(
-        <div className=" hover:text-cyan-500 active:scale-95 cursor-pointer hover:scale-110" key= {route.path} onClick={()=>{navigate("/"+route.path)}}> <div className="flex flex-row gap-2 items-center">{route.icon}{route.name}</div></div>
         
-        );
-    })}
-    </div>
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex flex-row gap-8 lg:gap-16 items-center p-3">
+            {routes.map((route) => {
+            return(
+            <div className="hover:text-cyan-500 active:scale-95 cursor-pointer hover:scale-110" key= {route.path} onClick={()=>{navigate("/"+route.path)}}> 
+                <div className="flex flex-row gap-2 items-center">{route.icon}{route.name}</div>
+            </div>
+            );
+        })}
+        </div>
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden">
+            <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-white hover:text-cyan-500 transition-colors"
+            >
+                {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            </button>
+        </div>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-black border-t border-gray-800">
+            <div className="flex flex-col p-4 space-y-4">
+                {routes.map((route) => {
+                return(
+                <div 
+                    className="hover:text-cyan-500 active:scale-95 cursor-pointer hover:scale-110 py-2" 
+                    key= {route.path} 
+                    onClick={() => handleNavigation(route.path)}
+                > 
+                    <div className="flex flex-row gap-3 items-center text-lg">{route.icon}{route.name}</div>
+                </div>
+                );
+            })}
+            </div>
+        </div>
+      )}
      
     </>
   );

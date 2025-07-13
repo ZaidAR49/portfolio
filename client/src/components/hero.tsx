@@ -21,36 +21,36 @@ export const Hero = () => {
   <div >
     
     <div className="hero min-h-screen ">
-      <div className="hero-content text-start flex-row justify-between gap-96 ">
+      <div className="hero-content text-start flex-col lg:flex-row justify-between gap-8 lg:gap-96 px-4 lg:px-0">
         <div className="max-w-md">
-          <h1 className="header-primary">Hi, I'm <br /> {userInfo.name}</h1>
+          <h1 className="header-primary text-4xl sm:text-5xl lg:text-6xl">Hi, I'm <br /> {userInfo.name}</h1>
           <p className="py-6">
-             I’m a passionate <strong>Software Engineer</strong> {userInfo.descHero}
+             I'm a passionate <strong>Software Engineer</strong> {userInfo.descHero}
           </p>
           <div className="btn-primary" onClick={()=>{navigate("/contact")}}>Contact me</div>
 
       
         </div>
-        <div>
-            <img className="border-4 border-spacing-64 border-gray-400 w-96 h-96 rounded " src="me.jpg" alt="me" />
+        <div className="mt-8 lg:mt-0">
+            <img className="border-4 border-spacing-64 border-gray-400 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded " src="me.jpg" alt="me" />
         </div>
       </div>
    
     </div>
     <div>
          
-       <div className="flex-col gap-0  justify-center max-w-lg mx-auto mt-10">
-          <div className="carousel  carousel-center rounded-box  opacity-60 my-10 w-full">
+       <div className="flex-col gap-0 justify-center max-w-lg mx-auto mt-10 px-4 lg:px-0">
+          <div className="carousel carousel-center rounded-box opacity-60 my-10 w-full">
           
       {techIcons.map((tech, index) => (
-        <div key={index} className="carousel-item w-24 h-24 flex flex-col items-center justify-center">
-          <div className="text-4xl">{tech.icon}</div>
-          <span className="text-sm mt-2">{tech.name}</span>
+        <div key={index} className="carousel-item w-20 h-20 sm:w-24 sm:h-24 flex flex-col items-center justify-center">
+          <div className="text-3xl sm:text-4xl">{tech.icon}</div>
+          <span className="text-xs sm:text-sm mt-2">{tech.name}</span>
         </div>
       ))  }
       
     </div>
-    <div className="text-4xl  opacity-60 ml-60 -mt-16 mb-10 ">...</div>
+    <div className="text-3xl sm:text-4xl opacity-60 ml-20 sm:ml-40 lg:ml-60 -mt-16 mb-10 ">...</div>
        </div>
     </div>
   </div>
