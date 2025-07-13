@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { FaReact, FaNodeJs, FaHtml5, FaCss3Alt } from "react-icons/fa";
-import { SiPostgresql, SiTailwindcss, SiJavascript, SiTypescript } from "react-icons/si";
+import { FaReact, FaNodeJs, FaHtml5, FaCss3Alt} from "react-icons/fa";
+import { SiPostgresql, SiTailwindcss, SiJavascript, SiTypescript, SiSharp} from "react-icons/si";
 import { userInfo } from "../data/about";
 export const Hero = () => {
   const navigate = useNavigate();
@@ -8,28 +8,13 @@ export const Hero = () => {
     { icon: <FaReact />, name: "React" },
     { icon: <FaNodeJs />, name: "Node.js" },
     { icon: <SiPostgresql />, name: "PostgreSQL" },
-    { icon: <FaHtml5 />, name: "HTML5" },
+    { icon: <FaHtml5 />, name: "HTML" },
     { icon: <FaCss3Alt />, name: "CSS3" },
     { icon: <SiTailwindcss />, name: "Tailwind CSS" },
     { icon: <SiJavascript />, name: "JavaScript" },
     { icon: <SiTypescript />, name: "TypeScript" },
-     { icon: <FaReact />, name: "React" },
-    { icon: <FaNodeJs />, name: "Node.js" },
-    { icon: <SiPostgresql />, name: "PostgreSQL" },
-    { icon: <FaHtml5 />, name: "HTML5" },
-    { icon: <FaCss3Alt />, name: "CSS3" },
-    { icon: <SiTailwindcss />, name: "Tailwind CSS" },
-    { icon: <SiJavascript />, name: "JavaScript" },
-    { icon: <SiTypescript />, name: "TypeScript" },
-     { icon: <FaReact />, name: "React" },
-    { icon: <FaNodeJs />, name: "Node.js" },
-    { icon: <SiPostgresql />, name: "PostgreSQL" },
-    { icon: <FaHtml5 />, name: "HTML5" },
-    { icon: <FaCss3Alt />, name: "CSS3" },
-    { icon: <SiTailwindcss />, name: "Tailwind CSS" },
-    { icon: <SiJavascript />, name: "JavaScript" },
-    { icon: <SiTypescript />, name: "TypeScript" },
-  
+    {icon : <SiSharp />, name: "C#"},
+   
   ];
   return (
     <>
@@ -54,8 +39,8 @@ export const Hero = () => {
     </div>
     <div>
          
-       <div className="flex justify-center ">
-          <div className="carousel carousel-center rounded-box  opacity-60 my-10 max-w-screen-md">
+       <div className="flex-col gap-0  justify-center max-w-lg mx-auto mt-10">
+          <div className="carousel  carousel-center rounded-box  opacity-60 my-10 w-full">
           
       {techIcons.map((tech, index) => (
         <div key={index} className="carousel-item w-24 h-24 flex flex-col items-center justify-center">
@@ -63,8 +48,9 @@ export const Hero = () => {
           <span className="text-sm mt-2">{tech.name}</span>
         </div>
       ))  }
+      
     </div>
-    
+    <div className="text-4xl  opacity-60 ml-60 -mt-16 mb-10 ">...</div>
        </div>
     </div>
   </div>
