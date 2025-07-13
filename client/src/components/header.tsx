@@ -1,4 +1,3 @@
-import React from "react";
 //import { useState } from "react";
 import { FaHome, FaUser, FaEnvelope,FaProjectDiagram} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
