@@ -31,7 +31,7 @@ export const Hero = () => {
 
       
         </div>
-        <div className="mt-8 lg:mt-0">
+        <div className="mt-8 lg:mt-0 sm:block hidden">
             <img className="border-4 border-spacing-64 border-gray-400 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded " src="me.jpg" alt="me" />
         </div>
       </div>
@@ -39,7 +39,7 @@ export const Hero = () => {
     </div>
     <div>
          
-       <div className="flex-col gap-0 justify-center max-w-lg mx-auto mt-10 px-4 lg:px-0">
+       <div className="flex-col gap-0 justify-center max-w-lg mx-auto sm:mt-10 -mt-10 px-4 lg:px-0">
           <div className="carousel carousel-center rounded-box opacity-60 my-10 w-full">
           
       {techIcons.map((tech, index) => (
