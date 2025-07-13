@@ -23,7 +23,7 @@ export const Projects = () => {
     <div id="slide1" className="carousel-item relative flex items-center justify-center">
   <img
     src={project.image[index_image]}
-    className="h-96 w-96 rounded-xl object-cover"
+    className="h-96 w-96 rounded-xl object-fill"
     alt="project"
   />
 
@@ -35,7 +35,7 @@ export const Projects = () => {
 
       </div>
     {/*project desc*/}
-    <div className="flex flex-col gap-7 mt-5 flex-nowrap max-w-xl">
+    <div className="flex flex-col gap-7 mt-5 flex-nowrap max-w-2xl">
 <div className="header-secondary">{project.title} </div>
 
 <p>{project.description}</p>
