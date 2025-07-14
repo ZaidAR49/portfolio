@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
+
 import { FaReact, FaNodeJs, FaHtml5, FaCss3Alt} from "react-icons/fa";
 import { SiPostgresql, SiTailwindcss, SiJavascript, SiTypescript, SiSharp} from "react-icons/si";
 import { userInfo } from "../data/about";
 export const Hero = () => {
-  const navigate = useNavigate();
+  
   const techIcons = [
     { icon: <FaReact />, name: "React" },
     { icon: <FaNodeJs />, name: "Node.js" },
@@ -20,14 +20,14 @@ export const Hero = () => {
     <>
   <div >
     
-    <div className="hero min-h-screen ">
+    <div className="hero min-h-screen animate-in fade-in slide-in-from-bottom duration-700 ">
       <div className="hero-content text-start flex-col lg:flex-row justify-between gap-8 lg:gap-96 px-4 lg:px-0">
-        <div className="max-w-md">
+        <div className="max-w-md ">
           <h1 className="header-primary text-4xl sm:text-5xl lg:text-6xl">Hi, I'm <br /> {userInfo.name}</h1>
           <p className="py-6">
              I'm a passionate <strong>Software Engineer</strong> {userInfo.descHero}
           </p>
-          <div className="btn-primary" onClick={()=>{navigate("/contact")}}>Contact me</div>
+          <div className="btn-primary" onClick={()=>{document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });}}>Contact me</div>
 
       
         </div>

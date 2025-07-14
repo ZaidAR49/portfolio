@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import daisyui from 'daisyui'
+import animate from 'tailwindcss-animate';
 export default {
   content: [
     "./index.html",
@@ -11,5 +12,5 @@ export default {
     },
 
   },
-  plugins: [daisyui]
+  plugins: [daisyui, animate],
 }

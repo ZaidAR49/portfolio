@@ -24,12 +24,19 @@ export const Header = () => {
     {
     name:"contact",
     icon: <FaEnvelope/>,
-    path: "contact"
+    path: "footer"
 },
 ];
 
 const handleNavigation = (path: string) => {
-    navigate("/"+path);
+    if (path === "projects") {
+        // If not on home, navigate to home with scrollTo state
+        navigate("/", { state: { scrollTo: "projects" } });
+    } else if (path === "" || path === "about") {
+        navigate("/" + path);
+    } else {
+        document.getElementById(path)?.scrollIntoView({ behavior: "smooth" });
+    }
     setIsMenuOpen(false);
 };
 
@@ -44,7 +51,7 @@ const handleNavigation = (path: string) => {
         <div className="hidden md:flex flex-row gap-8 lg:gap-16 items-center p-3">
             {routes.map((route) => {
             return(
-            <div className="hover:text-cyan-500 active:scale-95 cursor-pointer hover:scale-110" key= {route.path} onClick={()=>{navigate("/"+route.path)}}> 
+            <div className="hover:text-cyan-500 active:scale-95 cursor-pointer hover:scale-110" key= {route.path} onClick={()=>{ handleNavigation(route.path)}}> 
                 <div className="flex flex-row gap-2 items-center">{route.icon}{route.name}</div>
             </div>
             );

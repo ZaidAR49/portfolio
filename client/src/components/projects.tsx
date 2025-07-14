@@ -14,7 +14,7 @@ export const Projects = () => {
   };
   return (
      <>
-    <div className="flex flex-col p-4 sm:py-6 lg:py-10 my-16 sm:my-24 lg:my-32">
+    <div  id="projects" className="flex flex-col p-4 sm:py-6 lg:py-10 my-16 sm:my-24 lg:my-32 ">
         <div className=" p-10 sm:px-32 max-w-3xl ">
             <div className="header-primary text-3xl sm:text-4xl lg:text-6xl">Projects</div>
             <br/>

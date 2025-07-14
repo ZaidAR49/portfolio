@@ -15,7 +15,7 @@ export const Footer = () => {
 ];
     return(
     <>
-    <div className="flex flex-col lg:flex-row justify-between mt-4 sm:mt-24 lg:mt-16 p-4 sm:p-6 lg:px-32 " >
+    <div id="footer" className="flex flex-col lg:flex-row justify-between mt-4 sm:mt-24 lg:mt-16 p-4 sm:p-6 lg:px-32 " >
         <div className="flex flex-col gap-4 sm:gap-6 lg:gap-7 relative">
             <div className="header-primary text-3xl sm:text-4xl lg:text-6xl">Let's contact</div>
             <p className="text-base sm:text-lg lg:text-xl"> say hello at <a href={`mailto:${userInfo.email}`} className="text-as-link">{userInfo.email}</a> for more info here my <a href={userInfo.resuma} className="text-as-link">resuma</a> </p>

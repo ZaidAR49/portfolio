@@ -1,5 +1,7 @@
 import {userInfo} from "../data/about";
+import { useNavigate } from "react-router-dom";
 export const About= () => {
+   const navigate = useNavigate();
  return(
     <>
      <div className="flex lg:p-32 justify-between  flex-col lg:flex-row my-16 sm:my-24 lg:mt-32 p-10">
@@ -7,7 +9,7 @@ export const About= () => {
         <div className="flex flex-col gap-3 max-w-3xl">
 <div className="header-tertiary text-xl sm:text-2xl">{userInfo.titleAbout} </div>
 <p className="break-words text-base sm:text-lg lg:text-xl">{userInfo.descAbout}</p>
-<div className="text-as-link mt-6 lg:mt-10">More about me</div>
+<div className="text-as-link mt-6 lg:mt-10" onClick={()=>{navigate("/about")}}>More about me</div>
         </div>
         
          </div>
