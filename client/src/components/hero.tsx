@@ -50,7 +50,7 @@ export const Hero = () => {
       ))  }
       
     </div>
-    <div className="text-3xl sm:text-4xl opacity-60 ml-20 sm:ml-40 lg:ml-60 -mt-16 mb-10 ">...</div>
+    <div className="text-3xl sm:text-4xl opacity-60 grid place-items-center -mt-12 mb-12  "><div>...</div></div>
        </div>
     </div>
   </div>
