@@ -14,14 +14,14 @@ export const Projects = () => {
   };
   return (
      <>
-    <div className="flex flex-col p-4 sm:p-6 lg:p-10 my-16 sm:my-24 lg:my-32 gap-8 lg:gap-10">
-        <div>
+    <div className="flex flex-col p-4 sm:py-6 lg:py-10 my-16 sm:my-24 lg:my-32">
+        <div className=" p-10 sm:px-32 max-w-3xl ">
             <div className="header-primary text-3xl sm:text-4xl lg:text-6xl">Projects</div>
             <br/>
             <p className="text-base sm:text-lg lg:text-xl">Here are some of the selected projects that showcase my passion for front-end development</p>
         </div>
 {projects.map((project, index) => (
-  <div key={index} className="flex flex-col lg:flex-row gap-8 lg:gap-36 my-8 lg:my-16">
+  <div key={index} className="flex flex-col lg:flex-row justify-between p-10 sm:p-32">
     <div className="w-full lg:w-[550px] h-[300px] sm:h-[400px] lg:h-[550px] bg-slate-900 flex justify-center rounded-xl center items-center relative">
       <div className={`absolute top-2 left-2 p-2 rounded-xl text-xs sm:text-sm ${project.state=="completed" ?"bg-green-700": "bg-yellow-200"}`}>{project.state}</div>
     <div id="slide1" className="carousel-item relative flex items-center justify-center">
@@ -69,7 +69,7 @@ export const Projects = () => {
 ))}
       
     </div>
-    
+    <div className="w-full h-px bg-white opacity-30"></div>
    </>
   );
 }
