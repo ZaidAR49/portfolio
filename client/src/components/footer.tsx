@@ -15,7 +15,7 @@ export const Footer = () => {
 ];
     return(
     <>
-    <div id="footer" className="flex flex-col lg:flex-row justify-between mt-4 sm:mt-24 lg:mt-16 p-4 sm:p-6 lg:px-32 relative" >
+    <div id="footer" className="flex flex-col lg:flex-row justify-between mt-4 sm:mt-24 lg:mt-16 p-24 lg:p-6 lg:px-32 relative" >
         <div className="flex flex-col gap-4 sm:gap-6 lg:gap-7 ">
             <div className="header-primary text-3xl sm:text-4xl lg:text-6xl">Let's contact</div>
             <p className="text-base sm:text-lg lg:text-xl"> say hello at <a href={`mailto:${userInfo.email}`} className="text-as-link">{userInfo.email}</a> for more info here my <a href={userInfo.resuma} className="text-as-link">resuma</a> </p>
@@ -24,7 +24,7 @@ export const Footer = () => {
                 <a key={index} className="carousel-item text-2xl sm:text-3xl lg:text-4xl" href={item.link}>{item.icon}</a>)
             )}
         </div>
-        <div className="text-sm sm:text-base lg:text-lg absolute bottom-5 ">© {new Date().getFullYear()}{userInfo.name}</div>
+        <div className="text-sm sm:text-base lg:text-lg absolute bottom-5 ">© {new Date().getFullYear()} {userInfo.name}</div>
             </div>
       <form className="flex flex-col gap-4 sm:gap-6 lg:gap-7 text-xl mt-5 md:mt-0 ">
         <label htmlFor="name">name</label>
