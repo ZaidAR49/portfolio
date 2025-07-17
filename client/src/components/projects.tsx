@@ -1,4 +1,4 @@
-import { projects } from "../data/projects";
+import { projects } from "../data/projects-data";
 import { FaGithub } from "react-icons/fa";
 import { useState } from "react";
 export const Projects = () => {

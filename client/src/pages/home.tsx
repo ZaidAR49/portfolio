@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Hero } from "../components/hero";
  import { Projects } from "../components/projects";
-import { About } from "../components/about-preview";
+import { About } from "../components/about-section";
 
 export const Home = () => {
   const location = useLocation();
@@ -21,7 +21,7 @@ export const Home = () => {
   <>
   <Hero/>
 <Projects/>
-<About/>
+<About page="home"/>
 
   </>
   );

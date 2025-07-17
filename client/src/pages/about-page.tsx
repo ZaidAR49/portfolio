@@ -1,16 +1,28 @@
-import { userInfo } from "../data/about"
+
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react"
+import {About as Aboutpreview} from "../components/about-section";
+import { Capabilities } from "../components/Capabilities";
+import { Experience } from "../components/experience";
 export const About = () => {
+const location = useLocation();
+    useEffect(() => {
+          if (location.state && location.state.scrollTo === "main"){
+        const el = document.getElementById("mainAbout");
+        
+        if (el) {
+            window.scrollTo({top:0, behavior: "smooth" });
+        }
+    }
+    }, [location.state]);
     return(<> 
     
-        <div className="flex lg:p-32 justify-between flex-col lg:flex-row my-16 sm:my-24 lg:mt-32 p-10">
-            <div className="header-primary text-3xl sm:text-4xl lg:text-6xl">About</div>
-            <div className="flex flex-col gap-3 max-w-3xl">
-                <div className="header-tertiary text-xl sm:text-2xl">{userInfo.titleAbout}</div>
-                <p className="break-words text-base sm:text-lg lg:text-xl">{userInfo.descAbout}</p>
-               
-            </div>
-        </div>
-        <div className="w-full h-px bg-white opacity-30"></div>
-        <div className="flex flex-col p-4 sm:p-6 lg:p-10 mt-10 gap-10 mb-12"></div>
+        <div id="mainAbout" className="">
+<Aboutpreview page = "about"/>
+
+<Capabilities/>
+
+<Experience/>
+           </div>
     </>)
 }

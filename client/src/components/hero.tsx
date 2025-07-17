@@ -1,21 +1,9 @@
 
-import { FaReact, FaNodeJs, FaHtml5, FaCss3Alt} from "react-icons/fa";
-import { SiPostgresql, SiTailwindcss, SiJavascript, SiTypescript, SiSharp} from "react-icons/si";
-import { userInfo } from "../data/about";
+
+import { userInfo } from "../data/about-data";
 export const Hero = () => {
   
-  const techIcons = [
-    { icon: <FaReact />, name: "React" },
-    { icon: <FaNodeJs />, name: "Node.js" },
-    { icon: <SiPostgresql />, name: "PostgreSQL" },
-    { icon: <FaHtml5 />, name: "HTML" },
-    { icon: <FaCss3Alt />, name: "CSS3" },
-    { icon: <SiTailwindcss />, name: "Tailwind CSS" },
-    { icon: <SiJavascript />, name: "JavaScript" },
-    { icon: <SiTypescript />, name: "TypeScript" },
-    {icon : <SiSharp />, name: "C#"},
-   
-  ];
+  
   return (
     <>
   <div >
@@ -42,7 +30,7 @@ export const Hero = () => {
        <div className="flex-col gap-0 justify-center max-w-lg mx-auto sm:mt-10 -mt-10 px-4 lg:px-0">
           <div className="carousel carousel-center rounded-box opacity-60 my-10 w-full">
           
-      {techIcons.map((tech, index) => (
+      {userInfo.techIcons.map((tech, index) => (
         <div key={index} className="carousel-item w-20 h-20 sm:w-24 sm:h-24 flex flex-col items-center justify-center">
           <div className="text-3xl sm:text-4xl">{tech.icon}</div>
           <span className="text-xs sm:text-sm mt-2">{tech.name}</span>

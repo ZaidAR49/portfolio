@@ -33,3 +33,21 @@
 .input-primary{
     @apply bg-gray-900 text-white border border-gray-800 rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-cyan-500 w-[250px] lg:w-[500px] ;
 }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 50s linear infinite;
+}
+
+@keyframes breathing {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.animate-breathing {
+  animation: breathing 2.8s ease-in-out infinite;
+}
