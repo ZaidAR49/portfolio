@@ -3,6 +3,7 @@ import { FaGithub } from "react-icons/fa";
 import { useState } from "react";
 export const Projects = () => {
   const [index_image, setIndex_image] = useState(0);
+
   const handleImageChange = (direction: "next" | "prev",projectindex:number) => {
     if (direction === "next") {
       setIndex_image((prev) => (prev + 1) % projects[projectindex].image.length);
@@ -10,6 +11,18 @@ export const Projects = () => {
       setIndex_image((prev) =>
         prev === 0 ? projects[projectindex].image.length - 1 : prev - 1
       );
+    }
+  };
+  const stateColor = ( index: number) => {
+    switch (projects[index].state) {
+      case "completed":
+        return "bg-green-500 text-white";
+      case "in-progress":
+        return "bg-yellow-500 text-white";
+      case "suspend":
+        return "bg-red-500 text-white";
+      default:
+        return "bg-gray-500 text-white";
     }
   };
   return (
@@ -23,7 +36,7 @@ export const Projects = () => {
 {projects.map((project, index) => (
   <div key={index} className="flex flex-col lg:flex-row justify-between p-10 sm:p-32">
     <div className="w-full lg:w-[550px] h-[300px] sm:h-[400px] lg:h-[550px] bg-slate-900 flex justify-center rounded-xl center items-center relative">
-      <div className={`absolute top-2 left-2 p-2 rounded-xl text-xs sm:text-sm ${project.state=="completed" ?"bg-green-700": "bg-yellow-200"}`}>{project.state}</div>
+      <div className={`absolute top-2 left-2 p-2 rounded-xl text-xs sm:text-sm ${stateColor(index)}`}>{project.state}</div>
     <div id="slide1" className="carousel-item relative flex items-center justify-center">
   <img
     src={project.image[index_image]}

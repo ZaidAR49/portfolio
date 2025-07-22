@@ -7,7 +7,7 @@ image: ["https://res.cloudinary.com/dxa0aylow/image/upload/v1752396452/GB1_qyjrt
 role: "full-stack developer",
 github: "https://github.com/ZaidAR49/Green-Bridge.git",
 year: "2025",
-tech:"React, Node.js,PostgreSQL",
+tech:"React, Node.js, PostgreSQL",
 },
  {
 state: "completed",
@@ -17,8 +17,20 @@ and two-player modes. Focused on game logic, UI design, and player controls usin
 image: ["https://res.cloudinary.com/dxa0aylow/image/upload/v1752398007/car3_r4erps.jpg","https://res.cloudinary.com/dxa0aylow/image/upload/v1752398007/car4_j0x8rm.jpg","https://res.cloudinary.com/dxa0aylow/image/upload/v1752398007/car2_ic9kxb.jpg","https://res.cloudinary.com/dxa0aylow/image/upload/v1752398007/car1_pmvker.jpg"],
 role: "full-stack developer",
 github: "https://github.com/ZaidAR49/car-game.git",
-year: "2025",
+year: "2023",
 tech:"C#, Microsoft Windows Forms",
+},
+{
+state: "Suspend",
+title: "Library Management System",
+description: `Developed a web-based library management system using JSP and Java Servlets. Followed the
+MVC architecture to separate concerns and improve maintainability. Implemented features such as
+user login, book search, borrowing/returning books, and admin management functionalities.`,
+image: ["https://res.cloudinary.com/dxa0aylow/image/upload/v1753178825/lib_1_cpsgsi.jpg","https://res.cloudinary.com/dxa0aylow/image/upload/v1753178833/lib_2_x2c2zf.jpg","https://res.cloudinary.com/dxa0aylow/image/upload/v1753178825/lib_3_bcfcq7.jpg"],
+role: "full-stack developer",
+github: "https://github.com/ZaidAR49/library-system.git",
+year: "2024",
+tech:"JSP, Java servlet, Oracle",
 },
 
 ];
