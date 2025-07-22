@@ -12,7 +12,7 @@ export const Experience = () => {
           {userInfo.experience.map((exp, index) => (
             <div
               key={index}
-              className="max-w-7xl rounded-xl shadow-lg p-16 bg-gray-900 border border-gray-800 ml-32"
+              className="max-w-7xl rounded-xl shadow-lg p-16 bg-gray-900 border border-gray-800 ml:8 lg:ml-32"
             >
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 gap-2">
                 <div className="header-secondary text-2xl sm:text-3xl lg:text-4xl ">{exp.role}</div>

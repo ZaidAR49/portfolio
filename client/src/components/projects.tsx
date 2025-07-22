@@ -57,6 +57,10 @@ export const Projects = () => {
         <span >Role</span>
         <span className="text-gray-300">{project.role}</span>
       </div>
+        <div className="border-t border-gray-600 py-3 flex justify-between text-sm sm:text-base">
+        <span >Techs</span>
+        <span className="text-gray-300">{project.tech}</span>
+      </div>
 
     </div>
 <a className="btn-primary w-fit my-3 sm:my-4 lg:my-5 text-sm sm:text-base" href="https://github.com/ZaidAR49/Green-Bridge.git"><FaGithub/> view in Github</a>
