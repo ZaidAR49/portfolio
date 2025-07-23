@@ -12,7 +12,7 @@ export const About= ({page} :{page:string}) => {
 <div className="header-tertiary text-xl sm:text-2xl ">{userInfo.titleAbout} </div>
 <p className={`break-words text-base sm:text-lg lg:text-xl ${page==="home" && "line-clamp-4"}`}>{userInfo.descAbout}</p>
 { page === "about" ? 
-<div className="flex flex-row gap-10 xl:gap-20 py-10 "> <a href={userInfo.resuma} className="btn-primary"> download My resume</a> <ButtonsSocial len={2}/>  </div>:
+<div className="flex flex-col md:flex-row gap-10 xl:gap-20 py-10 "> <a href={userInfo.resuma} className="btn-primary"> download My resume</a> <ButtonsSocial len={2}/>  </div>:
 <div className="text-as-link mt-6 lg:mt-10" onClick={()=>{navigate("/about",{state: {scrollTo:"main"}})}}>More about me</div>
 }
         </div>

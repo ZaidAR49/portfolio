@@ -24,15 +24,15 @@ export const userInfo = {
     <>
       I’m a <strong>Jordanian web developer</strong> passionate about building
       high-quality, user-centric web applications. I specialize in creating
-      efficient and scalable solutions using modern technologies like{" "}
+      efficient and scalable solutions using modern technologies like
       <strong>React</strong>, <strong>Node.js</strong>,
       <strong>PostgreSQL</strong>, and <strong>Tailwind CSS</strong>. With a
-      strong foundation in{" "}
+      strong foundation in
       <strong>both front-end and back-end development</strong>, I strive to
       write clean, maintainable code and continuously improve user experience
       through thoughtful design and performance optimization. I hold a degree
       from <strong>Jordan University of Science and Technology</strong> , where
-      I developed my technical skills and deepened my passion for{" "}
+      I developed my technical skills and deepened my passion for
       <strong>full-stack development</strong>
     </>
   ),
