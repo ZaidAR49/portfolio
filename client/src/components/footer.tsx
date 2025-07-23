@@ -1,3 +1,4 @@
+
 import { userInfo } from "../data/about-data";
 import { ButtonsSocial } from "./buttons-social";
 import axios from "axios";
@@ -6,9 +7,14 @@ export const Footer = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-   
+   const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      subject: formData.get("subject"),
+      message: formData.get("message"),
+    };
     try {
-      const response = await axios.post("http://localhost:3000/api/contact", formData);
+      const response = await axios.post("http://localhost:3000/api/contact",data);
       console.log(response.data);
       alert(response.data.message );
     } catch (error) {
