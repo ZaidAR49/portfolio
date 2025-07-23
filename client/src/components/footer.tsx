@@ -1,6 +1,23 @@
 import { userInfo } from "../data/about-data";
 import { ButtonsSocial } from "./buttons-social";
+import axios from "axios";
 export const Footer = () => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+   
+    try {
+      const response = await axios.post("http://localhost:3000/api/contact", formData);
+      console.log(response.data);
+      alert(response.data.message );
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("Failed to send message. Please try again later.");
+    }
+
+    
+  }
 
     return(
     <>
@@ -11,15 +28,15 @@ export const Footer = () => {
           <div className="my-6 sm:my-8 lg:my-10"><ButtonsSocial len={5}/></div>
         <div className="text-sm sm:text-base lg:text-lg absolute bottom-5 ">© {new Date().getFullYear()} {userInfo.name}</div>
             </div>
-      <form className="flex flex-col gap-4 sm:gap-6 lg:gap-7 text-xl mt-5 md:mt-0 ">
+      <form className="flex flex-col gap-4 sm:gap-6 lg:gap-7 text-xl mt-5 md:mt-0 " onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="name">name</label>
-        <input type="text" id="name" className="input-primary" placeholder="Your Name" />
+        <input type="text" id="name" name="name" className="input-primary" placeholder="Your Name" />
         <label htmlFor="email">email</label>
-        <input type="email" id="email" className="input-primary" placeholder=" Your Email" />
+        <input type="email" id="email" name="email" className="input-primary" placeholder=" Your Email" />
         <label htmlFor="subject"> Subject</label>
-        <input type="text" id="subject" className="input-primary" placeholder="Subject" />
+        <input type="text" id="subject" name="subject" className="input-primary" placeholder="Subject" />
         <label htmlFor="message">message</label>
-        <textarea id="message" className="input-primary" placeholder="Your Message"></textarea>
+        <textarea id="message" name="message" className="input-primary" placeholder="Your Message"></textarea>
         <button className="btn-primary w-fit">Send</button>
 
         
