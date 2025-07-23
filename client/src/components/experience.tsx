@@ -1,4 +1,5 @@
 import { userInfo } from "../data/about-data";
+import { motion } from "framer-motion";
 
 export const Experience = () => {
   return (
@@ -10,8 +11,12 @@ export const Experience = () => {
         </div>
         <div className="flex flex-col gap-10 mt-8 sm:mt-12 lg:mt-16">
           {userInfo.experience.map((exp, index) => (
-            <div
+            <motion.div
               key={index}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, delay: index * 0.15, ease: "easeOut" }}
               className="max-w-7xl rounded-xl shadow-lg p-16 bg-gray-900 border border-gray-800 ml:8 lg:ml-32"
             >
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 gap-2">
@@ -23,7 +28,7 @@ export const Experience = () => {
                 <div className="text-base sm:text-lg text-cyan-300 font-medium mb-2">{exp.companey}</div>
               )}
               <div className="text-base sm:text-lg lg:text-xl text-gray-300 whitespace-pre-line">{exp.desc}</div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

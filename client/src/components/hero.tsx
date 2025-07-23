@@ -1,6 +1,7 @@
 
 
 import { userInfo } from "../data/about-data";
+import { motion } from "framer-motion";
 export const Hero = () => {
   
   
@@ -9,7 +10,12 @@ export const Hero = () => {
   <div >
     
     <div className="hero min-h-screen animate-in fade-in slide-in-from-bottom duration-700 -mt-16 ">
-      <div className="hero-content text-start flex-col lg:flex-row justify-between gap-8 lg:gap-96 px-4 lg:px-0">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="hero-content text-start flex-col lg:flex-row justify-between gap-8 lg:gap-96 px-4 lg:px-0"
+      >
         <div className="max-w-md ">
           <h1 className="header-primary text-4xl sm:text-5xl lg:text-6xl">Hi, I'm <br /> {userInfo.name}</h1>
           <p className="py-6">
@@ -22,7 +28,7 @@ export const Hero = () => {
         <div className="mt-8 lg:mt-0  ">
             <img className="border-4 border-spacing-64 border-gray-400 w-72 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded " src="me.jpg" alt="me" />
         </div>
-      </div>
+      </motion.div>
    
     </div>
     <div>

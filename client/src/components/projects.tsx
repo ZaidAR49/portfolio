@@ -1,6 +1,7 @@
 import { projects } from "../data/projects-data";
 import { FaGithub } from "react-icons/fa";
 import { useState } from "react";
+import { motion } from "framer-motion";
 export const Projects = () => {
   const [index_image, setIndex_image] = useState(0);
 
@@ -47,8 +48,12 @@ export const Projects = () => {
           </p>
         </div>
         {projects.map((project, index) => (
-          <div
+          <motion.div
             key={index}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.5, delay: index * 0.15, ease: "easeOut" }}
             className="flex flex-col lg:flex-row justify-between p-10 lg:p-32 xl:p-14  md:p-16"
           >
             <div className="w-full lg:w-[550px] h-[300px] sm:h-[400px] lg:h-[550px] bg-slate-900 flex justify-center rounded-xl center items-center relative">
@@ -135,7 +140,7 @@ export const Projects = () => {
                 <FaGithub /> view in Github
               </a>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
       <div className="w-full h-px bg-white opacity-30"></div>

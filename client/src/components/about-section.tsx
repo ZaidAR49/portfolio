@@ -1,21 +1,34 @@
 import {userInfo} from "../data/about-data";
 import { useNavigate } from "react-router-dom";
 import { ButtonsSocial } from "./buttons-social";
+import { motion } from "framer-motion";
 
 export const About= ({page} :{page:string}) => {
    const navigate = useNavigate();
  return(
     <>
      <div className="flex lg:p-32 justify-between  flex-col gap-10 lg:gap-0 lg:flex-row my-16 sm:my-24 lg:mt-32 p-10">
-        <div className="header-primary text-3xl sm:text-4xl lg:text-6xl">About</div>
-        <div className="flex flex-col gap-3 max-w-3xl">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="header-primary text-3xl sm:text-4xl lg:text-6xl"
+        >About</motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
+          className="flex flex-col gap-3 max-w-3xl"
+        >
 <div className="header-tertiary text-xl sm:text-2xl ">{userInfo.titleAbout} </div>
 <p className={`break-words text-base sm:text-lg lg:text-xl ${page==="home" && "line-clamp-4"}`}>{userInfo.descAbout}</p>
 { page === "about" ? 
 <div className="flex flex-col md:flex-row gap-10 xl:gap-20 py-10 "> <a href={userInfo.resuma} className="btn-primary"> download My resume</a> <ButtonsSocial len={2}/>  </div>:
 <div className="text-as-link mt-6 lg:mt-10" onClick={()=>{navigate("/about",{state: {scrollTo:"main"}})}}>More about me</div>
 }
-        </div>
+        </motion.div>
         
          </div>
          <div className={`w-full h-px bg-white opacity-30`}></div>
