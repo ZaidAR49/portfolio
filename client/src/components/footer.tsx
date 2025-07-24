@@ -35,13 +35,13 @@ export const Footer = () => {
         <div className="text-sm sm:text-base lg:text-lg absolute bottom-5 ">© {new Date().getFullYear()} {userInfo.name}</div>
             </div>
       <form className="flex flex-col gap-4 sm:gap-6 lg:gap-7 text-xl mt-5 md:mt-0 " onSubmit={(e) => handleSubmit(e)}>
-        <label htmlFor="name">name</label>
+        <label htmlFor="name">Full name</label>
         <input type="text" id="name" name="name" className="input-primary" placeholder="Your Name" />
-        <label htmlFor="email">email</label>
+        <label htmlFor="email">Email</label>
         <input type="email" id="email" name="email" className="input-primary" placeholder=" Your Email" />
         <label htmlFor="subject"> Subject</label>
         <input type="text" id="subject" name="subject" className="input-primary" placeholder="Subject" />
-        <label htmlFor="message">message</label>
+        <label htmlFor="message">Message</label>
         <textarea id="message" name="message" className="input-primary" placeholder="Your Message"></textarea>
         <button className="btn-primary w-fit">Send</button>
 
