@@ -2,6 +2,8 @@
 import { userInfo } from "../data/about-data";
 import { ButtonsSocial } from "./buttons-social";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const Footer = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -16,10 +18,11 @@ export const Footer = () => {
     try {
       const response = await axios.post("http://localhost:3000/api/contact",data);
       console.log(response.data);
-      alert(response.data.message );
+      //alert(response.data.message );
+      toast.success("Message sent successfully!");
     } catch (error) {
       console.error("Error sending message:", error);
-      alert("Failed to send message. Please try again later.");
+      toast.error("Failed to send message. Please try again later.");
     }
 
     
@@ -35,19 +38,17 @@ export const Footer = () => {
         <div className="text-sm sm:text-base lg:text-lg absolute bottom-5 ">© {new Date().getFullYear()} {userInfo.name}</div>
             </div>
       <form className="flex flex-col gap-4 sm:gap-6 lg:gap-7 text-xl mt-5 md:mt-0 " onSubmit={(e) => handleSubmit(e)}>
-        <label htmlFor="name">Full name</label>
-        <input type="text" id="name" name="name" className="input-primary" placeholder="Your Name" />
+        <label htmlFor="name" >Full name</label>
+        <input type="text" id="name" name="name" className="input-primary" placeholder="Your Name"  minLength={3} maxLength={50} required/>
         <label htmlFor="email">Email</label>
-        <input type="email" id="email" name="email" className="input-primary" placeholder=" Your Email" />
+        <input type="email" id="email" name="email" className="input-primary" placeholder=" Your Email" required maxLength={50} />
         <label htmlFor="subject"> Subject</label>
-        <input type="text" id="subject" name="subject" className="input-primary" placeholder="Subject" />
+        <input type="text" id="subject" name="subject" className="input-primary" placeholder="Subject"   minLength={3} maxLength={50} required/>
         <label htmlFor="message">Message</label>
-        <textarea id="message" name="message" className="input-primary" placeholder="Your Message"></textarea>
+        <textarea id="message" name="message" className="input-primary" placeholder="Your Message"  minLength={2} maxLength={500} required ></textarea>
         <button className="btn-primary w-fit">Send</button>
-
-        
       </form>
-        
+        <ToastContainer position="bottom-right" toastStyle={{fontSize:"14"}} />
     </div>
     </>
         
