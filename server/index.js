@@ -27,7 +27,7 @@ app.post('/api/contact', (req, res) => {
     
 
     const emailToOwner = {
-        from: process.env.EMAIL, // replace with your email
+        from: process.env.EMAIL, 
          replyTo: email, 
         to: process.env.EMAIL, 
         subject: `Contact Form portfolio `,
