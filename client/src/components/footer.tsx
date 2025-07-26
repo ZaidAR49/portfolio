@@ -5,7 +5,8 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export const Footer = () => {
-
+const server_host_url="https://portfolio-wqai.onrender.com";
+const server_local_url="http://localhost:3000";
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -16,7 +17,7 @@ export const Footer = () => {
       message: formData.get("message"),
     };
     try {
-      const response = await axios.post("http://localhost:3000/api/contact",data);
+      const response = await axios.post(`${server_host_url}/api/contact`,data);
       console.log(response.data);
       //alert(response.data.message );
       toast.success("Message sent successfully!");
