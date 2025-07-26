@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export const Footer = () => {
 const server_host_url="https://portfolio-wqai.onrender.com";
-const server_local_url="http://localhost:3000";
+//const server_local_url="http://localhost:3000";
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
