@@ -44,7 +44,7 @@ const handleNavigation = (path: string) => {
     <>
       <div className="text-white p-4 flex flex-row items-center justify-between">
         <div>
-          <img className="rounded-full w-12 h-12 sm:w-16 sm:h-16" src="/logo.png" alt="" />
+          <img className="rounded-full w-24 h-24 " src="/logo.png" alt="" />
         </div>
         
         {/* Desktop Navigation */}
