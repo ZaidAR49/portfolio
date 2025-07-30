@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { FaHome, FaUser, FaEnvelope,FaProjectDiagram, FaBars, FaTimes} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/theme-context";
 
 export const Header = () => {
+    const {theme,toggleTheme}=useContext(ThemeContext);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const routes = [{
@@ -42,6 +45,7 @@ const handleNavigation = (path: string) => {
 
   return (
     <>
+<div onClick={toggleTheme}>{theme}</div>
       <div className="text-white p-4 flex flex-row items-center justify-between">
         <div>
           <img className="rounded-full w-24 h-24 " src="/logo.png" alt="" />
