@@ -7,7 +7,7 @@ function App() {
   
   return (
     <>
-    
+    <div className="dark">
     <Router>
       <Header/>
       <Routes>
@@ -18,6 +18,7 @@ function App() {
       </Routes>
    <Footer/>
    </Router>
+   </div>
     </>
   )
 }
