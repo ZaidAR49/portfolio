@@ -35,29 +35,29 @@
 .light {
     background-color: #fafafa;
     color: #1a1a1a;
-     p{
+        p{
     @apply text-gray-700 opacity-100 text-base sm:text-lg lg:text-xl break-words;
   }
 .btn-primary {
-    @apply bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold btn uppercase text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300;
+    @apply bg-[#06b6d4] text-white font-semibold btn uppercase text-sm sm:text-base;
 }
 .header-primary {
-    @apply font-bold uppercase whitespace-nowrap text-start text-gray-900;
+    @apply font-bold uppercase whitespace-nowrap text-start;
 }
 .header-secondary{
-    @apply font-bold mb-3 text-gray-800;
+    @apply font-bold mb-3;
 }
 .header-tertiary{
-    @apply font-bold mb-3 text-gray-700;
+    @apply font-bold mb-3;
 }
 .text-as-link{
-    @apply text-blue-600 cursor-pointer underline text-base sm:text-lg lg:text-xl hover:text-blue-800 transition-colors duration-200;
+    @apply text-cyan-300 cursor-pointer underline text-base sm:text-lg lg:text-xl;
 }
 .input-primary{
-    @apply bg-white text-gray-900 border border-gray-200 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent w-[250px] lg:w-[500px] shadow-sm hover:shadow-md transition-shadow duration-200;
+    @apply bg-gray-200 text-white border border-gray-800 rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-cyan-500 w-[250px] lg:w-[500px] ;
 }
 .border-image{
-  @apply border-b-4 border-spacing-64 bg-gradient-to-r from-cyan-400 to-blue-500;
+  @apply border-b-4 border-spacing-64 border-cyan-400 ;
 }
 }
 

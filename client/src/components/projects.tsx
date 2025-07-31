@@ -134,7 +134,7 @@ export const Projects = () => {
                 </div>
               </div>
               <a
-                className="btn-primary w-fit my-3 sm:my-4 lg:my-5 text-sm sm:text-base"
+                className="btn-primary w-fit my-3 sm:my-4 lg:my-5 text-sm sm:text-base max-w-fit"
                 href="https://github.com/ZaidAR49/Green-Bridge.git"
               >
                 <FaGithub /> view in Github
