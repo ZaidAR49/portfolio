@@ -17,17 +17,17 @@ export const Experience = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.5, delay: index * 0.15, ease: "easeOut" }}
-              className="max-w-7xl rounded-xl shadow-lg p-16 bg-gray-900 border border-gray-800 ml:8 lg:ml-32"
+              className="exprerience-card"
             >
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 gap-2">
-                <div className="header-secondary text-2xl sm:text-3xl lg:text-4xl ">{exp.role}</div>
+                <div className="header-secondary text-2xl sm:text-3xl lg:text-4xl  ">{exp.role}</div>
                 
-                <div className="text-sm sm:text-base text-gray-400 font-semibold uppercase">{exp.peroid}</div>
+                <div className="text-sm sm:text-base text-primary font-semibold uppercase">{exp.peroid}</div>
               </div>
               {exp.companey && (
                 <div className="text-base sm:text-lg text-cyan-300 font-medium mb-2">{exp.companey}</div>
               )}
-              <div className="text-base sm:text-lg lg:text-xl text-gray-300 whitespace-pre-line">{exp.desc}</div>
+              <div className="text-base sm:text-lg lg:text-xl text-primary whitespace-pre-line">{exp.desc}</div>
             </motion.div>
           ))}
         </div>

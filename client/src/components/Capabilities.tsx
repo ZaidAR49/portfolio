@@ -15,10 +15,10 @@ export const Capabilities = () => {
             {userInfo.techIcons.map((tech, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center justify-center bg-gray-900 border border-gray-800 rounded-lg p-4 min-w-[100px] sm:min-w-[120px] transition-transform hover:scale-110 hover:border-cyan-400 shadow-md mx-2 animate-breathing"
+                className="capabilities-items"
               >
                 <div className="text-3xl sm:text-4xl mb-2">{tech.icon}</div>
-                <div className="text-xs sm:text-sm text-gray-200 font-semibold">{tech.name}</div>
+                <div className="text-xs sm:text-sm font-semibold">{tech.name}</div>
               </div>
             ))}
           </div>
@@ -31,10 +31,10 @@ export const Capabilities = () => {
               {userInfo.toolsAndOthers.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center justify-center bg-gray-900 border border-gray-800 rounded-lg p-4 min-w-[100px] sm:min-w-[120px] transition-transform hover:scale-110 hover:border-cyan-400 shadow-md mx-2 animate-breathing"
+                  className="capabilities-items"
                 >
                   <div className="text-3xl sm:text-4xl mb-2">{item.icon}</div>
-                  <div className="text-xs sm:text-sm text-gray-200 font-semibold">{item.name}</div>
+                  <div className="text-xs sm:text-sm font-semibold">{item.name}</div>
                 </div>
               ))}
             </div>
