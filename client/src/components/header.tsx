@@ -126,10 +126,16 @@ export const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden border-t border-gray-800">
-          <div className="flex flex-col p-4 space-y-4">
+                           {/* Mobile Navigation Menu */}
+        {isMenuOpen && (
+          <div 
+            className="md:hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex items-start justify-end"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <div 
+              className="flex flex-col space-y-4 mb-10 items-start border-[1px] border-solid border-gray-600 w-fit p-5 shadow absolute top-20 right-4 overflow-hidden background rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            >
             {taps.map((route) => {
               return (
                 <div

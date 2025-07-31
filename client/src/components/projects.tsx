@@ -41,9 +41,9 @@ const [imageIndices, setImageIndices] = useState(() => projects.map(() => 0));
     <>
       <div
         id="projects"
-        className="flex flex-col p-4 sm:py-6 lg:py-10 my-16 sm:my-24 lg:my-32 "
+        className="flex flex-col p-4 sm:py-6 lg:py-10 my-16 sm:my-24 lg:my-32  "
       >
-        <div className=" p-10 sm:px-32 max-w-3xl ">
+        <div className=" p-10 sm:px-16 max-w-3xl ">
           <div className="header-primary text-3xl sm:text-4xl lg:text-6xl">
             Projects
           </div>
@@ -120,23 +120,23 @@ const [imageIndices, setImageIndices] = useState(() => projects.map(() => 0));
               <p className="text-base sm:text-lg lg:text-xl">
                 {project.description}
               </p>
-              <div className="bg-black text-white p-4 sm:p-6 max-w-xl border border-gray-800">
+              <div className="backgraund  p-4 sm:p-6 max-w-xl border border-gray-800">
                 <h2 className="text-sm sm:text-base font-semibold mb-4">
                   PROJECT INFO
                 </h2>
 
                 <div className="border-t border-gray-600 py-3 flex justify-between text-sm sm:text-base">
                   <span>Year</span>
-                  <span className="text-gray-300">{project.year}</span>
+                  <span className="text-gray-400">{project.year}</span>
                 </div>
 
                 <div className="border-t border-gray-600 py-3 flex justify-between text-sm sm:text-base">
                   <span>Role</span>
-                  <span className="text-gray-300">{project.role}</span>
+                  <span className="text-gray-400 max-w-36">{project.role}</span>
                 </div>
                 <div className="border-t border-gray-600 py-3 flex justify-between text-sm sm:text-base">
                   <span>Techs</span>
-                  <span className="text-gray-300">{project.tech}</span>
+                  <span className="text-gray-400 max-w-36">{project.tech}</span>
                 </div>
               </div>
               <a

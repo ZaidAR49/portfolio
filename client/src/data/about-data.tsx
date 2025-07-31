@@ -47,6 +47,16 @@ export const userInfo = {
 I am always eager to expand my skill set and stay current with modern technologies. So far, I’ve gained solid experience with tools and frameworks.`,
       
 experience :[
+  
+  {
+    peroid: "Jun 2025 - presnt",
+    role : " Quality Assurance Internship",
+    companey:"Real Soft Advanced applications",
+    desc: ` Gained experience in business requirements and quality assurance by working on real-world problems.
+     RealSoft is a leading company in Jordan that develops government applications, which gave me valuable insight into
+      how large companies operate and maintain high-quality software standards`
+
+  },
   {
     peroid:"sep 2021 - sep 2025",
     role: "student",
@@ -58,15 +68,7 @@ desc:`As a recent computer science graduate, I gained hands-on experience throug
 `
 
   },
-  {
-    peroid: "Jun 2025 - presnt",
-    role : " Quality Assurance Internship",
-    companey:"Real Soft Advanced applications",
-    desc: ` Gained experience in business requirements and quality assurance by working on real-world problems.
-     RealSoft is a leading company in Jordan that develops government applications, which gave me valuable insight into
-      how large companies operate and maintain high-quality software standards`
-
-  }
+  
 ],
       techIcons : [
     { icon: <FaReact />, name: "React" },
