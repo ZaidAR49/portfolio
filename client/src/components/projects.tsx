@@ -149,7 +149,7 @@ const [imageIndices, setImageIndices] = useState(() => projects.map(() => 0));
           </motion.div>
         ))}
       </div>
-      <div className="w-full h-px bg-white opacity-30"></div>
+      <div className="w-full h-px background-oopposit opacity-30"></div>
     </>
   );
 };

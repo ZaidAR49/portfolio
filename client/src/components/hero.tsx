@@ -62,7 +62,7 @@ export const Hero = () => {
       </div>
       {/*line and space*/}
 
-      <div className="w-full h-px bg-white opacity-30"></div>
+      <div className="w-full h-px background-oopposit opacity-30"></div>
     </>
   );
 };

@@ -40,7 +40,7 @@ export const Capabilities = () => {
             </div>
           </div>
         )}
-        <div className="w-full h-px bg-white opacity-30 mt-12"></div>
+        <div className="w-full h-px background-oopposit opacity-30 mt-12"></div>
       </div>
       <div className="flex flex-col p-4 sm:p-6 lg:p-10 mt-10 gap-10 mb-12"></div>
     </>

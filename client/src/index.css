@@ -4,6 +4,7 @@
 
 
 .dark {
+
     background-color: black;
     color: white;
      p{
@@ -45,10 +46,15 @@
 .background{
   @apply bg-black
 }
+.background-oopposit{
+  @apply bg-white
+}
 }
 
 
+
 .light {
+
     background-color: #fafafa;
     color: #1a1a1a;
         p{
@@ -90,6 +96,9 @@
 }
 .background{
   @apply bg-white
+}
+.background-oopposit{
+  @apply bg-black
 }
 }
 
