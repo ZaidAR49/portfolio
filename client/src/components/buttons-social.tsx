@@ -1,10 +1,10 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-
+import { userInfo } from "../data/about-data";
 export const ButtonsSocial = ({len}:{len:number}) => {
   const social = [
-    { link: "https://github.com/ZaidAR49", icon: <FaGithub />, name: "GitHub" },
+    { link: userInfo.github, icon: <FaGithub />, name: "GitHub" },
     {
-      link: "https://www.linkedin.com/in/zaid-radaideh-5b1a11332",
+      link: userInfo.linkedin,
       icon: <FaLinkedin />,
     },
   ];

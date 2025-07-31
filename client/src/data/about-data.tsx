@@ -20,6 +20,8 @@ export const userInfo = {
   descHero: "focused on creating beautiful, high-performance web applications.",
   titleAbout: `I am a software engineer in Jordan With a foundation in engineering and a passion for technology, 
   I build end-to-end web applications that are fast, accessible, and scalable.`,
+  github: "https://github.com/ZaidAR49",
+  linkedin: "linkedin.com/in/zaid-radaideh",
   descAbout: (
     <>
       I’m a <strong>Jordanian web developer</strong> passionate about building

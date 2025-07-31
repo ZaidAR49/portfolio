@@ -3,28 +3,34 @@ import { FaGithub } from "react-icons/fa";
 import { useState } from "react";
 import { motion } from "framer-motion";
 export const Projects = () => {
-  const [index_image, setIndex_image] = useState(0);
+const [imageIndices, setImageIndices] = useState(() => projects.map(() => 0));
+
 
   const handleImageChange = (
-    direction: "next" | "prev",
-    projectindex: number
-  ) => {
+  direction: "next" | "prev",
+  projectIndex: number
+) => {
+  setImageIndices((prevIndices) => {
+    const newIndices = [...prevIndices];
+    const numImages = projects[projectIndex].image.length;
     if (direction === "next") {
-      setIndex_image(
-        (prev) => (prev + 1) % projects[projectindex].image.length
-      );
+      newIndices[projectIndex] = (newIndices[projectIndex] + 1) % numImages;
     } else {
-      setIndex_image((prev) =>
-        prev === 0 ? projects[projectindex].image.length - 1 : prev - 1
-      );
+      newIndices[projectIndex] =
+        newIndices[projectIndex] === 0
+          ? numImages - 1
+          : newIndices[projectIndex] - 1;
     }
-  };
+    return newIndices;
+  });
+};
+
   const stateColor = (index: number) => {
     switch (projects[index].state.toLowerCase()) {
       case "completed":
         return "bg-green-500 text-white";
       case "in progress":
-        return "bg-yellow-500 text-white";
+        return "bg-yellow-600 text-white";
       case "suspend":
         return "bg-red-500 text-white";
       default:
@@ -69,8 +75,8 @@ export const Projects = () => {
                 className="carousel-item relative flex items-center justify-center"
               >
                 <img
-                  src={project.image[index_image]}
-                  className="h-48 w-48 sm:h-64 sm:w-64 lg:h-96 lg:w-96 rounded-xl object-fill"
+                  src={project.image[imageIndices[index]]}
+                  className="h-48 w-48 sm:h-64 sm:w-64 lg:h-96 lg:w-96 rounded-xl object-cover"
                   alt="project"
                 />
 
