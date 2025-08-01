@@ -41,7 +41,7 @@
   @apply max-w-7xl rounded-xl shadow-lg p-16 bg-gray-900 border border-gray-800 ml-8 lg:ml-32
 }
 .shadow{
-  @apply shadow-md shadow-white
+  @apply shadow-sm shadow-white
 }
 .background{
   @apply bg-black
