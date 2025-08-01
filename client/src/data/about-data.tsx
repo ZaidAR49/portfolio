@@ -41,7 +41,7 @@ export const userInfo = {
 
   dgree: "Jordan University of sinace and technology in software engineering",
   resuma:
-    "https://drive.google.com/file/d/1j2wiv627G8YNUCjthsCPK4D5NE57Z6xd/view?usp=drive_link",
+    "https://drive.google.com/file/d/1w-haVJ34sLI3PbON9ZY6vPxy-Swjo0wV/view?usp=sharing",
   descCapabilities: `I specialize in building real-world applications through hands-on, practical projects. My core strengths lie in full-stack development, with a focus on writing clean, maintainable, and scalable code.
 
 I am always eager to expand my skill set and stay current with modern technologies. So far, I’ve gained solid experience with tools and frameworks.`,
