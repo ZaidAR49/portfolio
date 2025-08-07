@@ -4,10 +4,20 @@ import { ButtonsSocial } from "./buttons-social";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from "react";
+
 export const Footer = () => {
-const server_host_url="https://portfolio-wqai.onrender.com";
-//const server_local_url="http://localhost:3000";
+const server_host_url=import.meta.env.VITE_API_URL  || "http://localhost:3000";
+// Check if the environment variable is set, if not, use a local server URL
+useEffect(() => {
+  if (server_host_url) {
+    console.log("connect to cloud server.");}
+  else {
+    console.log("connect to local server.");}
+}, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+   
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
    const data = {
@@ -16,6 +26,8 @@ const server_host_url="https://portfolio-wqai.onrender.com";
       subject: formData.get("subject"),
       message: formData.get("message"),
     };
+    //clrear the form fields
+    e.currentTarget.reset();
     try {
       const response = await axios.post(`${server_host_url}/api/contact`,data);
       console.log(response.data);
