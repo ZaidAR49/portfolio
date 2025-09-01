@@ -35,7 +35,7 @@ export const Hero = () => {
                 className="border-image w-80 h-80 sm:w-96 sm:h-80 lg:w-96 lg:h-96 rounded object-cover px-6 pointer-events-none select-none touch-none"
                 draggable="false"
                 onContextMenu={(e) => e.preventDefault()}
-                src="me.png"
+                src={userInfo.picture}
                 alt="me"
               />
             </div>

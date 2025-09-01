@@ -22,6 +22,7 @@ export const userInfo = {
   I build end-to-end web applications that are fast, accessible, and scalable.`,
   github: "https://github.com/ZaidAR49",
   linkedin: "https://www.linkedin.com/in/zaid-radaideh/",
+  picture: "https://res.cloudinary.com/dxa0aylow/image/upload/v1756738759/me_gdeyxa.png",
   descAbout: (
     <>
       I’m a <strong>Jordanian web developer</strong> passionate about building
