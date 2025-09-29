@@ -48,10 +48,20 @@ export const userInfo = {
 I am always eager to expand my skill set and stay current with modern technologies. So far, I’ve gained solid experience with tools and frameworks.`,
       
 experience :[
-  
+
+    {
+    peroid: "Sep 2025 - present",
+    role : " Internship in Quality Assurance",
+    companey:"ARD(Arabia weather)",
+    desc: ` Ard Group (ArabiaWeather) is a leading weather technology company in the Middle East, known for its
+     ArabiaWeather app that delivers hyper-localized forecasts and real-time alerts. My role was to test the app’s 
+     functionality, usability, and performance to ensure a smooth user experience and accurate delivery of weather data.`
+
+  },
+
   {
-    peroid: "Jun 2025 - presnt",
-    role : " Quality Assurance Internship",
+    peroid: "Jun 2025 - Sep 2025",
+    role : " Internship in Quality Assurance and Business Analysis",
     companey:"Real Soft Advanced applications",
     desc: ` Gained experience in business requirements and quality assurance by working on real-world problems.
      RealSoft is a leading company in Jordan that develops government applications, which gave me valuable insight into
