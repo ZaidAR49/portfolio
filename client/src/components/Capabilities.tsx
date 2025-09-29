@@ -4,7 +4,7 @@ import { userInfo } from "../data/about-data";
 export const Capabilities = () => {
   return (
     <>
-      <div className="flex flex-col gap-10 my-16 sm:my-24 lg:mt-32 p-4 sm:p-10 lg:p-32">
+      <div className="flex flex-col gap-10 my-16 sm:my-24 lg:my-32 px-4 sm:px-10 lg:px-32">
         <div className="header-primary text-3xl sm:text-4xl lg:text-6xl mb-4"> my Capabilities</div>
         <div className=" p-6 sm:p-8 max-w-5xl shadow-lg">
           <p className="text-gray-300 text-base sm:text-lg lg:text-xl whitespace-pre-line">{userInfo.descCapabilities}</p>
@@ -40,9 +40,10 @@ export const Capabilities = () => {
             </div>
           </div>
         )}
-        <div className="w-full h-px background-oopposit opacity-30 mt-12"></div>
+    
       </div>
       <div className="flex flex-col p-4 sm:p-6 lg:p-10 mt-10 gap-10 mb-12"></div>
+          <div className="w-full h-px background-oopposit opacity-30 mt-12"></div>
     </>
   );
 };
