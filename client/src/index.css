@@ -5,7 +5,7 @@
 
 .dark {
 
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     color: white;
      p{
     @apply text-gray-300 opacity-100 text-base sm:text-lg lg:text-xl break-words;
@@ -55,7 +55,7 @@
 
 .light {
 
-    background-color: #fafafa;
+    background-color: rgb(255, 255, 255);
     color: #1a1a1a;
         p{
     @apply text-gray-700 opacity-100 text-base sm:text-lg lg:text-xl break-words;

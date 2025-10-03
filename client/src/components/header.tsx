@@ -46,27 +46,32 @@ export const Header = () => {
       name: "Home",
       icon: <FaHome />,
       path: "",
+      id:"home-btn"
     },
 
     {
       name: "Projects",
       icon: <FaProjectDiagram />,
       path: "projects",
+      id:"projects-btn"
     },
     {
       name: "About",
       icon: <FaUser />,
       path: "about",
+      id:"about-btn"
     },
     {
       name: "contact",
       icon: <FaEnvelope />,
       path: "footer",
+      id:"contact-btn"
     },
     {
         name:"",
         icon: DarkMode(),
-        path:"darkMode"
+        path:"darkMode",
+        id: "theme-btn"
     }
   ];
 
@@ -100,6 +105,7 @@ export const Header = () => {
           {taps.map((route) => {
             return (
               <div
+              id= {route.id}
                 className="hover:text-cyan-500 active:scale-95 cursor-pointer hover:scale-110"
                 key={route.path}
                 onClick={() => {
@@ -139,6 +145,7 @@ export const Header = () => {
             {taps.map((route) => {
               return (
                 <div
+                id={route.id}
                   className="hover:text-cyan-500 active:scale-95 cursor-pointer hover:scale-110 py-2"
                   key={route.path}
                  {...route.path === "darkMode" ? {} : { onClick: () => handleNavigation(route.path) }}

@@ -4,7 +4,7 @@ import { userInfo } from "../data/about-data";
 export const Capabilities = () => {
   return (
     <>
-      <div className="flex flex-col gap-10 my-16 sm:my-24 lg:my-32 px-4 sm:px-10 lg:px-32">
+      <div id="Capabilities" className="flex flex-col gap-10 my-16 sm:my-24 lg:my-32 px-4 sm:px-10 lg:px-32">
         <div className="header-primary text-3xl sm:text-4xl lg:text-6xl mb-4"> my Capabilities</div>
         <div className=" p-6 sm:p-8 max-w-5xl shadow-lg">
           <p className="text-gray-300 text-base sm:text-lg lg:text-xl whitespace-pre-line">{userInfo.descCapabilities}</p>

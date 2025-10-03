@@ -7,7 +7,7 @@ export const About= ({page} :{page:string}) => {
    const navigate = useNavigate();
  return(
     <>
-     <div className="flex lg:p-32 justify-between  flex-col gap-10 lg:gap-0 lg:flex-row my-16 sm:my-24 lg:mt-32 p-10">
+     <div id="about" className="flex lg:p-32 justify-between  flex-col gap-10 lg:gap-0 lg:flex-row my-16 sm:my-24 lg:mt-32 p-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

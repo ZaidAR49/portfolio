@@ -4,7 +4,7 @@ export const Hero = () => {
   return (
     <>
       <div>
-        <div className="hero min-h-screen animate-in fade-in slide-in-from-bottom duration-700 -mt-16 ">
+        <div id="hero" className="hero min-h-screen animate-in fade-in slide-in-from-bottom duration-700 -mt-16 ">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}

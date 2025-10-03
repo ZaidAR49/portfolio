@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 export const Experience = () => {
   return (
     <>
-      <div className="flex flex-col p-4 sm:py-6 lg:py-10 my-16 sm:my-24 lg:my-32 ">
+      <div id="Experience" className="flex flex-col p-4 sm:py-6 lg:py-10 my-16 sm:my-24 lg:my-32 ">
         <div className="p-10 sm:px-32 max-w-5xl">
           <div className="header-primary text-3xl sm:text-4xl lg:text-6xl mb-4">My Experience</div>
           <p className="text-base sm:text-lg lg:text-xl mt-10">A summary of my professional and academic journey so far.</p>
