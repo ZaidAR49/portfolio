@@ -1,155 +1,173 @@
 import { projects } from "../data/projects-data";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+
 export const Projects = () => {
-const [imageIndices, setImageIndices] = useState(() => projects.map(() => 0));
+  const [imageIndices, setImageIndices] = useState(() => projects.map(() => 0));
 
+  const handleImageChange = (direction: "next" | "prev", projectIndex: number) => {
+    setImageIndices((prevIndices) => {
+      const newIndices = [...prevIndices];
+      const numImages = projects[projectIndex].image.length;
+      if (direction === "next") {
+        newIndices[projectIndex] = (newIndices[projectIndex] + 1) % numImages;
+      } else {
+        newIndices[projectIndex] =
+          newIndices[projectIndex] === 0
+            ? numImages - 1
+            : newIndices[projectIndex] - 1;
+      }
+      return newIndices;
+    });
+  };
 
-  const handleImageChange = (
-  direction: "next" | "prev",
-  projectIndex: number
-) => {
-  setImageIndices((prevIndices) => {
-    const newIndices = [...prevIndices];
-    const numImages = projects[projectIndex].image.length;
-    if (direction === "next") {
-      newIndices[projectIndex] = (newIndices[projectIndex] + 1) % numImages;
-    } else {
-      newIndices[projectIndex] =
-        newIndices[projectIndex] === 0
-          ? numImages - 1
-          : newIndices[projectIndex] - 1;
-    }
-    return newIndices;
-  });
-};
-
-  const stateColor = (index: number) => {
-    switch (projects[index].state.toLowerCase()) {
+  const stateColor = (state: string) => {
+    switch (state.toLowerCase()) {
       case "completed":
-        return "bg-green-500 text-white";
+        return "bg-emerald-500/20 text-emerald-400 border-emerald-500/50";
       case "in progress":
-        return "bg-yellow-600 text-white";
+        return "bg-amber-500/20 text-amber-400 border-amber-500/50";
       case "suspend":
-        return "bg-red-500 text-white";
+        return "bg-rose-500/20 text-rose-400 border-rose-500/50";
       default:
-        return "bg-gray-500 text-white";
+        return "bg-slate-500/20 text-slate-400 border-slate-500/50";
     }
   };
+
   return (
-    <>
-      <div
-        id="projects"
-        className="flex flex-col p-4 sm:py-6 lg:py-10 my-16 sm:my-24 lg:my-32  "
-      >
-        <div className=" p-10 sm:px-16 max-w-3xl ">
-          <div className="header-primary text-3xl sm:text-4xl lg:text-6xl">
-            Projects
-          </div>
-          <br />
-          <p className="text-base sm:text-lg lg:text-xl">
-            Here are some of the selected projects that showcase my passion for
-            front-end development
-          </p>
-        </div>
-        {projects.map((project, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 40 }}
+    <section id="projects" className="py-20 lg:py-32 relative overflow-hidden">
+      {/* Background Decoration */}
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[var(--accent)]/5 rounded-full blur-[100px] -z-10" />
+
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.5, delay: index * 0.15, ease: "easeOut" }}
-            className="flex flex-col lg:flex-row justify-between p-10 lg:p-32 xl:p-14  md:p-16"
+            className="text-[var(--accent)] font-bold tracking-wider uppercase mb-4 text-sm md:text-base"
           >
-            <div className="w-full lg:w-[550px] h-[300px] sm:h-[400px] lg:h-[550px] bg-slate-900 flex justify-center rounded-xl center items-center relative">
-              <div
-                className={`absolute top-2 left-2 p-2 rounded-xl text-xs sm:text-sm ${stateColor(
-                  index
-                )}`}
-              >
-                {project.state}
-              </div>
-              <div
-                id="slide1"
-                className="carousel-item relative flex items-center justify-center"
-              >
-                <img
-                  src={project.image[imageIndices[index]]}
-                  className="h-48 w-48 sm:h-64 sm:w-64 lg:h-96 lg:w-96 rounded-xl object-cover"
-                  alt="project"
-                />
+            My Work
+          </motion.h2>
+          <motion.h3 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="section-title"
+          >
+            Featured Projects
+          </motion.h3>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-[var(--text-secondary)] text-lg"
+          >
+            A collection of projects that showcase my passion for building robust and interactive web applications.
+          </motion.p>
+        </div>
 
-                <div
-                  className="absolute inset-0 flex items-center justify-between -mx-8 sm:-mx-12 lg:-mx-16"
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowRight") {
-                      handleImageChange("next", index);
-                    } else if (e.key === "ArrowLeft") {
-                      handleImageChange("prev", index);
-                    }
-                  }}
-                  tabIndex={0}
-                   role="button"
-                >
-                  <div
-                    onClick={() => {
-                      handleImageChange("prev", index);
-                    }}
-                    className="text-2xl sm:text-3xl text-white hover:scale-125 transition cursor-pointer select-none"
-                  >
-                    ❮
+        <div className="grid grid-cols-1 gap-64">
+          {projects.map((project, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-10 lg:gap-16 items-center`}
+            >
+              {/* Project Image Carousel */}
+              <div className="w-full lg:w-1/2 relative group">
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--bg-secondary)] aspect-video bg-[var(--bg-secondary)]">
+                  <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-md z-10 ${stateColor(project.state)}`}>
+                    {project.state}
                   </div>
-                  <div
-                    onClick={() => {
-                      handleImageChange("next", index);
-                    }}
-                    className="text-2xl sm:text-3xl text-white hover:scale-125 transition cursor-pointer select-none"
-                  >
-                    ❯
+                  
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={imageIndices[index]}
+                      src={project.image[imageIndices[index]]}
+                      alt={project.title}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="w-full h-full object-cover"
+                    />
+                  </AnimatePresence>
+
+                  {/* Carousel Controls */}
+                  <div className="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleImageChange("prev", index); }}
+                      className="p-2 rounded-full bg-black/50 text-white hover:bg-[var(--accent)] transition-colors backdrop-blur-sm"
+                    >
+                      <FaChevronLeft size={20} />
+                    </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleImageChange("next", index); }}
+                      className="p-2 rounded-full bg-black/50 text-white hover:bg-[var(--accent)] transition-colors backdrop-blur-sm"
+                    >
+                      <FaChevronRight size={20} />
+                    </button>
                   </div>
                 </div>
-              </div>
-            </div>
-            {/*project desc*/}
-            <div className="flex flex-col gap-4 sm:gap-6 lg:gap-7 mt-2 lg:mt-5 flex-nowrap max-w-2xl">
-              <div className="header-secondary text-2xl sm:text-3xl lg:text-4xl">
-                {project.title}{" "}
+                
+                {/* Decorative Elements */}
+                <div className={`absolute -bottom-4 -right-4 w-full h-full border-2 border-[var(--accent)]/20 rounded-2xl -z-10 transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2`} />
               </div>
 
-              <p className="text-base sm:text-lg lg:text-xl">
-                {project.description}
-              </p>
-              <div className="backgraund  p-4 sm:p-6 max-w-xl border border-gray-800">
-                <h2 className="text-sm sm:text-base font-semibold mb-4">
-                  PROJECT INFO
-                </h2>
+              {/* Project Details */}
+              <div className="w-full lg:w-1/2 flex flex-col gap-6">
+                <h3 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
+                  {project.title}
+                </h3>
+                
+                <p className="text-[var(--text-secondary)] text-lg leading-relaxed">
+                  {project.description}
+                </p>
 
-                <div className="border-t border-gray-600 py-3 flex justify-between text-sm sm:text-base">
-                  <span>Year</span>
-                  <span className="text-gray-400">{project.year}</span>
+                <div className="grid grid-cols-2 gap-4 p-6 rounded-2xl bg-[var(--bg-secondary)]/50 border border-[var(--bg-secondary)]">
+                  <div>
+                    <span className="block text-xs uppercase tracking-wider text-[var(--text-secondary)] mb-1">Year</span>
+                    <span className="font-semibold text-[var(--text-primary)]">{project.year}</span>
+                  </div>
+                  <div>
+                    <span className="block text-xs uppercase tracking-wider text-[var(--text-secondary)] mb-1">Role</span>
+                    <span className="font-semibold text-[var(--text-primary)]">{project.role}</span>
+                  </div>
+                  <div className="col-span-2">
+                    <span className="block text-xs uppercase tracking-wider text-[var(--text-secondary)] mb-1">Technologies</span>
+                    <span className="font-semibold text-[var(--accent)]">{project.tech}</span>
+                  </div>
                 </div>
 
-                <div className="border-t border-gray-600 py-3 flex justify-between text-sm sm:text-base">
-                  <span>Role</span>
-                  <span className="text-gray-400 max-w-36">{project.role}</span>
-                </div>
-                <div className="border-t border-gray-600 py-3 flex justify-between text-sm sm:text-base">
-                  <span>Techs</span>
-                  <span className="text-gray-400 max-w-36">{project.tech}</span>
+                <div className="flex gap-4 mt-2">
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary flex items-center gap-2"
+                  >
+                    <FaGithub size={20} />
+                    <span>View Code</span>
+                  </a>
+                  {/* Placeholder for live demo if added later */}
+                  {/* <a href="#" className="px-6 py-3 rounded-full font-semibold text-[var(--text-primary)] border border-[var(--text-secondary)]/30 hover:border-[var(--accent)] transition-all flex items-center gap-2">
+                    <FaExternalLinkAlt size={16} />
+                    <span>Live Demo</span>
+                  </a> */}
                 </div>
               </div>
-              <a
-                className="btn-primary w-fit my-3 sm:my-4 lg:my-5 text-sm sm:text-base max-w-fit"
-                href={project.github}
-              >
-                <FaGithub /> view in Github
-              </a>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </div>
       </div>
-      <div className="w-full h-px background-oopposit opacity-30"></div>
-    </>
+    </section>
   );
 };
+

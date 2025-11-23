@@ -2,120 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply transition-colors duration-300 ease-in-out font-sans antialiased;
+  }
+}
 
+/* Dark Mode */
 .dark {
+  @apply bg-slate-900 text-slate-100;
+  
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --accent: #38bdf8;
+  --accent-hover: #0ea5e9;
 
-    background-color: rgb(0, 0, 0);
-    color: white;
-     p{
-    @apply text-gray-300 opacity-100 text-base sm:text-lg lg:text-xl break-words;
+  p {
+    @apply text-slate-400 text-base sm:text-lg leading-relaxed;
   }
-  .text-primary {
-    @apply text-gray-200;
+
+  .glass-panel {
+    @apply bg-slate-900/70 backdrop-blur-md border border-slate-700/50 shadow-xl;
   }
-.btn-primary {
-    @apply bg-[#06b6d4] text-white font-semibold btn uppercase text-sm sm:text-base;
-}
-.header-primary {
-    @apply font-bold uppercase whitespace-nowrap text-start;
-}
-.header-secondary{
-    @apply font-bold mb-3;
-}
-.header-tertiary{
-    @apply font-bold mb-3;
-}
-.text-as-link{
-    @apply text-cyan-300 cursor-pointer underline text-base sm:text-lg lg:text-xl;
-}
-.input-primary{
-    @apply bg-gray-900 text-white border border-gray-800 rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-cyan-500 w-[250px] lg:w-[500px] ;
-}
-.border-image{
-  @apply border-b-4 border-spacing-64 border-cyan-400 ;
-}
-.capabilities-items{
-  @apply flex flex-col items-center justify-center bg-gray-900 border border-gray-800 rounded-lg p-4 min-w-[100px] sm:min-w-[120px] transition-transform hover:scale-110 hover:border-cyan-400 shadow-md mx-2 animate-breathing
-}
-.exprerience-card{
-  @apply max-w-7xl rounded-xl shadow-lg p-16 bg-gray-900 border border-gray-800 ml-8 lg:ml-32
-}
-.shadow{
-  @apply shadow-sm shadow-white
-}
-.background{
-  @apply bg-black
-}
-.background-oopposit{
-  @apply bg-white
-}
 }
 
-
-
+/* Light Mode */
 .light {
+  @apply bg-slate-50 text-slate-900;
 
-    background-color: rgb(255, 255, 255);
-    color: #1a1a1a;
-        p{
-    @apply text-gray-700 opacity-100 text-base sm:text-lg lg:text-xl break-words;
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --accent: #0ea5e9;
+  --accent-hover: #0284c7;
+
+  p {
+    @apply text-slate-600 text-base sm:text-lg leading-relaxed;
   }
 
-  .text-primary {
-    @apply text-gray-700;
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-md border border-slate-200/50 shadow-xl;
   }
-.btn-primary {
-    @apply bg-[#06b6d4] text-white font-semibold btn uppercase text-sm sm:text-base;
-}
-.header-primary {
-    @apply font-bold uppercase whitespace-nowrap text-start;
-}
-.header-secondary{
-    @apply font-bold mb-3;
-}
-.header-tertiary{
-    @apply font-bold mb-3;
-}
-.text-as-link{
-    @apply text-cyan-300 cursor-pointer underline text-base sm:text-lg lg:text-xl;
-}
-.input-primary{
-    @apply bg-gray-200 text-white border border-gray-800 rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-cyan-500 w-[250px] lg:w-[500px] ;
-}
-.border-image{
-  @apply border-b-4 border-spacing-64 border-cyan-400 ;
-}
-.capabilities-items{
-  @apply flex flex-col items-center justify-center bg-gray-200 border border-gray-800 rounded-lg p-4 min-w-[100px] sm:min-w-[120px] transition-transform hover:scale-110 hover:border-cyan-400 shadow-md mx-2 animate-breathing
-}
-.exprerience-card{
-  @apply max-w-7xl rounded-xl shadow-lg p-16 bg-gray-200 border border-gray-800 ml-8 lg:ml-32
-}
-.shadow{
-  @apply shadow-md shadow-black
-}
-.background{
-  @apply bg-white
-}
-.background-oopposit{
-  @apply bg-black
-}
 }
 
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 rounded-full font-semibold text-white bg-[var(--accent)] 
+    hover:bg-[var(--accent-hover)] transition-all duration-300 
+    shadow-lg hover:shadow-[0_0_15px_var(--accent)] hover:-translate-y-1 active:scale-95;
+  }
+
+  .header-link {
+    @apply relative text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors duration-300 font-medium;
+  }
+
+  .header-link::after {
+    content: '';
+    @apply absolute left-0 bottom-0 w-0 h-0.5 bg-[var(--accent)] transition-all duration-300;
+  }
+
+  .header-link:hover::after {
+    @apply w-full;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-5xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[var(--accent)];
+  }
+
+  .card {
+    @apply glass-panel rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
+  }
+
+  .input-primary {
+    @apply w-full bg-[var(--bg-secondary)] border border-slate-700 rounded-xl px-4 py-3 
+    text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] 
+    focus:border-transparent transition-all duration-300;
+  }
 }
 
-.animate-marquee {
-  animation: marquee 50s linear infinite;
+/* Utilities */
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[var(--accent)];
 }
 
-@keyframes breathing {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
-}
-
-.animate-breathing {
-  animation: breathing 2.8s ease-in-out infinite;
+.hover-pause:hover {
+  animation-play-state: paused;
 }
