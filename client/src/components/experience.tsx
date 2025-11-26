@@ -26,7 +26,7 @@ export const Experience = () => {
           </motion.h3>
         </div>
 
-        <div className="relative max-w-7xl mx-auto">
+        <div className="relative max-w-8xl mx-auto">
           {/* Timeline Line */}
           <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-1 bg-[var(--text-secondary)]/20" />
 

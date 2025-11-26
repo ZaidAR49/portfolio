@@ -80,7 +80,7 @@ export const Footer = () => {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="flex-1 max-w-xl"
+            className="flex-1 max-w-2xl"
           >
             <form className="glass-panel p-8 rounded-3xl flex flex-col gap-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

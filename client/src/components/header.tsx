@@ -20,12 +20,27 @@ export const Header = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Check initial scroll position
+    setScrolled(window.scrollY > 20);
+    
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Reset scroll state when navigating to a new page
+  useEffect(() => {
+    setScrolled(window.scrollY > 20);
+  }, [location.pathname]);
 
   const navItems = [
     { name: "Home", icon: <FaHome />, path: "/", id: "home-btn" },
@@ -52,7 +67,7 @@ export const Header = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "py-3 bg-[var(--bg-primary)]/10 backdrop-blur-md border-b border-[var(--text-secondary)]/10"
+          ? "py-3 bg-slate-50 dark:bg-slate-900 border-b border-[var(--text-secondary)]/10"
           : "py-5 bg-transparent"
       }`}
     >
@@ -116,66 +131,33 @@ export const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Navigation Dropdown */}
       <div
-        className={`fixed inset-0 z-[100] bg-black/80 backdrop-blur-md transition-opacity duration-300 md:hidden ${
-          isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        className={`absolute top-full left-0 right-0 md:hidden transition-all duration-300 ease-out ${
+          isMenuOpen 
+            ? "opacity-100 translate-y-0 pointer-events-auto" 
+            : "opacity-0 -translate-y-4 pointer-events-none"
         }`}
-        onClick={() => setIsMenuOpen(false)}
       >
-        <div
-          className={`absolute right-0 top-0 h-full w-[75%] max-w-[320px] bg-[var(--bg-primary)] shadow-2xl transform transition-transform duration-300 ease-out ${
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="flex flex-col h-full bg-[var(--bg-primary)]">
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-[var(--text-secondary)]/10">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[var(--accent)] to-purple-500 flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">Z</span>
-                </div>
-                <span className="text-lg font-bold text-[var(--text-primary)]">ZAR</span>
-              </div>
+        <div className="flex justify-end px-4">
+          <nav className="w-full max-w-[280px] mt-2 bg-[var(--bg-primary)] rounded-2xl shadow-2xl border border-[var(--text-secondary)]/10 overflow-hidden">
+          <div className="p-4 space-y-2">
+            {navItems.map((item) => (
               <button
-                onClick={() => setIsMenuOpen(false)}
-                className="p-2 hover:bg-[var(--bg-secondary)] rounded-lg text-[var(--text-secondary)] hover:text-[var(--accent)] transition-all"
+                key={item.name}
+                onClick={() => handleNavigation(item.path)}
+                className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-300 ${
+                  location.pathname === (item.path.startsWith("/") ? item.path : "/" + item.path)
+                    ? "bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30"
+                    : "text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent)]"
+                }`}
               >
-                <FaTimes size={20} />
+                <span className="text-lg">{item.icon}</span>
+                <span className="text-sm font-medium">{item.name}</span>
               </button>
-            </div>
-
-            {/* Navigation Items */}
-            <nav className="flex-1 p-6">
-              <div className="flex flex-col gap-2">
-                {navItems.map((item, index) => (
-                  <button
-                    key={item.name}
-                    onClick={() => handleNavigation(item.path)}
-                    className={`flex items-center gap-4 p-4 rounded-xl text-left transition-all duration-300 ${
-                      location.pathname === (item.path.startsWith("/") ? item.path : "/" + item.path)
-                        ? "bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30"
-                        : "text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent)]"
-                    }`}
-                    style={{ 
-                      animation: isMenuOpen ? `slideUp 0.3s ease-out ${index * 0.05}s both` : 'none'
-                    }}
-                  >
-                    <span className="text-xl">{item.icon}</span>
-                    <span className="text-base font-medium">{item.name}</span>
-                  </button>
-                ))}
-              </div>
-            </nav>
-
-            {/* Footer */}
-            <div className="p-6 border-t border-[var(--text-secondary)]/10">
-              <p className="text-xs text-[var(--text-secondary)] text-center">
-                © 2025 Zaid Radaideh
-              </p>
-            </div>
+            ))}
           </div>
+        </nav>
         </div>
       </div>
     </header>
