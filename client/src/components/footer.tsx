@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { FaPaperPlane } from "react-icons/fa";
 
 export const Footer = () => {
-  const server_host_url =  import.meta.env.VITE_API_URLx;
+  const server_host_url =  import.meta.env.VITE_API_URL;
   const server_local_url ="http://localhost:3000";
   const server_url = server_host_url || server_local_url;
   //import.meta.env.VITE_API_URL ||
