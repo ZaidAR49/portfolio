@@ -8,8 +8,10 @@ import { motion } from "framer-motion";
 import { FaPaperPlane } from "react-icons/fa";
 
 export const Footer = () => {
-  const server_host_url = import.meta.env.VITE_API_URL || "http://localhost:3000";
-  
+  const server_host_url =  import.meta.env.VITE_API_URLx;
+  const server_local_url ="http://localhost:3000";
+  const server_url = server_host_url || server_local_url;
+  //import.meta.env.VITE_API_URL ||
   useEffect(() => {
     if (server_host_url) {
       console.log("connect to cloud server.");
@@ -30,8 +32,8 @@ export const Footer = () => {
     
     e.currentTarget.reset();
     try {
-      const response = await axios.post(`${server_host_url}/api/contact`, data);
-      console.log(response.data);
+      const response = await axios.post(`${server_url}/api/contact`, data);
+      console.log("server:",response.data);
       toast.success("Message sent successfully!");
     } catch (error) {
       console.error("Error sending message:", error);
