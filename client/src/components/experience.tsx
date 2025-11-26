@@ -4,29 +4,27 @@ import { FaBriefcase, FaGraduationCap } from "react-icons/fa";
 
 export const Experience = () => {
   return (
-    <section id="experience" className="py-20 lg:py-32 relative">
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <motion.h2 
+    <section id="experience" className="py-24 lg:py-32 relative overflow-hidden">
+      {/* Background Decoration */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 md:px-12">
+        <div className="max-w-6xl mx-auto mb-16">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[var(--accent)] font-bold tracking-wider uppercase mb-4 text-sm md:text-base"
           >
-            My Journey
-          </motion.h2>
-          <motion.h3 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="section-title"
-          >
-            Experience & Education
-          </motion.h3>
+            <div className="inline-block px-4 py-2 rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/30 text-[var(--accent)] text-sm font-semibold mb-6">
+              My Journey
+            </div>
+            <h2 className="section-title mb-6">Experience & Education</h2>
+          </motion.div>
         </div>
 
-        <div className="relative max-w-8xl mx-auto">
+        <div className="relative max-w-6xl mx-auto">
           {/* Timeline Line */}
           <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-1 bg-[var(--text-secondary)]/20" />
 

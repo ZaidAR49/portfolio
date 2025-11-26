@@ -16,68 +16,72 @@
   }
 }
 
-/* Dark Mode */
+/* Dark Mode - Modern Purple/Indigo Theme */
 .dark {
-  @apply bg-slate-900 text-slate-100;
+  @apply bg-zinc-950 text-zinc-50;
   
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --accent: #38bdf8;
-  --accent-hover: #0ea5e9;
+  --bg-primary: #09090b;
+  --bg-secondary: #18181b;
+  --bg-tertiary: #27272a;
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --accent: #a855f7;
+  --accent-hover: #9333ea;
+  --accent-light: #c084fc;
 
   p {
-    @apply text-slate-400 text-base sm:text-lg leading-relaxed;
+    @apply text-zinc-400 text-base sm:text-lg leading-relaxed;
   }
 
   .glass-panel {
-    @apply bg-slate-900/70 backdrop-blur-md border border-slate-700/50 shadow-xl;
+    @apply bg-zinc-900/80 backdrop-blur-xl border border-zinc-800/50 shadow-2xl;
   }
 }
 
-/* Light Mode */
+/* Light Mode - Clean White with Purple Accents */
 .light {
-  @apply bg-slate-50 text-slate-900;
+  @apply bg-white text-zinc-900;
   
-  --bg-primary: #f8fafc;
-  --bg-secondary: #ffffff;
-  --text-primary: #0f172a;
-  --text-secondary: #64748b;
-  --accent: #0ea5e9;
-  --accent-hover: #0284c7;
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f4f4f5;
+  --text-primary: #09090b;
+  --text-secondary: #71717a;
+  --accent: #9333ea;
+  --accent-hover: #7e22ce;
+  --accent-light: #a855f7;
 
   p {
-    @apply text-slate-600 text-base sm:text-lg leading-relaxed;
+    @apply text-zinc-600 text-base sm:text-lg leading-relaxed;
   }
 
   .glass-panel {
-    @apply bg-white/70 backdrop-blur-md border border-slate-200/50 shadow-xl;
+    @apply bg-white/90 backdrop-blur-xl border border-zinc-200/50 shadow-2xl;
   }
 }
 
 /* Apply background to html and body based on theme */
 html.light {
-  background-color: #f8fafc;
+  background-color: #ffffff;
 }
 
 html.light body {
-  background-color: #f8fafc;
+  background-color: #ffffff;
 }
 
 html.dark {
-  background-color: #0f172a;
+  background-color: #09090b;
 }
 
 html.dark body {
-  background-color: #0f172a;
+  background-color: #09090b;
 }
 
 @layer components {
   .btn-primary {
-    @apply px-6 py-3 rounded-full font-semibold text-white bg-[var(--accent)] 
+    @apply px-8 py-4 rounded-lg font-semibold text-white bg-[var(--accent)] 
     hover:bg-[var(--accent-hover)] transition-all duration-300 
-    shadow-lg hover:shadow-[0_0_15px_var(--accent)] hover:-translate-y-1 active:scale-95;
+    shadow-lg hover:shadow-[0_0_20px_var(--accent)] hover:scale-105 active:scale-95;
   }
 
   .header-link {
@@ -94,15 +98,15 @@ html.dark body {
   }
 
   .section-title {
-    @apply text-3xl md:text-5xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[var(--accent)];
+    @apply text-4xl md:text-6xl font-bold mb-6 text-left bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] via-[var(--accent)] to-[var(--accent-light)];
   }
 
   .card {
-    @apply glass-panel rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
+    @apply glass-panel rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border border-[var(--bg-tertiary)];
   }
 
   .input-primary {
-    @apply w-full bg-[var(--bg-secondary)] border border-slate-700 rounded-xl px-4 py-3 
+    @apply w-full bg-[var(--bg-secondary)] border border-zinc-300 dark:border-zinc-800 rounded-lg px-4 py-3 
     text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] 
     focus:border-transparent transition-all duration-300;
   }
@@ -110,9 +114,27 @@ html.dark body {
 
 /* Utilities */
 .text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[var(--accent)];
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] via-[var(--accent)] to-[var(--accent-light)];
 }
 
 .hover-pause:hover {
   animation-play-state: paused;
+}
+
+/* Modern Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-hover);
 }

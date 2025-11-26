@@ -24,38 +24,30 @@ export const Capabilities = () => {
   };
 
   return (
-    <section id="capabilities" className="py-20 lg:py-32 relative">
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <motion.h2 
+    <section id="capabilities" className="py-24 lg:py-32 relative overflow-hidden">
+      {/* Background Decoration */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-1/4 right-0 w-96 h-96 bg-[var(--accent)]/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 md:px-12">
+        <div className="max-w-6xl mx-auto mb-16">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[var(--accent)] font-bold tracking-wider uppercase mb-4 text-sm md:text-base"
           >
-            My Skills
-          </motion.h2>
-          <motion.h3 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="section-title"
-          >
-            Capabilities
-          </motion.h3>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-[var(--text-secondary)] text-lg leading-relaxed"
-          >
-            {userInfo.descCapabilities}
-          </motion.p>
+            <div className="inline-block px-4 py-2 rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/30 text-[var(--accent)] text-sm font-semibold mb-6">
+              My Skills
+            </div>
+            <h2 className="section-title mb-6">Capabilities</h2>
+            <p className="text-[var(--text-secondary)] text-lg leading-relaxed max-w-3xl">
+              {userInfo.descCapabilities}
+            </p>
+          </motion.div>
         </div>
 
-        <div className="flex flex-col gap-16">
+        <div className="max-w-6xl mx-auto flex flex-col gap-16">
           {/* Tech Stack */}
           <div>
             <motion.h4 
