@@ -32,7 +32,7 @@ export const Footer = () => {
     
     e.currentTarget.reset();
     try {
-      const response = await axios.post(`${server_url}/api/contact`, data);
+      const response = await axios.post(`${server_url}/api/contact`, data,{timeout:60000});
       console.log("server:",response.data);
       toast.success("Message sent successfully!");
     } catch (error) {

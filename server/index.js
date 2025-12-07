@@ -10,12 +10,13 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Configure CORS to accept requests from any frontend
+// Configure CORS to accept requests from any frontend - completely permissive
 app.use(cors({
-  origin: '*', // Allow all origins
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow all common methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allow common headers
-  credentials: false // Set to false when using wildcard origin
+  origin: '*',
+  methods: '*',
+  allowedHeaders: '*',
+  exposedHeaders: '*',
+  credentials: false
 }));
 
 app.use(express.json());
@@ -56,7 +57,10 @@ app.post("/api/contact", async (req, res) => {
     ]);
 
     console.log("Email sent to both owner and user");
-    res.status(200).send({ message: "Message sent successfully!" });
+    res.status(200).send(
+      { message: "Message sent successfully!" , details: { ownerResult, userResult } }
+   
+    );
   } catch (error) {
     console.error("Error sending email:", error);
     res
