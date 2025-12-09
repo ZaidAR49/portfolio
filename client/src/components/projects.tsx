@@ -187,7 +187,7 @@ const ProjectCarousel = ({ project }: { project: typeof projects[0] }) => {
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={1}
-            onDragEnd={(e, { offset, velocity }) => {
+            onDragEnd={(_, { offset, velocity }) => {
               const swipe = swipePower(offset.x, velocity.x);
 
               if (swipe < -swipeConfidenceThreshold) {
@@ -215,6 +215,24 @@ const ProjectCarousel = ({ project }: { project: typeof projects[0] }) => {
           >
             <FaChevronRight size={20} />
           </button>
+        </div>
+
+        {/* Pagination Dots */}
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+          {project.image.map((_, index) => (
+            <button
+              key={index}
+              onClick={(e) => {
+                e.stopPropagation();
+                setPage([page + (index - imageIndex), index > imageIndex ? 1 : -1]);
+              }}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === imageIndex 
+                  ? "bg-[var(--accent)] w-6" 
+                  : "bg-gray-500/50 hover:bg-white/80"
+              }`}
+            />
+          ))}
         </div>
       </div>
     </div>

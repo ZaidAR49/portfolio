@@ -30,7 +30,7 @@ export const projects = [
         state: "completed",
         title: "Portfolio Website",
         description: `This portfolio website showcases my projects and skills, built with React and Tailwind CSS. It features a responsive design, smooth animations, and a user-friendly interface. The site includes sections for project details, skills, and contact information, providing a comprehensive overview of my work.`,
-        image: ["https://res.cloudinary.com/dxa0aylow/image/upload/v1753981954/portfolio1_kijyrl.jpg", "https://res.cloudinary.com/dxa0aylow/image/upload/v1753981955/portfolio2_admuqr.jpg", "https://res.cloudinary.com/dxa0aylow/image/upload/v1753981955/portfolio4_t2xk02.jpg"],
+        image: ["https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p3_nrqoxp.jpg", "https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p2_etwj2t.jpg", "https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p1_fngjm1.jpg"],
         role: "full-stack developer",
         github: "https://github.com/ZaidAR49/portfolio.git",
         year: "2025",

@@ -124,9 +124,9 @@ export const Header = () => {
           
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors p-1"
+            className="p-2 rounded-full bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-sm hover:text-[var(--accent)] transition-colors"
           >
-            {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+            {isMenuOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
           </button>
         </div>
       </div>
