@@ -4,7 +4,6 @@ import {
   SiTailwindcss,
   SiJavascript,
   SiTypescript,
-  SiSharp,
   SiPostman,
   SiCypress,
   SiFigma,
@@ -17,23 +16,22 @@ export const userInfo = {
   name: "Zaid Radaideh",
   role: "Software Engineer",
   email: "zaidradaideh.dev@gmail.com",
-  descHero: "focused on creating beautiful, high-performance web applications.",
-  titleAbout: `I am a software engineer in Jordan With a foundation in engineering and a passion for technology, 
-  I build end-to-end web applications that are fast, accessible, and scalable.`,
+  descHero: "focused on creating reliable web applications and ensuring software quality.",
+  titleAbout: `I am a software engineer in Jordan. With a foundation in engineering and a passion for technology, 
+  I build functional end-to-end web applications and ensure they meet high quality standards.`,
   github: "https://github.com/ZaidAR49",
   linkedin: "https://www.linkedin.com/in/zaid-radaideh/",
   picture: "https://res.cloudinary.com/dxa0aylow/image/upload/v1756738759/me_gdeyxa.png",
   descAbout: (
     <>
       I’m a <strong>Jordanian web developer</strong> passionate about building
-      high-quality, user-centric web applications. I specialize in creating
-      efficient and scalable solutions using modern technologies like
+      functional and user-friendly web applications. I specialize in <strong>Full Stack Development</strong> and 
+      <strong> Quality Assurance</strong> using modern technologies like
       <strong> React</strong>,<strong> Node.js</strong>,
       <strong> PostgreSQL</strong>, and<strong>Tailwind CSS</strong>. With a
       strong foundation in
       <strong> both front-end and back-end development</strong>, I strive to
-      write clean, maintainable code and continuously improve user experience
-      through thoughtful design and performance optimization. I hold a degree
+      write clean, maintainable code and ensure software reliability through testing. I hold a degree
       from <strong>Jordan University of Science and Technology</strong> , where
       I developed my technical skills and deepened my passion for
       <strong> full-stack development</strong>
@@ -43,7 +41,7 @@ export const userInfo = {
   dgree: "Jordan University of sinace and technology in software engineering",
   resuma:
     "https://drive.google.com/file/d/1w-haVJ34sLI3PbON9ZY6vPxy-Swjo0wV/view?usp=sharing",
-  descCapabilities: `I specialize in building real-world applications through hands-on, practical projects. My core strengths lie in full-stack development, with a focus on writing clean, maintainable, and scalable code.
+  descCapabilities: `I specialize in building real-world applications through hands-on, practical projects. My core strengths lie in full-stack development and quality assurance, with a focus on writing clean and maintainable code.
 
 I am always eager to expand my skill set and stay current with modern technologies. So far, I’ve gained solid experience with tools and frameworks.`,
       
@@ -55,7 +53,7 @@ experience :[
     companey:"ARD(Arabia weather)",
     desc: ` Ard Group (ArabiaWeather) is a leading weather technology company in the Middle East, known for its
      ArabiaWeather app that delivers hyper-localized forecasts and real-time alerts. My role was to test the app’s 
-     functionality, usability, and performance to ensure a smooth user experience and accurate delivery of weather data.`
+     functionality, usability, and performance to ensure a smooth user experience and accurate delivery of weather data. I also built and worked on Appium automations.`
 
   },
 
@@ -90,7 +88,7 @@ desc:`As a recent computer science graduate, I gained hands-on experience throug
     { icon: <SiTailwindcss />, name: "Tailwind CSS" },
     { icon: <SiJavascript />, name: "JavaScript" },
     { icon: <SiTypescript />, name: "TypeScript" },
-    {icon : <SiSharp />, name: "C#"},
+    
   ],
   toolsAndOthers:[
     {icon: <SiGit/>, name:"Git"},

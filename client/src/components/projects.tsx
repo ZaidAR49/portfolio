@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Projects = () => {
+  projects.sort((a, b) => a.order - b.order);
   const [imageIndices, setImageIndices] = useState(() => projects.map(() => 0));
 
   const handleImageChange = (direction: "next" | "prev", projectIndex: number) => {
