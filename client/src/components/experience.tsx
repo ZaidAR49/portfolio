@@ -47,17 +47,36 @@ export const Experience = () => {
 
                 {/* Content */}
                 <div className="md:w-1/2 px-0 md:px-20">
-                  <div className="glass-panel p-12 rounded-[2rem] hover:border-[var(--accent)]/50 transition-colors duration-300 group">
-                    <div className="flex items-center gap-5 mb-8 text-[var(--accent)]">
-                      {exp.role.toLowerCase().includes("student") || exp.role.toLowerCase().includes("degree") ? (
-                        <FaGraduationCap size={32} />
-                      ) : (
-                        <FaBriefcase size={32} />
-                      )}
-                      <span className="text-lg font-bold tracking-wider uppercase">
-                        {exp.peroid}
-                      </span>
+                  <div className="relative group">
+                    {/* Animated Border - Masked to be hollow */}
+                    <div 
+                      className="absolute -inset-[3px] rounded-[2rem] z-0 hidden lg:block"
+                      style={{
+                        mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                        maskComposite: 'exclude',
+                        WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                        WebkitMaskComposite: 'xor',
+                        padding: '3px'
+                      }}
+                    >
+                       <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                        className="w-full h-full bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,var(--accent)_90deg,transparent_180deg,var(--accent)_270deg,transparent_360deg)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-[2]"
+                      />
                     </div>
+
+                    <div className="glass-panel p-12 rounded-[2rem] hover:border-[var(--accent)]/50 transition-colors duration-300 relative z-10">
+                      <div className="flex items-center gap-5 mb-8 text-[var(--accent)]">
+                        {exp.role.toLowerCase().includes("student") || exp.role.toLowerCase().includes("degree") ? (
+                          <FaGraduationCap size={32} />
+                        ) : (
+                          <FaBriefcase size={32} />
+                        )}
+                        <span className="text-lg font-bold tracking-wider uppercase">
+                          {exp.peroid}
+                        </span>
+                      </div>
 
                     <h4 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-4 group-hover:text-[var(--accent)] transition-colors">
                       {exp.role}
@@ -72,6 +91,7 @@ export const Experience = () => {
                     <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
                       {exp.desc}
                     </p>
+                  </div>
                   </div>
                 </div>
                 

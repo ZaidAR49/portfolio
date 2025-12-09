@@ -73,16 +73,36 @@ export const Hero = () => {
       </div>
 
       {/* Tech Stack Marquee */}
-      <div className="w-full mt-20 mb-10 overflow-hidden py-8 bg-[var(--bg-secondary)]/30 backdrop-blur-sm border-y border-[var(--text-secondary)]/10">
-        <div className="relative w-full flex overflow-x-hidden">
-          <div className="animate-marquee hover-pause whitespace-nowrap flex items-center gap-16 px-8">
-            {/* Double the list for seamless loop */}
-            {[...userInfo.techIcons, ...userInfo.techIcons, ...userInfo.techIcons].map((tech, index) => (
-              <div key={index} className="flex flex-col items-center gap-2 opacity-80 hover:opacity-100 transition-opacity duration-300">
-                <span className="text-3xl sm:text-4xl text-[var(--text-primary)]">{tech.icon}</span>
-                <span className="text-xs font-medium text-[var(--text-secondary)]">{tech.name}</span>
-              </div>
-            ))}
+      <div className="w-full mt-20 mb-10 relative group">
+        {/* Animated Border - Top & Bottom only */}
+         <div 
+            className="absolute -inset-y-[1px] inset-x-0 z-0 pointer-events-none"
+            style={{
+              mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+              maskComposite: 'exclude',
+              WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+              WebkitMaskComposite: 'xor',
+              padding: '2px 0'
+            }}
+          >
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 300, repeat: Infinity, ease: "linear" }}
+              className="w-full h-full bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,var(--accent)_90deg,transparent_180deg,var(--accent)_270deg,transparent_360deg)] opacity-60 group-hover:opacity-100 transition-opacity duration-500 scale-[2] origin-center"
+            />
+          </div>
+
+        <div className="w-full overflow-hidden py-8 bg-[var(--bg-secondary)]/30 backdrop-blur-sm relative z-10">
+          <div className="relative w-full flex overflow-x-hidden">
+            <div className="animate-marquee hover-pause whitespace-nowrap flex items-center gap-16 px-8">
+              {/* Double the list for seamless loop */}
+              {[...userInfo.techIcons, ...userInfo.techIcons, ...userInfo.techIcons].map((tech, index) => (
+                <div key={index} className="flex flex-col items-center gap-2 opacity-80 hover:opacity-100 transition-opacity duration-300">
+                  <span className="text-3xl sm:text-4xl text-[var(--text-primary)]">{tech.icon}</span>
+                  <span className="text-xs font-medium text-[var(--text-secondary)]">{tech.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

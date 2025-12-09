@@ -107,11 +107,30 @@ export const Footer = () => {
             viewport={{ once: true }}
             className="flex-1 max-w-2xl"
           >
-            <form
-              className="glass-panel p-8 rounded-3xl flex flex-col gap-6"
-              onSubmit={handleSubmit}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="relative group">
+              {/* Animated Border - Masked to be hollow */}
+              <div 
+                className="absolute -inset-[3px] rounded-3xl z-0 pointer-events-none"
+                style={{
+                  mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  maskComposite: 'exclude',
+                  WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                  WebkitMaskComposite: 'xor',
+                  padding: '3px'
+                }}
+              >
+                  <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
+                  className="w-full h-full bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,var(--accent)_90deg,transparent_180deg,var(--accent)_270deg,transparent_360deg)] opacity-40 group-hover:opacity-100 transition-opacity duration-500 scale-[2]"
+                />
+              </div>
+
+              <form
+                className="glass-panel p-8 rounded-3xl flex flex-col gap-6 relative z-10"
+                onSubmit={handleSubmit}
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="name"
@@ -191,6 +210,7 @@ export const Footer = () => {
                 <FaPaperPlane className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </button>
             </form>
+            </div>
           </motion.div>
         </div>
 

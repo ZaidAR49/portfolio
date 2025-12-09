@@ -5,36 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export const Projects = () => {
   projects.sort((a, b) => a.order - b.order);
-  const [imageIndices, setImageIndices] = useState(() => projects.map(() => 0));
-
-  const handleImageChange = (direction: "next" | "prev", projectIndex: number) => {
-    setImageIndices((prevIndices) => {
-      const newIndices = [...prevIndices];
-      const numImages = projects[projectIndex].image.length;
-      if (direction === "next") {
-        newIndices[projectIndex] = (newIndices[projectIndex] + 1) % numImages;
-      } else {
-        newIndices[projectIndex] =
-          newIndices[projectIndex] === 0
-            ? numImages - 1
-            : newIndices[projectIndex] - 1;
-      }
-      return newIndices;
-    });
-  };
-
-  const stateColor = (state: string) => {
-    switch (state.toLowerCase()) {
-      case "completed":
-        return "bg-emerald-500/20 text-emerald-400 border-emerald-500/50";
-      case "in progress":
-        return "bg-amber-500/20 text-amber-400 border-amber-500/50";
-      case "suspend":
-        return "bg-rose-500/20 text-rose-400 border-rose-500/50";
-      default:
-        return "bg-slate-500/20 text-slate-400 border-slate-500/50";
-    }
-  };
 
   return (
     <section id="projects" className="py-20 lg:py-32 relative overflow-hidden">
@@ -82,45 +52,7 @@ export const Projects = () => {
               className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-10 lg:gap-16 items-center`}
             >
               {/* Project Image Carousel */}
-              <div className="w-full lg:w-1/2 relative group">
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--bg-secondary)] aspect-video bg-[var(--bg-secondary)]">
-                  <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-md z-10 ${stateColor(project.state)}`}>
-                    {project.state}
-                  </div>
-                  
-                  <AnimatePresence mode="wait">
-                    <motion.img
-                      key={imageIndices[index]}
-                      src={project.image[imageIndices[index]]}
-                      alt={project.title}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="w-full h-full object-cover"
-                    />
-                  </AnimatePresence>
-
-                  {/* Carousel Controls */}
-                  <div className="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button
-                      onClick={(e) => { e.stopPropagation(); handleImageChange("prev", index); }}
-                      className="p-2 rounded-full bg-black/50 text-white hover:bg-[var(--accent)] transition-colors backdrop-blur-sm"
-                    >
-                      <FaChevronLeft size={20} />
-                    </button>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); handleImageChange("next", index); }}
-                      className="p-2 rounded-full bg-black/50 text-white hover:bg-[var(--accent)] transition-colors backdrop-blur-sm"
-                    >
-                      <FaChevronRight size={20} />
-                    </button>
-                  </div>
-                </div>
-                
-                {/* Decorative Elements */}
-                <div className={`absolute -bottom-4 -right-4 w-full h-full border-2 border-[var(--accent)]/20 rounded-2xl -z-10 transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2`} />
-              </div>
+              <ProjectCarousel project={project} />
 
               {/* Project Details */}
               <div className="w-full lg:w-1/2 flex flex-col gap-6">
@@ -141,10 +73,16 @@ export const Projects = () => {
                     <span className="block text-xs uppercase tracking-wider text-[var(--text-secondary)] mb-1">Role</span>
                     <span className="font-semibold text-[var(--text-primary)]">{project.role}</span>
                   </div>
-                  <div className="col-span-2">
-                    <span className="block text-xs uppercase tracking-wider text-[var(--text-secondary)] mb-1">Technologies</span>
-                    <span className="font-semibold text-[var(--accent)]">{project.tech}</span>
+                  <div >
+                <div>   
+                   <span className="block text-xs uppercase tracking-wider text-[var(--text-secondary)] mb-1">Technologies</span>
+                    <span className="font-semibold text-[var(--accent)]">{project.tech}</span></div>
                   </div>
+                  <div >
+                    <span className="block text-xs uppercase tracking-wider text-[var(--text-secondary)] mb-1">Client</span>
+                    <span className="font-semibold text-[var(--text-primary)]">{project.client}</span>
+                  </div>
+                  
                 </div>
 
                 <div className="flex gap-4 mt-2">
@@ -169,6 +107,117 @@ export const Projects = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+const variants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    opacity: 0
+  }),
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1
+  },
+  exit: (direction: number) => ({
+    zIndex: 0,
+    x: direction < 0 ? "100%" : "-100%",
+    opacity: 0
+  })
+};
+
+const ProjectCarousel = ({ project }: { project: typeof projects[0] }) => {
+  const [[page, direction], setPage] = useState([0, 0]);
+
+  // We only have 3 images, but we want infinite paging
+  const imageIndex = Math.abs(page % project.image.length);
+
+  const paginate = (newDirection: number) => {
+    setPage([page + newDirection, newDirection]);
+  };
+
+  const stateColor = (state: string) => {
+    switch (state.toLowerCase()) {
+      case "completed":
+        return "bg-emerald-500/20 text-emerald-400 border-emerald-500/50";
+      case "in progress":
+        return "bg-amber-500/20 text-amber-400 border-amber-500/50";
+      case "suspend":
+        return "bg-rose-500/20 text-rose-400 border-rose-500/50";
+      default:
+        return "bg-slate-500/20 text-slate-400 border-slate-500/50";
+    }
+  };
+
+  const swipeConfidenceThreshold = 10000;
+  const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
+  };
+
+  return (
+    <div className="w-full lg:w-1/2 relative group">
+      {/* Animated Border */}
+      <div className="absolute -inset-1 rounded-2xl overflow-hidden z-0">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+          className="w-full h-[150%] bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,var(--accent)_90deg,transparent_180deg,var(--accent)_270deg,transparent_360deg)] absolute top-[-25%] left-0 right-0 mx-auto opacity-50 group-hover:opacity-100 transition-opacity duration-500"
+        />
+      </div>
+
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--bg-secondary)] aspect-video bg-[var(--bg-secondary)] z-10">
+        <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-md z-10 ${stateColor(project.state)}`}>
+          {project.state}
+        </div>
+        
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+          <motion.img
+            key={page}
+            src={project.image[imageIndex]}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "spring", stiffness: 300, damping: 30 },
+              opacity: { duration: 0.2 }
+            }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={1}
+            onDragEnd={(e, { offset, velocity }) => {
+              const swipe = swipePower(offset.x, velocity.x);
+
+              if (swipe < -swipeConfidenceThreshold) {
+                paginate(1);
+              } else if (swipe > swipeConfidenceThreshold) {
+                paginate(-1);
+              }
+            }}
+            className="absolute w-full h-full object-cover cursor-grab active:cursor-grabbing"
+            alt={project.title}
+          />
+        </AnimatePresence>
+
+        {/* Carousel Controls */}
+        <div className="absolute inset-0 flex items-center justify-between px-4 transition-opacity duration-300 z-10 pointer-events-none">
+          <button
+            onClick={(e) => { e.stopPropagation(); paginate(-1); }}
+            className="p-2 rounded-full bg-black/50 text-white hover:bg-[var(--accent)] transition-colors backdrop-blur-sm pointer-events-auto"
+          >
+            <FaChevronLeft size={20} />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); paginate(1); }}
+            className="p-2 rounded-full bg-black/50 text-white hover:bg-[var(--accent)] transition-colors backdrop-blur-sm pointer-events-auto"
+          >
+            <FaChevronRight size={20} />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
