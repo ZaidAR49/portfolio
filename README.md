@@ -109,7 +109,7 @@ those used for contact us section
 - Add new projects in `client/src/data/projects-data.ts`
 
 ### Note 
-- You can have that free Deployment for the server (backend) By using Google Apps Script and the God is in the root ./google-apps-script
+- You can have that free Deployment for the server (backend) By using Google Apps Script and the God is in the root ./google-apps-script in the main branch
 
 ## 👨‍💻 Author
 
