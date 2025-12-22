@@ -108,7 +108,8 @@ those used for contact us section
 - Modify styling in `client/src/index.css`
 - Add new projects in `client/src/data/projects-data.ts`
 
-This project is open source and available under the [MIT License](LICENSE).
+### Note 
+- You can have that free Deployment for the server (backend) By using Google Apps Script and the God is in the root ./google-apps-script
 
 ## 👨‍💻 Author
 
