@@ -1,4 +1,4 @@
-import { userInfo } from "../data/about-data";
+import { userInfo,skillsData } from "../data/about-data";
 import { motion } from "framer-motion";
 
 export const Capabilities = () => {
@@ -74,7 +74,7 @@ export const Capabilities = () => {
               viewport={{ once: true }}
               className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6"
             >
-              {userInfo.techIcons.map((tech, index) => (
+              {skillsData.main.map((tech, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
@@ -92,7 +92,7 @@ export const Capabilities = () => {
           </div>
 
           {/* Tools & Others */}
-          {userInfo.toolsAndOthers && userInfo.toolsAndOthers.length > 0 && (
+          {skillsData.Secondary && skillsData.Secondary.length > 0 && (
             <div>
               <motion.h4 
                 initial={{ opacity: 0, x: -20 }}
@@ -110,7 +110,7 @@ export const Capabilities = () => {
                 viewport={{ once: true }}
                 className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6"
               >
-                {userInfo.toolsAndOthers.map((item, index) => (
+                {skillsData.Secondary.map((item, index) => (
                   <motion.div
                     key={index}
                     variants={itemVariants}

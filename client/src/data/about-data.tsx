@@ -14,7 +14,7 @@ import {
 
 export const userInfo = {
   name: "Zaid Radaideh",
-  role: "Software Engineer",
+  jobTitle: "Software Engineer",
   email: "zaidradaideh.dev@gmail.com",
   descHero: "focused on creating reliable web applications and ensuring software quality.",
   titleAbout: `I am a software engineer in Jordan. With a foundation in engineering and a passion for technology, 
@@ -31,22 +31,22 @@ export const userInfo = {
       <strong> PostgreSQL</strong>, and<strong>Tailwind CSS</strong>. With a
       strong foundation in
       <strong> both front-end and back-end development</strong>, I strive to
-      write clean, maintainable code and ensure software reliability through testing. I hold a degree
+      write clean, maintainable code and ensure software reliability through testing. I hold a Bachelor’s degree in Software Engineering
       from <strong>Jordan University of Science and Technology</strong> , where
       I developed my technical skills and deepened my passion for
       <strong> full-stack development</strong>
     </>
   ),
 
-  dgree: "Jordan University of sinace and technology in software engineering",
+  
   resuma:
     "https://drive.google.com/file/d/1w-haVJ34sLI3PbON9ZY6vPxy-Swjo0wV/view?usp=sharing",
   descCapabilities: `I specialize in building real-world applications through hands-on, practical projects. My core strengths lie in full-stack development and quality assurance, with a focus on writing clean and maintainable code.
 
 I am always eager to expand my skill set and stay current with modern technologies. So far, I’ve gained solid experience with tools and frameworks.`,
-      
-experience :[
+};
 
+export const experience = [
     {
     peroid: "Sep 2025 - present",
     role : " Internship in Quality Assurance",
@@ -78,8 +78,10 @@ desc:`As a recent computer science graduate, I gained hands-on experience throug
 
   },
   
-],
-      techIcons : [
+];
+
+export const skillsData = {
+      main : [
     { icon: <FaReact />, name: "React" },
     { icon: <FaNodeJs />, name: "Node.js" },
     { icon: <SiPostgresql />, name: "PostgreSQL" },
@@ -90,7 +92,7 @@ desc:`As a recent computer science graduate, I gained hands-on experience throug
     { icon: <SiTypescript />, name: "TypeScript" },
     
   ],
-  toolsAndOthers:[
+  Secondary:[
     {icon: <SiGit/>, name:"Git"},
     {icon: <SiGithub/>,name:"GitHub"},
     {icon:<SiCypress/>,name:"Cypress"},

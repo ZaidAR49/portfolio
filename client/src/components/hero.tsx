@@ -1,4 +1,4 @@
-import { userInfo } from "../data/about-data";
+import { userInfo,skillsData } from "../data/about-data";
 import { motion } from "framer-motion";
 import { FaArrowDown } from "react-icons/fa";
 
@@ -20,7 +20,7 @@ export const Hero = () => {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-[var(--accent)] font-bold tracking-wider uppercase mb-4 text-sm md:text-base">
-              Software Engineer
+              {userInfo.jobTitle}
             </h2>
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 leading-tight">
               Hi, I'm <br />
@@ -96,7 +96,7 @@ export const Hero = () => {
           <div className="relative w-full flex overflow-x-hidden">
             <div className="animate-marquee hover-pause whitespace-nowrap flex items-center gap-16 px-8">
               {/* Double the list for seamless loop */}
-              {[...userInfo.techIcons, ...userInfo.techIcons, ...userInfo.techIcons].map((tech, index) => (
+              {[...skillsData.main, ...skillsData.main, ...skillsData.main].map((tech, index) => (
                 <div key={index} className="flex flex-col items-center gap-2 opacity-80 hover:opacity-100 transition-opacity duration-300">
                   <span className="text-3xl sm:text-4xl text-[var(--text-primary)]">{tech.icon}</span>
                   <span className="text-xs font-medium text-[var(--text-secondary)]">{tech.name}</span>

@@ -1,4 +1,4 @@
-import { userInfo } from "../data/about-data";
+import {experience } from "../data/about-data";
 import { motion } from "framer-motion";
 import { FaBriefcase, FaGraduationCap } from "react-icons/fa";
 
@@ -31,7 +31,7 @@ export const Experience = () => {
           <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-1 bg-[var(--text-secondary)]/20" />
 
           <div className="flex flex-col gap-24">
-            {userInfo.experience.map((exp, index) => (
+            {experience.map((exp, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 50 }}
