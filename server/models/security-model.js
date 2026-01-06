@@ -1,0 +1,22 @@
+import sql from "../config/database-conection.js";
+
+export const resetSecurityCode = async (securityCode) => {
+    try {
+        await sql.from("secret_key").delete().neq('id', 0);
+        await sql.from("secret_key").insert({ secret: securityCode });
+
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const getStoredSecurityCode = async () => {
+    try {
+        const result = await sql.from("secret_key").select("secret").single();
+        console.log("Retrieved security code from database:", result.data.secret);
+        return result.data.secret;
+    } catch (error) {
+        console.error(error);
+
+    }
+}

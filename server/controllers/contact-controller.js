@@ -6,6 +6,7 @@ import {
 } from "../templates/email-template.js";
 import dotenv from "dotenv";
 import crypto from "crypto";
+import { resetSecurityCode } from "../models/security-model.js";
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
@@ -56,7 +57,8 @@ export const contactus = async (req, res) => {
 export const sendsecuritycode = async (req, res) => {
     try {
         const securityCode = crypto.randomBytes(16).toString("hex");
-
+        await resetSecurityCode(securityCode);
+        console.log("securityCode stored in database:");
         const emailToOwner = {
             from: process.env.EMAIL,
             to: process.env.EMAIL, // Sending to owner

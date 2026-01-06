@@ -1,8 +1,9 @@
-
+import { getStoredSecurityCode } from "../models/security-model.js";
 export const checksecuritycode = async (req, res) => {
     try {
         const { securityCode } = req.body;
-        if (securityCode) {
+        const storedSecurityCode = await getStoredSecurityCode();
+        if (securityCode === storedSecurityCode) {
             console.log("Security code correct");
             res.status(200).json({ message: "Security code correct" });
 

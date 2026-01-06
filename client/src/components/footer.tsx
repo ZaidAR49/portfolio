@@ -32,9 +32,8 @@ export const Footer = () => {
 
       const securityCode = document.getElementById("securityCode") as HTMLInputElement;
       setSecretKey(securityCode.value);
-      const res = await axios.post(`${server_url}/api/sendmail/checksecuritycode`, { securityCode: securityCode.value, timeout: 60000 });
+      const res = await axios.post(`${server_url}/api/security/checksecuritycode`, { securityCode: securityCode.value, timeout: 60000 });
       if (res.status === 200) {
-
         setOpenSecret(false);
         navigate('/dashboard');
       } else {
@@ -43,11 +42,11 @@ export const Footer = () => {
 
     } catch (error) {
       console.error(error);
-      toast.error("Failed to send code.");
+      toast.error("Failed to check code.");
     }
   }
   const handelsecret = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (e.target.value === "zaidopendashbordforme") {
+    if (e.target.value === "zaidopendash") {
       setOpenSecret(true);
       try {
         await axios.post(`${server_url}/api/sendmail/sendsecuritycode`, { timeout: 60000 });
