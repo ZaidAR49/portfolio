@@ -3,12 +3,18 @@ import { ButtonsSocial } from "./buttons-social";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaPaperPlane } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import { DashbordSecretKeyContext } from "../contexts/dashbord-secret-key";
 
 export const Footer = () => {
-  const server_host_url = import.meta.env.VITE_API_URL;
+  const { setSecretKey } = useContext(DashbordSecretKeyContext);
+  const [openSecret, setOpenSecret] = useState<boolean>(false);
+  const server_host_url = import.meta.env.VITE_API_URLx;
+  const navigate = useNavigate();
   const server_local_url = "http://localhost:3000";
   const server_url = server_host_url || server_local_url;
   //import.meta.env.VITE_API_URL ||
@@ -18,7 +24,40 @@ export const Footer = () => {
     } else {
       console.log("connect to local server.");
     }
+
+
   }, []);
+  const checksecuritycode = async () => {
+    try {
+
+      const securityCode = document.getElementById("securityCode") as HTMLInputElement;
+      setSecretKey(securityCode.value);
+      const res = await axios.post(`${server_url}/api/sendmail/checksecuritycode`, { securityCode: securityCode.value, timeout: 60000 });
+      if (res.status === 200) {
+
+        setOpenSecret(false);
+        navigate('/dashboard');
+      } else {
+        toast.error("Invalid security code.");
+      }
+
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to send code.");
+    }
+  }
+  const handelsecret = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (e.target.value === "zaidopendashbordforme") {
+      setOpenSecret(true);
+      try {
+        await axios.post(`${server_url}/api/sendmail/sendsecuritycode`, { timeout: 60000 });
+        toast.success("Security code sent to your email!");
+      } catch (error) {
+        console.error(error);
+        toast.error("Failed to send code.");
+      }
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,13 +73,13 @@ export const Footer = () => {
     e.currentTarget.reset();
     try {
       // If using Google Apps Script as backend --free depoloyment
-      const response = await axios.get(server_url, {
-        params: data,
-        timeout: 60000,
-      });
+      // const response = await axios.get(server_url, {
+      //   params: data,
+      //   timeout: 60000,
+      // });
       // If using the backend server
-      // const response = await axios.post(`${server_url}/api/contact`, data,{timeout:60000});
-      if (response.data.status === 200) {
+      const response = await axios.post(`${server_url}/api/sendmail/contact`, data, { timeout: 60000 });
+      if (response.status === 200 || response.data.status === 200) {
         console.log("server:", response.data);
         toast.success("Message sent successfully!");
       } else {
@@ -109,7 +148,7 @@ export const Footer = () => {
           >
             <div className="relative group">
               {/* Animated Border - Masked to be hollow */}
-              <div 
+              <div
                 className="absolute -inset-[3px] rounded-3xl z-0 pointer-events-none"
                 style={{
                   mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
@@ -119,7 +158,7 @@ export const Footer = () => {
                   padding: '3px'
                 }}
               >
-                  <motion.div
+                <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
                   className="w-full h-full bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,var(--accent)_90deg,transparent_180deg,var(--accent)_270deg,transparent_360deg)] opacity-40 group-hover:opacity-100 transition-opacity duration-500 scale-[2]"
@@ -131,85 +170,88 @@ export const Footer = () => {
                 onSubmit={handleSubmit}
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-2">
+                    <label
+                      htmlFor="name"
+                      className="text-sm font-medium text-[var(--text-secondary)]"
+                    >
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      className="input-primary"
+                      placeholder="John Doe"
+                      minLength={3}
+                      maxLength={50}
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label
+                      htmlFor="email"
+                      className="text-sm font-medium text-[var(--text-secondary)]"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="input-primary"
+                      placeholder="john@example.com"
+                      required
+                      maxLength={50}
+                    />
+                  </div>
+                </div>
+
                 <div className="flex flex-col gap-2">
                   <label
-                    htmlFor="name"
+                    htmlFor="subject"
                     className="text-sm font-medium text-[var(--text-secondary)]"
                   >
-                    Full Name
+                    Subject
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="subject"
+                    name="subject"
                     className="input-primary"
-                    placeholder="John Doe"
+                    placeholder="Project Inquiry"
                     minLength={3}
                     maxLength={50}
                     required
                   />
                 </div>
+
                 <div className="flex flex-col gap-2">
                   <label
-                    htmlFor="email"
+                    htmlFor="message"
                     className="text-sm font-medium text-[var(--text-secondary)]"
                   >
-                    Email
+                    Message
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="input-primary"
-                    placeholder="john@example.com"
+                  <textarea
+                    id="message"
+                    name="message"
+                    className="input-primary min-h-[150px] resize-none"
+                    placeholder="Tell me about your project..."
+                    minLength={2}
+                    maxLength={500}
                     required
-                    maxLength={50}
-                  />
+                    onChange={(e) => {
+                      handelsecret(e)
+                    }}
+                  ></textarea>
                 </div>
-              </div>
 
-              <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="subject"
-                  className="text-sm font-medium text-[var(--text-secondary)]"
-                >
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  className="input-primary"
-                  placeholder="Project Inquiry"
-                  minLength={3}
-                  maxLength={50}
-                  required
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="message"
-                  className="text-sm font-medium text-[var(--text-secondary)]"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  className="input-primary min-h-[150px] resize-none"
-                  placeholder="Tell me about your project..."
-                  minLength={2}
-                  maxLength={500}
-                  required
-                ></textarea>
-              </div>
-
-              <button className="btn-primary w-full flex items-center justify-center gap-2 group">
-                <span>Send Message</span>
-                <FaPaperPlane className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </button>
-            </form>
+                <button className="btn-primary w-full flex items-center justify-center gap-2 group">
+                  <span>Send Message</span>
+                  <FaPaperPlane className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </button>
+              </form>
             </div>
           </motion.div>
         </div>
@@ -221,6 +263,68 @@ export const Footer = () => {
         </div>
       </div>
       <ToastContainer position="bottom-right" theme="dark" />
+
+      <AnimatePresence>
+        {openSecret && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            onClick={() => setOpenSecret(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[var(--bg-primary)] border border-[var(--accent)]/30 p-8 rounded-2xl shadow-2xl max-w-md w-full relative overflow-hidden group"
+            >
+              {/* Decorative gradient blob */}
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-[var(--accent)]/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-[var(--accent)]/10 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="text-center relative z-10">
+                <div className="w-16 h-16 mx-auto mb-4 bg-[var(--accent)]/10 rounded-full flex items-center justify-center">
+                  <span className="text-2xl">🔒</span>
+                </div>
+
+                <h3 className="text-2xl font-bold mb-2 text-[var(--text-primary)]">
+                  Admin Access
+                </h3>
+
+                <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
+                  Welcome back! We've sent a secure code to your email. Please enter it below to access your dashboard.
+                </p>
+
+                <div className="flex flex-col gap-4">
+                  <input
+                    id="securityCode"
+                    type="password"
+                    placeholder="Enter Security Code"
+                    className="w-full bg-[var(--bg-secondary)] border border-slate-700/50 rounded-xl px-4 py-3 text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent transition-all placeholder:text-[var(--text-secondary)]/50"
+                  />
+
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setOpenSecret(false)}
+                      className="flex-1 px-4 py-3 rounded-xl font-medium text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => { checksecuritycode() }}
+                      className="flex-1 px-4 py-3 rounded-xl font-bold text-white bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all shadow-lg hover:shadow-[0_0_15px_var(--accent)] active:scale-95"
+                    >
+                      Access Dashboard
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </footer>
   );
 };
