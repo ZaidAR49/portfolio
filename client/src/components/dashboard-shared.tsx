@@ -52,14 +52,17 @@ export const SectionHeader = ({ title, desc, onAdd }: any) => (
 // wait, the original SectionHeader used FaPlus. I should import it.
 // Also InputGroup was here.
 
-export const InputGroup = ({ label, value, onChange, type = "text" }: any) => (
+export const InputGroup = ({ label, value, onChange, type = "text", ...rest }: any) => (
     <div>
         <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2 uppercase tracking-wide text-[0.7rem]">{label}</label>
         <input
             type={type}
-            value={value || ''}
-            onChange={(e) => onChange(e.target.value)}
+            // Use key to force re-render if defaultValue changes significantly, though strictly not needed for uncontrolled
+            // If value is provided, it's controlled. If not, we allow defaultValue from ...rest or undefined.
+            {...(value !== undefined ? { value } : {})}
+            onChange={onChange ? (e) => onChange(e.target.value) : undefined}
             className="w-full bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl px-4 py-3 text-[var(--text-primary)] outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all"
+            {...rest}
         />
     </div>
 );

@@ -11,13 +11,13 @@ import {
 // Import new modular components
 import { Tab } from "../components/dashboard-shared";
 import { AnalysisDashboard } from "../components/dashboard-analysis";
-import { UserForm } from "../components/dashboard-user-info";
+import { UserInfo } from "../components/dashboard-user-info";
 import { ExperienceManager } from "../components/dashboard-experience";
 import { ProjectsManager } from "../components/dashboard-projects";
 import { SkillsManager } from "../components/dashboard-skills";
 
 // Import data
-import { userInfo, experience as initialExperience } from "../data/about-data";
+import { experience as initialExperience } from "../data/about-data";
 import { projects as initialProjects } from "../data/projects-data";
 import { skillsData } from "../data/about-data";
 
@@ -25,7 +25,7 @@ export const Dashboard = () => {
     const [activeTab, setActiveTab] = useState("analysis");
 
     // Local state for forms
-    const [userForm, setUserForm] = useState(userInfo);
+
     const [expList, setExpList] = useState(initialExperience);
     const [projList, setProjList] = useState(initialProjects);
     const [skills, setSkills] = useState(skillsData);
@@ -87,7 +87,7 @@ export const Dashboard = () => {
             case "analysis":
                 return <AnalysisDashboard />;
             case "user":
-                return <UserForm data={userForm} setData={setUserForm} onSubmit={handleUserUpdate} />;
+                return <UserInfo />;
             case "experience":
                 return <ExperienceManager
                     list={expList}
