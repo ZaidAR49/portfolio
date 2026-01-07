@@ -13,20 +13,9 @@ import { DashbordSecretKeyContext } from "../contexts/dashbord-secret-key";
 export const Footer = () => {
   const { setSecretKey } = useContext(DashbordSecretKeyContext);
   const [openSecret, setOpenSecret] = useState<boolean>(false);
-  const server_host_url = import.meta.env.VITE_API_URLx;
+  const server_url = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
-  const server_local_url = "http://localhost:3000";
-  const server_url = server_host_url || server_local_url;
-  //import.meta.env.VITE_API_URL ||
-  useEffect(() => {
-    if (server_host_url) {
-      console.log("connect to cloud server.");
-    } else {
-      console.log("connect to local server.");
-    }
 
-
-  }, []);
   const checksecuritycode = async () => {
     try {
 
