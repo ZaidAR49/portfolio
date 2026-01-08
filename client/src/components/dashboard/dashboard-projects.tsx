@@ -67,8 +67,8 @@ export const ProjectsManager = ({ list, onEdit, onDelete, onAdd, editIndex, isAd
                         <div className="relative z-10">
                             <div className="flex justify-between items-start mb-4">
                                 <span className={`px-2 py-1 text-xs rounded border ${item.state === 'completed' ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10' :
-                                        item.state === 'in progress' ? 'border-amber-500/30 text-amber-400 bg-amber-500/10' :
-                                            'border-slate-500/30 text-slate-400 bg-slate-500/10'
+                                    item.state === 'in progress' ? 'border-amber-500/30 text-amber-400 bg-amber-500/10' :
+                                        'border-slate-500/30 text-slate-400 bg-slate-500/10'
                                     }`}>
                                     {item.state}
                                 </span>

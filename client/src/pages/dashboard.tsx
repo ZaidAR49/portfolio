@@ -9,12 +9,12 @@ import {
 } from "react-icons/fa";
 
 // Import new modular components
-import { Tab } from "../components/dashboard-shared";
-import { AnalysisDashboard } from "../components/dashboard-analysis";
-import { UserInfo } from "../components/dashboard-user-info";
-import { ExperienceManager } from "../components/dashboard-experience";
-import { ProjectsManager } from "../components/dashboard-projects";
-import { SkillsManager } from "../components/dashboard-skills";
+import { Tab } from "../components/dashboard/dashboard-shared";
+import { AnalysisDashboard } from "../components/dashboard/dashboard-analysis";
+import { PortfolioManager } from "../components/dashboard/dashboard-portfolios";
+import { ExperienceManager } from "../components/dashboard/dashboard-experience";
+import { ProjectsManager } from "../components/dashboard/dashboard-projects";
+import { SkillsManager } from "../components/dashboard/dashboard-skills";
 
 // Import data
 import { experience as initialExperience } from "../data/about-data";
@@ -37,10 +37,7 @@ export const Dashboard = () => {
     const [isAddingProj, setIsAddingProj] = useState(false);
 
     // --- Handlers (Mock logic) ---
-    const handleUserUpdate = (e: React.FormEvent) => {
-        e.preventDefault();
-        alert("User Info Updated (Session Only)");
-    };
+
 
     const handleExpSave = (index: number | null, data: any) => {
         if (index !== null) {
@@ -86,19 +83,10 @@ export const Dashboard = () => {
         switch (activeTab) {
             case "analysis":
                 return <AnalysisDashboard />;
-            case "user":
-                return <UserInfo />;
+            case "portfolios":
+                return <PortfolioManager />;
             case "experience":
-                return <ExperienceManager
-                    list={expList}
-                    onEdit={(i: number) => setIsEditingExp(i)}
-                    onDelete={(i: number) => handleDelete('exp', i)}
-                    onAdd={() => setIsAddingExp(true)}
-                    editIndex={isEditingExp}
-                    isAdding={isAddingExp}
-                    onCancel={() => { setIsEditingExp(null); setIsAddingExp(false); }}
-                    onSave={handleExpSave}
-                />;
+                return <ExperienceManager />;
             case "projects":
                 return <ProjectsManager
                     list={projList}
@@ -128,7 +116,7 @@ export const Dashboard = () => {
 
                 <nav className="flex-1 flex flex-col gap-2">
                     <Tab active={activeTab === "analysis"} onClick={() => setActiveTab("analysis")} icon={<FaChartLine />} label="Analysis" />
-                    <Tab active={activeTab === "user"} onClick={() => setActiveTab("user")} icon={<FaUserEdit />} label="User Info" />
+                    <Tab active={activeTab === "portfolios"} onClick={() => setActiveTab("portfolios")} icon={<FaUserEdit />} label="Portfolios" />
                     <Tab active={activeTab === "experience"} onClick={() => setActiveTab("experience")} icon={<FaBriefcase />} label="Experience" />
                     <Tab active={activeTab === "projects"} onClick={() => setActiveTab("projects")} icon={<FaProjectDiagram />} label="Projects" />
                     <Tab active={activeTab === "skills"} onClick={() => setActiveTab("skills")} icon={<FaCode />} label="Skills" />
