@@ -1,6 +1,7 @@
 import {
     adduser, getUserByPortfolioName as getuserByPortfolioName, getAllUsers as getallusers
-    , updateUser as updateuser, deleteUser as deleteuser
+    , updateUser as updateuser, deleteUser as deleteuser, activateUser as activateuser,
+    deactivateUser as deactivateuser, getActiveUser as getactiveuser
 } from "../models/user-model.js";
 
 export const addUser = async (req, res) => {
@@ -88,4 +89,65 @@ export const deleteUser = async (req, res) => {
         res.status(500).json({ error: "Failed to get user" });
     }
 };
+export const activateUser = async (req, res) => {
+    try {
+        if (!req.params.id) {
+            console.log("Missing required fields");
+            return res.status(400).json({ error: "Missing required fields" });
+        }
+        const { data, error } = await activateuser(req.params.id);
+
+        if (error) {
+            console.error("Supabase activation error:", error);
+            throw error;
+        }
+
+        if (!data || data.length === 0) {
+            console.log("No user found with ID:", req.params.id);
+            return res.status(404).json({ error: "User not found or already active" });
+        }
+
+        console.log("Activated user:", data);
+        res.status(200).json({ message: "Activated successfully", data });
+    } catch (error) {
+        console.error("Error activating user:", error);
+        res.status(500).json({ error: "Failed to activate user" });
+    }
+};
+export const deactivateUser = async (req, res) => {
+    try {
+        if (!req.params.id) {
+            console.log("Missing required fields");
+            return res.status(400).json({ error: "Missing required fields" });
+        }
+        const { data, error } = await deactivateuser(req.params.id);
+
+        if (error) {
+            console.error("Supabase deactivation error:", error);
+            throw error;
+        }
+
+        if (!data || data.length === 0) {
+            console.log("No user found with ID:", req.params.id);
+            return res.status(404).json({ error: "User not found or already deactivated" });
+        }
+
+        console.log("Deactivated user:", data);
+        res.status(200).json({ message: "Deactivated successfully", data });
+    } catch (error) {
+        console.error("Error deactivating user:", error);
+        res.status(500).json({ error: "Failed to deactivate user" });
+    }
+};
+export const getActiveUser = async (req, res) => {
+    try {
+        const users = await getactiveuser();
+        console.log("users :", users);
+        res.status(200).json(users.data[0]);
+    } catch (error) {
+        console.error("Error getting users:", error);
+        res.status(500).json({ error: "Failed to get users" });
+    }
+};
+
 

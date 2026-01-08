@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { FaEdit, FaTrash, FaSave, FaExternalLinkAlt } from "react-icons/fa";
-import { InputGroup, SectionHeader } from "./dashboard-shared";
+import { FaEdit, FaTrash, FaSave, FaExternalLinkAlt, FaCheck, FaBolt } from "react-icons/fa";
+import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -32,6 +32,12 @@ export const PortfolioManager = () => {
     const [picture, setPicture] = useState({
         preview: null as string | null,
         file: null as File | null
+    });
+
+    const [deleteConfirm, setDeleteConfirm] = useState<{ isOpen: boolean; id: string | number | null; name: string }>({
+        isOpen: false,
+        id: null,
+        name: ""
     });
 
     const fetchPortfolios = async () => {
@@ -70,16 +76,35 @@ export const PortfolioManager = () => {
         setIsAdding(false);
     };
 
-    const handleDelete = async (id: string | number) => {
-        if (!confirm(`Are you sure you want to delete this portfolio?`)) return;
+    const handleDeleteClick = (item: any) => {
+        setDeleteConfirm({
+            isOpen: true,
+            id: item.id,
+            name: item.portfolio_name || item.name
+        });
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!deleteConfirm.id) return;
 
         try {
-            await axios.delete(`${server_url}/api/user/delete/${id}`);
-            toast.success("Portfolio deleted successfully" + id);
-            setPortfolios(portfolios.filter(p => p.id !== id));
+            await axios.delete(`${server_url}/api/user/delete/${deleteConfirm.id}`);
+            toast.success("Portfolio deleted successfully");
+            setPortfolios(portfolios.filter(p => p.id !== deleteConfirm.id));
         } catch (error) {
             console.error("Error deleting portfolio:", error);
             toast.error("Failed to delete portfolio");
+        }
+    };
+
+    const handleActivate = async (id: string | number) => {
+        try {
+            await axios.post(`${server_url}/api/user/activate/${id}`);
+            toast.success("Portfolio activated successfully");
+            fetchPortfolios();
+        } catch (error) {
+            console.error("Error activating portfolio:", error);
+            toast.error("Failed to activate portfolio");
         }
     };
 
@@ -144,6 +169,7 @@ export const PortfolioManager = () => {
                         )}
                         {portfolios.map((item: any) => (
                             <div key={item.id} className="glass-panel p-6 rounded-2xl flex items-center justify-between group hover:border-[var(--accent)]/30 transition-all">
+
                                 <div className="flex items-center gap-6">
                                     <div className="w-16 h-16 rounded-full overflow-hidden bg-[var(--accent)]/10 border border-[var(--text-secondary)]/20">
                                         {item.picture_url ? (
@@ -160,20 +186,43 @@ export const PortfolioManager = () => {
                                             <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/20">
                                                 {item.portfolio_name}
                                             </span>
+                                            {item.is_active && (
+                                                <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/10 text-green-500 border border-green-500/20 flex items-center gap-1">
+                                                    <FaCheck size={10} /> Active
+                                                </span>
+                                            )}
                                         </h4>
                                         <p className="text-[var(--text-secondary)] text-sm">{item.job_title}</p>
                                     </div>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => navigate('/')} className="p-2 text-[var(--text-primary)] hover:bg-[var(--text-secondary)]/10 rounded-lg" title="View Live"><FaExternalLinkAlt /></button>
+                                    {!item.is_active && (
+                                        <button
+                                            onClick={() => handleActivate(item.id)}
+                                            className="p-2 text-yellow-400 hover:bg-yellow-400/10 rounded-lg flex items-center gap-2"
+                                            title="Activate"
+                                        >
+                                            <FaBolt />
+                                        </button>
+                                    )}
+                                    <button onClick={() => window.open(`http://localhost:5173/${item.portfolio_name}`, '_blank')} className="p-2 text-[var(--text-primary)] hover:bg-[var(--text-secondary)]/10 rounded-lg" title="View Live"><FaExternalLinkAlt /></button>
                                     <button onClick={() => handleEdit(item)} className="p-2 text-blue-400 hover:bg-blue-400/10 rounded-lg" title="Edit"><FaEdit /></button>
-                                    <button onClick={() => handleDelete(item.id)} className="p-2 text-red-400 hover:bg-red-400/10 rounded-lg" title="Delete"><FaTrash /></button>
+                                    <button onClick={() => handleDeleteClick(item)} className="p-2 text-red-400 hover:bg-red-400/10 rounded-lg" title="Delete"><FaTrash /></button>
                                 </div>
                             </div>
                         ))}
                     </div>
-                )}
-            </div>
+                )
+                }
+                <ConfirmDialog
+                    isOpen={deleteConfirm.isOpen}
+                    onClose={() => setDeleteConfirm({ ...deleteConfirm, isOpen: false })}
+                    onConfirm={handleConfirmDelete}
+                    title="Delete Portfolio?"
+                    message={`Are you sure you want to delete "${deleteConfirm.name}"? This action cannot be undone and will remove all associated data.`}
+                    confirmText="Delete Portfolio"
+                />
+            </div >
         );
     }
 

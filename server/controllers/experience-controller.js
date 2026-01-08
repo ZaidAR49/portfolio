@@ -1,10 +1,10 @@
 
-import { addExperience as addexperience, getAllExperiences as getallExperiences, getExperienceById as getexperienceById, deleteExperience as deleteexperience, updateExperience as updateexperience } from "../models/experience-model.js";
+import { addExperience as addexperience, getExperienceByUserId as getallExperiences, getExperienceById as getexperienceById, deleteExperience as deleteexperience, updateExperience as updateexperience } from "../models/experience-model.js";
 
 export const addExperience = async (req, res) => {
     try {
         const experience = req.body;
-        if (!experience.userID || !experience.role || !experience.period || !experience.description) {
+        if (!experience.userID || !experience.role || !experience.company || !experience.period || !experience.description) {
             return res.status(400).json({ message: "Missing required fields" });
         }
         const result = await addexperience(experience);
@@ -16,9 +16,9 @@ export const addExperience = async (req, res) => {
     }
 };
 
-export const getAllExperiences = async (req, res) => {
+export const getExperienceByUserId = async (req, res) => {
     try {
-        const experiences = await getallExperiences();
+        const experiences = await getallExperiences(req.params.id);
         console.log("experiences :", experiences);
         res.status(200).json(experiences);
     } catch (error) {
@@ -59,12 +59,28 @@ export const deleteExperience = async (req, res) => {
 export const updateExperience = async (req, res) => {
     try {
         const experience = req.body;
-        if (!experience.id || experience.role || experience.period || experience.description) {
+        // Ensure ID is present. If not in body, try params.
+        if (!experience.id && req.params.id) {
+            experience.id = req.params.id;
+        }
+
+        console.log("Updating experience with data:", experience);
+
+        if (!experience.id || !experience.role || !experience.company || !experience.period || !experience.description) {
+            console.error("Missing fields in update:", experience);
             return res.status(400).json({ message: "Missing required fields" });
         }
+
         const result = await updateexperience(experience);
-        console.log("experience updated successfully :", experience);
-        res.status(200).json(result);
+
+        if (result.error) {
+            throw result.error;
+        }
+
+        console.log("Experience updated successfully result:", result);
+        // Supabase update with select() returns { data: [...], error: null }
+        // If select() is used, data is an array of updated rows.
+        res.status(200).json(result.data ? result.data[0] : result.data);
     } catch (error) {
         console.error("Error updating experience:", error);
         res.status(500).json({ message: "Failed to update experience" });

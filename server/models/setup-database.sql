@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
     github_url VARCHAR(500),
     resume_url VARCHAR(500),
     picture_url VARCHAR(500),
-    portfolio_name VARCHAR(255) UNIQUE
+    portfolio_name VARCHAR(255) UNIQUE is_active BOOLEAN DEFAULT true
 );
 -- Enable RLS for users
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS experiences (
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
     role VARCHAR(255),
     period VARCHAR(100),
-    description TEXT
+    description TEXT,
+    company VARCHAR(255)
 );
 -- Enable RLS for experiences
 ALTER TABLE experiences ENABLE ROW LEVEL SECURITY;

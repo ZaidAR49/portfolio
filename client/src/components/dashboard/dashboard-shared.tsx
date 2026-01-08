@@ -66,3 +66,92 @@ export const InputGroup = ({ label, value, onChange, type = "text", ...rest }: a
         />
     </div>
 );
+
+import { AnimatePresence } from "framer-motion";
+import { FaExclamationTriangle } from "react-icons/fa";
+
+interface ConfirmDialogProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onConfirm: () => void;
+    title: string;
+    message: string;
+    confirmText?: string;
+    cancelText?: string;
+    isDangerous?: boolean;
+}
+
+export const ConfirmDialog = ({
+    isOpen,
+    onClose,
+    onConfirm,
+    title,
+    message,
+    confirmText = "Delete",
+    cancelText = "Cancel",
+    isDangerous = true
+}: ConfirmDialogProps) => {
+    return (
+        <AnimatePresence>
+            {isOpen && (
+                <>
+                    {/* Backdrop */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={onClose}
+                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                    >
+                        {/* Modal */}
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-[var(--bg-secondary)] border border-[var(--text-secondary)]/10 text-[var(--text-primary)] rounded-2xl shadow-2xl max-w-md w-full overflow-hidden relative"
+                        >
+                            {/* Decorative Top Border */}
+                            <div className={`h-1 w-full ${isDangerous ? 'bg-red-500' : 'bg-[var(--accent)]'}`} />
+
+                            <div className="p-6">
+                                <div className="flex items-start gap-4">
+                                    <div className={`p-3 rounded-xl ${isDangerous ? 'bg-red-500/10 text-red-500' : 'bg-[var(--accent)]/10 text-[var(--accent)]'}`}>
+                                        <FaExclamationTriangle size={24} />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-xl font-bold mb-2">{title}</h3>
+                                        <p className="text-[var(--text-secondary)] leading-relaxed">
+                                            {message}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-3 justify-end mt-8">
+                                    <button
+                                        onClick={onClose}
+                                        className="px-4 py-2 rounded-xl text-[var(--text-secondary)] hover:bg-[var(--text-secondary)]/5 transition-colors font-medium"
+                                    >
+                                        {cancelText}
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            onConfirm();
+                                            onClose();
+                                        }}
+                                        className={`px-6 py-2 rounded-xl font-bold text-white shadow-lg transition-all transform hover:scale-105 active:scale-95 ${isDangerous
+                                            ? 'bg-gradient-to-r from-red-600 to-rose-600 shadow-red-500/20'
+                                            : 'bg-[var(--accent)] shadow-[var(--accent)]/20'
+                                            }`}
+                                    >
+                                        {confirmText}
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                </>
+            )}
+        </AnimatePresence>
+    );
+};

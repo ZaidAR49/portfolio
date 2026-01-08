@@ -40,6 +40,17 @@ export const updateUser = (user) => {
 export const deleteUser = (id) => {
     return sql.from("users").delete().eq("id", id).select();
 }
-export const updateuserPicture = (userID, url) => {
+export const updateUserPicture = (userID, url) => {
     return sql.from("users").update({ picture_url: url }).eq("id", userID);
+}
+export const activateUser = async (id) => {
+    await sql.from("users").update({ is_active: false }).eq("is_active", true);
+    return sql.from("users").update({ is_active: true }).eq("id", id).select();
+}
+export const deactivateUser = (id) => {
+    return sql.from("users").update({ is_active: false }).eq("id", id).select();
+}
+export const getActiveUser = () => {
+
+    return sql.from("users").select("*").eq("is_active", true);
 }
