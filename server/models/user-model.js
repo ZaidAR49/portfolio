@@ -17,7 +17,7 @@ export const adduser = async (user) => {
             github_url: user.github_url,
             resume_url: user.resume_url,
             portfolio_name: user.portfolio_name
-        }]);
+        }]).select("id");
 }
 export const updateuser = (user) => {
     return sql.from("users").where("id", user.id).update(user);
@@ -26,5 +26,5 @@ export const deleteuser = (id) => {
     return sql.from("users").where("id", id).del();
 }
 export const updateuserPicture = (userID, url) => {
-    return sql.from("users").where("id", userID).update({ picture_urls: url });
+    return sql.from("users").update({ picture_url: url }).eq("id", userID);
 }

@@ -1,4 +1,6 @@
 import { useContext, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Header } from "./components/header"
 import { Footer } from "./components/footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -29,7 +31,7 @@ function AppContent() {
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       {!isDashboard && <Footer />}
-
+      <ToastContainer position="bottom-right" theme="dark" />
     </div>
   );
 }

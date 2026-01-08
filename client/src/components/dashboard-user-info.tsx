@@ -26,29 +26,53 @@ export const UserInfo = () => {
     });
     const [data, setData] = useState(initialData);
 
+    // Helper to convert file to base64
+    const fileToBase64 = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = (error) => reject(error);
+        });
+    };
+
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
-        // Convert to object for easier debugging/viewing
         const formObject = Object.fromEntries(formData.entries());
-        console.log("Form Data Submitted:", formObject);
-        console.log("Picture:", picture);
-
+        let userID = null;
         e.currentTarget.reset();
-        setData(initialData);
-        setPicture({ preview: null, file: null });
-
         try {
-            const response = await axios.post(`${server_url}/api/user/add`, formData);
-            console.log("Response:", response.data);
+            const response = await axios.post(`${server_url}/api/user/add`, formObject);
             if (response.status === 201) {
-                toast.success("User added successfully");
+                userID = response.data.data[0].id;
             }
         } catch (error) {
             console.error("Error adding user:", error);
             toast.error("Failed to add user");
         }
+        if (picture.file && userID) {
+            try {
+                const base64Picture = await fileToBase64(picture.file);
+                const payload = {
+                    userID: userID,
+                    picture: base64Picture
+                };
+
+                const response = await axios.post(`${server_url}/api/cloud/upload/picture`, payload);
+                if (response.status === 200) {
+                    toast.success("user added successfully");
+                }
+            } catch (error) {
+                console.error("Error uploading picture:", error);
+                toast.error("Failed to upload picture");
+            }
+        }
+
+        setData(initialData);
+        setPicture({ preview: null, file: null });
+
     };
 
     return (
