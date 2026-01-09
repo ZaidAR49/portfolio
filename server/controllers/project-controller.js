@@ -1,30 +1,32 @@
 import { addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
+import Logger from "../helpers/logger-helper.js";
 export const addProject = async (req, res) => {
     try {
         const project = req.body;
-        console.log("project :", project);
+        Logger.info("Adding new project", project); // Log sanitized input
         if (!project.user_id || !project.title || !project.client || !project.role || !project.year || !project.state || !project.sort_order || !project.description || !project.github_url || !project.technologies || !project.images) {
-            console.log("Missing required fields");
+            Logger.warn("Missing required fields for invalid project attempt");
             return res.status(400).json({ message: "Missing required fields" });
 
         }
         const result = await addproject(project);
-        console.log("result :", result);
-        console.log("project added successfully :", result.data[0]);
+        // Log the sanitized result from DB, which is the source of truth
+        Logger.success("Project added successfully", result.data[0]);
         res.status(201).json(result.data[0]);
     } catch (error) {
-        console.error("Error adding project:", error);
+        Logger.error("Error adding project", error);
         return res.status(500).json({ message: "Failed to add project" });
     }
 };
 
 export const getProjectByUserId = async (req, res) => {
     try {
+        Logger.info(`Fetching projects for user ID: ${req.params.id}`);
         const projects = await getallProjects(req.params.id);
-        console.log("projects by user id :", projects);
+        Logger.success(`Fetched ${projects ? projects.length : 0} projects`, projects);
         res.status(200).json(projects);
     } catch (error) {
-        console.error("Error getting projects:", error);
+        Logger.error("Error getting projects", error);
         return res.status(500).json({ message: "Failed to get projects" });
     }
 };
@@ -34,11 +36,12 @@ export const getProjectById = async (req, res) => {
         if (!req.params.id) {
             return res.status(400).json({ message: "Missing required fields" });
         }
+        Logger.info(`Fetching project by ID: ${req.params.id}`);
         const project = await getprojectById(req.params.id);
-        console.log("project by id :", project);
+        Logger.success("Fetched project successfully", project);
         res.status(200).json(project);
     } catch (error) {
-        console.error("Error getting project by id:", error);
+        Logger.error("Error getting project by id", error);
         res.status(500).json({ message: "Failed to get project by id" });
     }
 };
@@ -48,11 +51,12 @@ export const deleteProject = async (req, res) => {
         if (!req.params.id) {
             return res.status(400).json({ message: "Missing required fields" });
         }
+        Logger.info(`Deleting project ID: ${req.params.id}`);
         const project = await deleteproject(req.params.id);
-        console.log("project deleted successfully :", project);
+        Logger.success("Project deleted successfully", project);
         res.status(200).json(project);
     } catch (error) {
-        console.error("Error deleting project:", error);
+        Logger.error("Error deleting project", error);
         res.status(500).json({ message: "Failed to delete project" });
     }
 };
@@ -61,9 +65,10 @@ export const updateProject = async (req, res) => {
     try {
         const project = req.body;
         const id = req.params.id;
+        Logger.info(`Updating project ID: ${id}`, project); // Log sanitized update data
 
         if (!id || !project.title || !project.client || !project.role || !project.year || !project.state || !project.sort_order || !project.description || !project.github_url || !project.technologies || !project.images) {
-            console.error("Missing fields in update:", project);
+            Logger.warn("Missing fields in update", project);
             return res.status(400).json({ message: "Missing required fields" });
         }
 
@@ -73,10 +78,10 @@ export const updateProject = async (req, res) => {
             throw result.error;
         }
 
-        console.log("Project updated successfully result:");
+        Logger.success("Project updated successfully", result.data ? result.data[0] : result.data);
         res.status(200).json(result.data ? result.data[0] : result.data);
     } catch (error) {
-        console.error("Error updating project:", error);
+        Logger.error("Error updating project", error);
         res.status(500).json({ message: "Failed to update project" });
     }
 };

@@ -187,7 +187,7 @@ export const ProjectsManager = () => {
         }
 
         // 3. Year Validation
-        if (!formData.year || !formData.year.trim()) {
+        if (!formData.year) {
             toast.error("Year is required");
             return false;
         }
@@ -279,90 +279,92 @@ export const ProjectsManager = () => {
     if (editingId !== null || isAdding) {
         return (
             <div className="glass-panel p-8 rounded-3xl animate-in fade-in zoom-in-95">
-                <h3 className="text-xl font-bold mb-6">{isAdding ? 'Add Project' : 'Edit Project'}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <InputGroup label="Title" value={formData.title} onChange={(v: string) => setFormData({ ...formData, title: v })} placeholder="e.g. E-Commerce Platform" />
-                    <InputGroup label="Client" value={formData.client} onChange={(v: string) => setFormData({ ...formData, client: v })} placeholder="e.g. John Doe / Personal" />
-                    <InputGroup label="Technologies" value={formData.technologies} onChange={(v: string) => setFormData({ ...formData, technologies: v })} placeholder="e.g. React, Node.js, MongoDB (comma separated)" />
-                    <InputGroup label="GitHub Link" value={formData.github_url} onChange={(v: string) => setFormData({ ...formData, github_url: v })} placeholder="https://github.com/username/project" />
-                    <InputGroup label="Year" value={formData.year} onChange={(v: string) => setFormData({ ...formData, year: v })} placeholder="YYYY" />
-                    <InputGroup label="Role" value={formData.role} onChange={(v: string) => setFormData({ ...formData, role: v })} placeholder="e.g. Full Stack Developer" />
+                <form>
+                    <h3 className="text-xl font-bold mb-6">{isAdding ? 'Add Project' : 'Edit Project'}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <InputGroup label="Title" value={formData.title} onChange={(v: string) => setFormData({ ...formData, title: v })} placeholder="e.g. E-Commerce Platform" />
+                        <InputGroup label="Client" value={formData.client} onChange={(v: string) => setFormData({ ...formData, client: v })} placeholder="e.g. John Doe / Personal" />
+                        <InputGroup label="Technologies" value={formData.technologies} onChange={(v: string) => setFormData({ ...formData, technologies: v })} placeholder="e.g. React, Node.js, MongoDB (comma separated)" />
+                        <InputGroup label="GitHub Link" value={formData.github_url} onChange={(v: string) => setFormData({ ...formData, github_url: v })} placeholder="https://github.com/username/project" />
+                        <InputGroup label="Year" value={formData.year} onChange={(v: string) => setFormData({ ...formData, year: v })} placeholder="YYYY" />
+                        <InputGroup label="Role" value={formData.role} onChange={(v: string) => setFormData({ ...formData, role: v })} placeholder="e.g. Full Stack Developer" />
 
-                    <div>
-                        <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Sort Order</label>
-                        <select
-                            value={formData.sort_order}
-                            onChange={(e) => setFormData({ ...formData, sort_order: parseInt(e.target.value) })}
-                            className="w-full bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl px-4 py-3 text-[var(--text-primary)] outline-none focus:border-[var(--accent)] appearance-none"
-                        >
-                            {Array.from({ length: projects.length + (isAdding ? 1 : 0) }, (_, i) => i + 1).map((num) => (
-                                <option key={num} value={num}>
-                                    {num}
-                                </option>
-                            ))}
-                        </select>
+                        <div>
+                            <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Sort Order</label>
+                            <select
+                                value={formData.sort_order}
+                                onChange={(e) => setFormData({ ...formData, sort_order: parseInt(e.target.value) })}
+                                className="w-full bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl px-4 py-3 text-[var(--text-primary)] outline-none focus:border-[var(--accent)] appearance-none"
+                            >
+                                {Array.from({ length: projects.length + (isAdding ? 1 : 0) }, (_, i) => i + 1).map((num) => (
+                                    <option key={num} value={num}>
+                                        {num}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Status</label>
+                            <select
+                                value={formData.state}
+                                onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                                className="w-full bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl px-4 py-3 text-[var(--text-primary)] outline-none focus:border-[var(--accent)] appearance-none"
+                            >
+                                <option value="completed">Completed</option>
+                                <option value="in progress">In Progress</option>
+                                <option value="suspended">Suspended</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Status</label>
-                        <select
-                            value={formData.state}
-                            onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                            className="w-full bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl px-4 py-3 text-[var(--text-primary)] outline-none focus:border-[var(--accent)] appearance-none"
-                        >
-                            <option value="completed">Completed</option>
-                            <option value="in progress">In Progress</option>
-                            <option value="suspended">Suspended</option>
-                        </select>
-                    </div>
-                </div>
+                    {/* Image Section */}
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2 uppercase tracking-wide text-[0.7rem]">
+                            Project Images (Max 5)
+                        </label>
 
-                {/* Image Section */}
-                <div className="mb-6">
-                    <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2 uppercase tracking-wide text-[0.7rem]">
-                        Project Images (Max 5)
-                    </label>
-
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
-                        {projectImages.map((img) => (
-                            <div key={img.id} className="relative group aspect-video rounded-xl overflow-hidden border border-[var(--text-secondary)]/20">
-                                <img src={img.preview} alt="Project" className="w-full h-full object-cover" />
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <button
-                                        type="button"
-                                        onClick={() => handleImageDelete(img.id)}
-                                        className="p-2 bg-red-500/80 hover:bg-red-500 text-white rounded-lg transition-colors"
-                                    >
-                                        <FaTrash size={14} />
-                                    </button>
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
+                            {projectImages.map((img) => (
+                                <div key={img.id} className="relative group aspect-video rounded-xl overflow-hidden border border-[var(--text-secondary)]/20">
+                                    <img src={img.preview} alt="Project" className="w-full h-full object-cover" />
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleImageDelete(img.id)}
+                                            className="p-2 bg-red-500/80 hover:bg-red-500 text-white rounded-lg transition-colors"
+                                        >
+                                            <FaTrash size={14} />
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
 
-                        {projectImages.length < 5 && (
-                            <label className="border-2 border-dashed border-[var(--text-secondary)]/20 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-[var(--accent)]/50 hover:bg-[var(--accent)]/5 transition-all text-[var(--text-secondary)] hover:text-[var(--accent)] aspect-video">
-                                <span className="text-2xl mb-1">+</span>
-                                <span className="text-xs font-medium">Add Image</span>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    multiple
-                                    onChange={handleImageSelect}
-                                    className="hidden"
-                                />
-                            </label>
-                        )}
+                            {projectImages.length < 5 && (
+                                <label className="border-2 border-dashed border-[var(--text-secondary)]/20 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-[var(--accent)]/50 hover:bg-[var(--accent)]/5 transition-all text-[var(--text-secondary)] hover:text-[var(--accent)] aspect-video">
+                                    <span className="text-2xl mb-1">+</span>
+                                    <span className="text-xs font-medium">Add Image</span>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        multiple
+                                        onChange={handleImageSelect}
+                                        className="hidden"
+                                    />
+                                </label>
+                            )}
+                        </div>
                     </div>
-                </div>
-                <div className="mb-6">
-                    <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Description</label>
-                    <textarea
-                        value={formData.description}
-                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                        className="w-full h-32 bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl p-4 text-[var(--text-primary)] outline-none focus:border-[var(--accent)]"
-                        placeholder="Briefly describe the project features and challenges..."
-                    />
-                </div>
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Description</label>
+                        <textarea
+                            value={formData.description}
+                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                            className="w-full h-32 bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl p-4 text-[var(--text-primary)] outline-none focus:border-[var(--accent)]"
+                            placeholder="Briefly describe the project features and challenges..."
+                        />
+                    </div>
+                </form>
                 <div className="flex justify-end gap-3">
                     <button onClick={cleanupForm} className="px-6 py-2 rounded-xl border border-[var(--text-secondary)]/30 hover:bg-[var(--text-secondary)]/10 text-[var(--text-secondary)]">Cancel</button>
                     <button onClick={handleSave} className="btn-primary flex items-center gap-2"><FaSave /> Save</button>
