@@ -20,7 +20,20 @@ app.use(cors({
   credentials: false
 }));
 
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: '200mb' }));
+
+// Error handling middleware for JSON parsing
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    console.error('Bad JSON:', err.message);
+    return res.status(400).json({ error: 'Invalid JSON payload' });
+  }
+  if (err.type === 'entity.too.large') {
+    console.error('Payload too large:', err.message);
+    return res.status(413).json({ error: 'Payload too large' });
+  }
+  next();
+});
 
 app.use("/api/sendmail", sendmail);
 app.use("/api/security", security);

@@ -2,12 +2,16 @@ import { addProject as addproject, getProjectByUserId as getallProjects, getProj
 export const addProject = async (req, res) => {
     try {
         const project = req.body;
+        console.log("project :", project);
         if (!project.user_id || !project.title || !project.client || !project.role || !project.year || !project.state || !project.sort_order || !project.description || !project.github_url || !project.technologies || !project.images) {
+            console.log("Missing required fields");
             return res.status(400).json({ message: "Missing required fields" });
+
         }
         const result = await addproject(project);
         console.log("result :", result);
-        res.status(201).json(result);
+        console.log("project added successfully :", result.data[0]);
+        res.status(201).json(result.data[0]);
     } catch (error) {
         console.error("Error adding project:", error);
         return res.status(500).json({ message: "Failed to add project" });
@@ -17,7 +21,7 @@ export const addProject = async (req, res) => {
 export const getProjectByUserId = async (req, res) => {
     try {
         const projects = await getallProjects(req.params.id);
-        console.log("projects :", projects);
+        console.log("projects by user id :", projects);
         res.status(200).json(projects);
     } catch (error) {
         console.error("Error getting projects:", error);
@@ -58,8 +62,6 @@ export const updateProject = async (req, res) => {
         const project = req.body;
         const id = req.params.id;
 
-        console.log("Updating project with data:", project);
-
         if (!id || !project.title || !project.client || !project.role || !project.year || !project.state || !project.sort_order || !project.description || !project.github_url || !project.technologies || !project.images) {
             console.error("Missing fields in update:", project);
             return res.status(400).json({ message: "Missing required fields" });
@@ -71,7 +73,7 @@ export const updateProject = async (req, res) => {
             throw result.error;
         }
 
-        console.log("Project updated successfully result:", result);
+        console.log("Project updated successfully result:");
         res.status(200).json(result.data ? result.data[0] : result.data);
     } catch (error) {
         console.error("Error updating project:", error);

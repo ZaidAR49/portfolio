@@ -137,15 +137,68 @@ export const ProjectsManager = () => {
     };
 
     const validateForm = () => {
-        // GitHub/Link Validation
-        if (formData.github_url && !/^https?:\/\//i.test(formData.github_url)) {
+        const rules: Record<string, { min: number; max?: number; label: string }> = {
+            title: { min: 2, max: 100, label: "Title" },
+            client: { min: 2, max: 100, label: "Client" },
+            technologies: { min: 2, max: 200, label: "Technologies" },
+            role: { min: 2, max: 100, label: "Role" },
+            description: { min: 10, max: 1000, label: "Description" },
+            sort_order: { min: 0, label: "Sort Order" }
+        };
+
+        // 1. Check Text Fields (Empty + Length)
+        for (const [key, rule] of Object.entries(rules)) {
+            const value = formData[key as keyof typeof formData];
+
+            // Check if empty
+            if (!value || (typeof value === 'string' && !value.trim())) {
+                toast.error(`${rule.label} is required`);
+                return false;
+            }
+
+            // Check lengths
+            if (typeof value === 'string') {
+                if (value.length < rule.min) {
+                    toast.error(`${rule.label} must be at least ${rule.min} characters`);
+                    return false;
+                }
+                if (rule.max && value.length > rule.max) {
+                    toast.error(`${rule.label} must be less than ${rule.max} characters`);
+                    return false;
+                }
+            }
+
+            if (key === 'sort_order' && typeof value === 'number') {
+                if (value < rule.min) {
+                    toast.error(`${rule.label} must be at least ${rule.min}`);
+                    return false;
+                }
+            }
+        }
+
+        // 2. GitHub URL Validation
+        if (!formData.github_url || !formData.github_url.trim()) {
+            toast.error("GitHub Link is required");
+            return false;
+        }
+        if (!/^https?:\/\//i.test(formData.github_url)) {
             toast.error("GitHub URL must start with http:// or https://");
             return false;
         }
 
-        // Year Validation
-        if (formData.year && !/^\d{4}$/.test(formData.year)) {
+        // 3. Year Validation
+        if (!formData.year || !formData.year.trim()) {
+            toast.error("Year is required");
+            return false;
+        }
+        if (!/^\d{4}$/.test(formData.year)) {
             toast.error("Year must be a 4-digit number (e.g., 2025)");
+            return false;
+        }
+
+        // 4. Image Validation
+        if (projectImages.length < 2) {
+            toast.error("You must upload at least 2 images");
             return false;
         }
 
@@ -158,32 +211,53 @@ export const ProjectsManager = () => {
         try {
             const user = await axios.get(`${server_url}/api/user/active`);
             const userId = user.data.id;
-
-            // Prepare payload
-            // NOTE: We are NOT uploading images yet as per instructions.
-            // We just pass the existing preview URLs for now if they are not files,
-            // or we might need a placeholder if it's a file.
-            // For this step, the user said "handle it later", so we will just preserve existing URLs
-            // and ignore new files in the payload for now, or just send what we have.
-            // Actually, if we send 'blob:...' urls to backend it won't work well for storage, 
-            // but the user explicitly said "images... handle it later". 
-            // So I will just map the previews to 'images' to keep array structure valid for now,
-            // assuming the backend just stores strings.
-            const imagePayload = projectImages.map(img => img.preview);
-
             const payload = {
                 ...formData,
                 user_id: userId,
-                images: imagePayload
             };
 
             if (isAdding) {
-                await axios.post(`${server_url}/api/project/add`, payload);
+                const Project = await axios.post(`${server_url}/api/project/add`, payload);
+                console.log("Project added:", Project.data);
+
+                const formDataUpload = new FormData();
+                projectImages.forEach((img) => {
+                    if (img.file) {
+                        formDataUpload.append("images", img.file);
+                    }
+                });
+
+                const hasFiles = projectImages.some(img => img.file !== null);
+
+                if (hasFiles) {
+                    await axios.post(`${server_url}/api/cloud/upload/images/${Project.data.id}`, formDataUpload, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+                }
+
             } else if (editingId) {
                 await axios.put(`${server_url}/api/project/update/${editingId}`, {
                     id: editingId,
                     ...payload
                 });
+                const formDataUpload = new FormData();
+                let hasNewFiles = false;
+                projectImages.forEach((img) => {
+                    if (img.file) {
+                        formDataUpload.append("images", img.file);
+                        hasNewFiles = true;
+                    }
+                });
+
+                if (hasNewFiles) {
+                    await axios.post(`${server_url}/api/cloud/upload/images/${editingId}`, formDataUpload, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+                }
             }
 
             toast.success(`Project ${isAdding ? 'added' : 'updated'} successfully`);
@@ -207,12 +281,28 @@ export const ProjectsManager = () => {
             <div className="glass-panel p-8 rounded-3xl animate-in fade-in zoom-in-95">
                 <h3 className="text-xl font-bold mb-6">{isAdding ? 'Add Project' : 'Edit Project'}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <InputGroup label="Title" value={formData.title} onChange={(v: string) => setFormData({ ...formData, title: v })} />
-                    <InputGroup label="Client" value={formData.client} onChange={(v: string) => setFormData({ ...formData, client: v })} />
-                    <InputGroup label="Technologies" value={formData.technologies} onChange={(v: string) => setFormData({ ...formData, technologies: v })} />
-                    <InputGroup label="GitHub Link" value={formData.github_url} onChange={(v: string) => setFormData({ ...formData, github_url: v })} placeholder="https://..." />
+                    <InputGroup label="Title" value={formData.title} onChange={(v: string) => setFormData({ ...formData, title: v })} placeholder="e.g. E-Commerce Platform" />
+                    <InputGroup label="Client" value={formData.client} onChange={(v: string) => setFormData({ ...formData, client: v })} placeholder="e.g. John Doe / Personal" />
+                    <InputGroup label="Technologies" value={formData.technologies} onChange={(v: string) => setFormData({ ...formData, technologies: v })} placeholder="e.g. React, Node.js, MongoDB (comma separated)" />
+                    <InputGroup label="GitHub Link" value={formData.github_url} onChange={(v: string) => setFormData({ ...formData, github_url: v })} placeholder="https://github.com/username/project" />
                     <InputGroup label="Year" value={formData.year} onChange={(v: string) => setFormData({ ...formData, year: v })} placeholder="YYYY" />
-                    <InputGroup label="Role" value={formData.role} onChange={(v: string) => setFormData({ ...formData, role: v })} placeholder="e.g. Lead Developer" />
+                    <InputGroup label="Role" value={formData.role} onChange={(v: string) => setFormData({ ...formData, role: v })} placeholder="e.g. Full Stack Developer" />
+
+                    <div>
+                        <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Sort Order</label>
+                        <select
+                            value={formData.sort_order}
+                            onChange={(e) => setFormData({ ...formData, sort_order: parseInt(e.target.value) })}
+                            className="w-full bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl px-4 py-3 text-[var(--text-primary)] outline-none focus:border-[var(--accent)] appearance-none"
+                        >
+                            {Array.from({ length: projects.length + (isAdding ? 1 : 0) }, (_, i) => i + 1).map((num) => (
+                                <option key={num} value={num}>
+                                    {num}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
                     <div>
                         <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Status</label>
                         <select
@@ -270,6 +360,7 @@ export const ProjectsManager = () => {
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         className="w-full h-32 bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl p-4 text-[var(--text-primary)] outline-none focus:border-[var(--accent)]"
+                        placeholder="Briefly describe the project features and challenges..."
                     />
                 </div>
                 <div className="flex justify-end gap-3">
@@ -282,7 +373,11 @@ export const ProjectsManager = () => {
 
     return (
         <div>
-            <SectionHeader title="Projects" desc="Showcase your best work" onAdd={() => { cleanupForm(); setIsAdding(true); }} />
+            <SectionHeader title="Projects" desc="Showcase your best work" onAdd={() => {
+                cleanupForm();
+                setFormData(prev => ({ ...prev, sort_order: projects.length + 1 }));
+                setIsAdding(true);
+            }} />
             {isLoading ? (
                 <div className="text-center py-10 text-[var(--text-secondary)]">Loading...</div>
             ) : (
@@ -305,12 +400,17 @@ export const ProjectsManager = () => {
 
                             <div className="relative z-10">
                                 <div className="flex justify-between items-start mb-4">
-                                    <span className={`px-2 py-1 text-xs rounded border ${item.state === 'completed' ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10' :
-                                        item.state === 'in progress' ? 'border-amber-500/30 text-amber-400 bg-amber-500/10' :
-                                            'border-slate-500/30 text-slate-400 bg-slate-500/10'
-                                        }`}>
-                                        {item.state}
-                                    </span>
+                                    <div className="flex gap-2">
+                                        <span className="px-2 py-1 text-xs rounded border border-[var(--text-secondary)]/20 bg-[var(--bg-secondary)]/50 text-[var(--text-secondary)]">
+                                            #{item.sort_order}
+                                        </span>
+                                        <span className={`px-2 py-1 text-xs rounded border ${item.state === 'completed' ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10' :
+                                            item.state === 'in progress' ? 'border-amber-500/30 text-amber-400 bg-amber-500/10' :
+                                                'border-slate-500/30 text-slate-400 bg-slate-500/10'
+                                            }`}>
+                                            {item.state}
+                                        </span>
+                                    </div>
                                 </div>
                                 <h4 className="text-xl font-bold mb-2 line-clamp-1">{item.title}</h4>
                                 <p className="text-[var(--text-secondary)] text-sm line-clamp-3 mb-4">{item.description}</p>
