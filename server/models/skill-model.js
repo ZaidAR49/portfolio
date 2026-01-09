@@ -1,0 +1,27 @@
+import sql from "../config/database-conection.js";
+
+export const addSkill = (skill) => {
+    return sql.from("skills").insert([
+        {
+            user_id: skill.user_id,
+            name: skill.name,
+            type: skill.type
+        }
+    ]).select("id");
+}
+
+export const getallSkills = (user_id) => {
+    return sql.from("skills").select("*").eq("user_id", user_id).select("*");
+}
+
+export const updateSkill = (skill) => {
+    return sql.from("skills").update({
+        name: skill.name,
+        type: skill.type
+    }).eq("id", skill.id).select();
+};
+
+export const deleteSkill = (id) => {
+    return sql.from("skills").delete().eq("id", id).select("id");
+};
+

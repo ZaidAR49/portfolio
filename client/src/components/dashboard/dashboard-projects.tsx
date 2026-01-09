@@ -205,7 +205,9 @@ export const ProjectsManager = () => {
         return true;
     };
 
-    const handleSave = async () => {
+    const handleSave = async (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
+
         if (!validateForm()) return;
 
         try {
@@ -279,7 +281,7 @@ export const ProjectsManager = () => {
     if (editingId !== null || isAdding) {
         return (
             <div className="glass-panel p-8 rounded-3xl animate-in fade-in zoom-in-95">
-                <form>
+                <form onSubmit={handleSave}>
                     <h3 className="text-xl font-bold mb-6">{isAdding ? 'Add Project' : 'Edit Project'}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <InputGroup label="Title" value={formData.title} onChange={(v: string) => setFormData({ ...formData, title: v })} placeholder="e.g. E-Commerce Platform" />
@@ -296,11 +298,14 @@ export const ProjectsManager = () => {
                                 onChange={(e) => setFormData({ ...formData, sort_order: parseInt(e.target.value) })}
                                 className="w-full bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl px-4 py-3 text-[var(--text-primary)] outline-none focus:border-[var(--accent)] appearance-none"
                             >
-                                {Array.from({ length: projects.length + (isAdding ? 1 : 0) }, (_, i) => i + 1).map((num) => (
-                                    <option key={num} value={num}>
-                                        {num}
-                                    </option>
-                                ))}
+                                {Array.from({ length: projects.length + (isAdding ? 1 : 0) }, (_, i) => i + 1).map((num) => {
+                                    const isTaken = projects.some((p: any) => p.sort_order === num && p.id !== editingId);
+                                    return (
+                                        <option key={num} value={num} disabled={isTaken} className={isTaken ? "text-gray-400" : ""}>
+                                            {num} {isTaken ? '(Taken)' : ''}
+                                        </option>
+                                    );
+                                })}
                             </select>
                         </div>
 
@@ -364,11 +369,11 @@ export const ProjectsManager = () => {
                             placeholder="Briefly describe the project features and challenges..."
                         />
                     </div>
+                    <div className="flex justify-end gap-3">
+                        <button type="button" onClick={cleanupForm} className="px-6 py-2 rounded-xl border border-[var(--text-secondary)]/30 hover:bg-[var(--text-secondary)]/10 text-[var(--text-secondary)]">Cancel</button>
+                        <button type="submit" className="btn-primary flex items-center gap-2"><FaSave /> Save</button>
+                    </div>
                 </form>
-                <div className="flex justify-end gap-3">
-                    <button onClick={cleanupForm} className="px-6 py-2 rounded-xl border border-[var(--text-secondary)]/30 hover:bg-[var(--text-secondary)]/10 text-[var(--text-secondary)]">Cancel</button>
-                    <button onClick={handleSave} className="btn-primary flex items-center gap-2"><FaSave /> Save</button>
-                </div>
             </div>
         );
     }
