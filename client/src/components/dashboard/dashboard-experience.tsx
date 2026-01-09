@@ -116,9 +116,9 @@ export const ExperienceManager = () => {
             <div className="glass-panel p-8 rounded-3xl animate-in fade-in zoom-in-95">
                 <h3 className="text-xl font-bold mb-6">{isAdding ? 'Add Experience' : 'Edit Experience'}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <InputGroup label="Role" value={formData.role} onChange={(v: string) => setFormData({ ...formData, role: v })} />
-                    <InputGroup label="Company" value={formData.company} onChange={(v: string) => setFormData({ ...formData, company: v })} />
-                    <InputGroup label="Period" value={formData.period} onChange={(v: string) => setFormData({ ...formData, period: v })} />
+                    <InputGroup label="Role" value={formData.role} onChange={(v: string) => setFormData({ ...formData, role: v })} placeholder="e.g. Senior Software Engineer" />
+                    <InputGroup label="Company" value={formData.company} onChange={(v: string) => setFormData({ ...formData, company: v })} placeholder="e.g. Google" />
+                    <InputGroup label="Period" value={formData.period} onChange={(v: string) => setFormData({ ...formData, period: v })} placeholder="e.g. Sep 2025 - Present" />
                 </div>
                 <div className="mb-6">
                     <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Description</label>
@@ -126,6 +126,7 @@ export const ExperienceManager = () => {
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         className="w-full h-32 bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl p-4 text-[var(--text-primary)] outline-none focus:border-[var(--accent)]"
+                        placeholder="Describe your role, responsibilities, and key achievements..."
                     />
                 </div>
                 <div className="flex justify-end gap-3">

@@ -16,68 +16,8 @@ import { ExperienceManager } from "../components/dashboard/dashboard-experience"
 import { ProjectsManager } from "../components/dashboard/dashboard-projects";
 import { SkillsManager } from "../components/dashboard/dashboard-skills";
 
-// Import data
-import { experience as initialExperience } from "../data/about-data";
-import { projects as initialProjects } from "../data/projects-data";
-import { skillsData } from "../data/about-data";
-
 export const Dashboard = () => {
     const [activeTab, setActiveTab] = useState("analysis");
-
-    // Local state for forms
-
-    const [expList, setExpList] = useState(initialExperience);
-    const [projList, setProjList] = useState(initialProjects);
-    const [skills, setSkills] = useState(skillsData);
-
-    // Edit states
-    const [isEditingExp, setIsEditingExp] = useState<number | null>(null);
-    const [isAddingExp, setIsAddingExp] = useState(false);
-    const [isEditingProj, setIsEditingProj] = useState<number | null>(null);
-    const [isAddingProj, setIsAddingProj] = useState(false);
-
-    // --- Handlers (Mock logic) ---
-
-
-    const handleExpSave = (index: number | null, data: any) => {
-        if (index !== null) {
-            const newList = [...expList];
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            newList[index] = data;
-            setExpList(newList);
-            setIsEditingExp(null);
-        } else {
-            setExpList([data, ...expList]);
-            setIsAddingExp(false);
-        }
-    };
-
-    const handleProjSave = (index: number | null, data: any) => {
-        if (index !== null) {
-            const newList = [...projList];
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            newList[index] = data;
-            setProjList(newList);
-            setIsEditingProj(null);
-        } else {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            setProjList([{ ...data, image: [], order: projList.length + 1 }, ...projList]);
-            setIsAddingProj(false);
-        }
-    };
-
-    const handleDelete = (type: 'exp' | 'proj', index: number) => {
-        if (confirm("Are you sure?")) {
-            if (type === 'exp') {
-                setExpList(expList.filter((_, i) => i !== index));
-            } else {
-                setProjList(projList.filter((_, i) => i !== index));
-            }
-        }
-    };
 
     const renderContent = () => {
         switch (activeTab) {
@@ -88,18 +28,9 @@ export const Dashboard = () => {
             case "experience":
                 return <ExperienceManager />;
             case "projects":
-                return <ProjectsManager
-                    list={projList}
-                    onEdit={(i: number) => setIsEditingProj(i)}
-                    onDelete={(i: number) => handleDelete('proj', i)}
-                    onAdd={() => setIsAddingProj(true)}
-                    editIndex={isEditingProj}
-                    isAdding={isAddingProj}
-                    onCancel={() => { setIsEditingProj(null); setIsAddingProj(false); }}
-                    onSave={handleProjSave}
-                />;
+                return <ProjectsManager />;
             case "skills":
-                return <SkillsManager skills={skills} setSkills={setSkills} />;
+                return <SkillsManager />;
             default:
                 return <AnalysisDashboard />;
         }
