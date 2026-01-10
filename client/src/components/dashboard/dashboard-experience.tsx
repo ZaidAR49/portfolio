@@ -4,7 +4,7 @@ import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
 import { getExperiences } from "../../data/portfolio-data";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { Loading } from "../loading";
 export const ExperienceManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
     const [experiences, setExperiences] = useState<any[]>([]);
@@ -137,7 +137,7 @@ export const ExperienceManager = () => {
         <div>
             <SectionHeader title="Experience" desc="Manage your work history" onAdd={() => { cleanupForm(); setIsAdding(true); }} />
             {isLoading ? (
-                <div className="text-center py-10 text-[var(--text-secondary)]">Loading...</div>
+                <Loading />
             ) : (
                 <div className="space-y-4">
                     {experiences.length === 0 && (

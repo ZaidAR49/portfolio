@@ -5,6 +5,7 @@ import { About as Aboutpreview } from "../components/about-section";
 import { Capabilities } from "../components/Capabilities";
 import { Experience } from "../components/experience";
 import { getUser, getExperiences, getSkills } from "../data/portfolio-data";
+import { Loading } from "../components/loading";
 import { toast } from "react-toastify";
 export const About = () => {
     const location = useLocation();
@@ -44,7 +45,7 @@ export const About = () => {
         }
     }, [location.state]);
     return (
-        isLoading ? <div>Loading...</div> : (
+        isLoading ? <Loading /> : (
             <>
                 <div id="mainAbout" className="">
                     <Aboutpreview page="about" userInfo={userInfo} />

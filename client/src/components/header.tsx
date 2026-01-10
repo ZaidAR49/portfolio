@@ -11,7 +11,6 @@ import {
 } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ThemeContext } from "../contexts/theme-context";
-
 export const Header = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,7 +21,7 @@ export const Header = () => {
   useEffect(() => {
     // Check initial scroll position
     setScrolled(window.scrollY > 20);
-    
+
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
@@ -55,8 +54,8 @@ export const Header = () => {
     } else if (path === "footer") {
       document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
     } else if (path === "/") {
-       navigate("/");
-       window.scrollTo({ top: 0, behavior: 'smooth' });
+      navigate("/");
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       navigate("/" + path);
     }
@@ -65,20 +64,19 @@ export const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
           ? "py-3 bg-slate-50 dark:bg-slate-900 border-b border-[var(--text-secondary)]/10"
           : "py-5 bg-transparent"
-      }`}
+        }`}
     >
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
         {/* Logo */}
-        <div 
+        <div
           className="flex items-center gap-3 cursor-pointer group"
           onClick={() => handleNavigation("/")}
         >
           <div className="relative w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-xl shadow-lg group-hover:scale-105 transition-transform duration-300">
-             <img src="/favicon.svg" alt="Logo" className="w-full h-full object-cover" />
+            <img src="/favicon.svg" alt="Logo" className="w-full h-full object-cover" />
           </div>
           <span className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[var(--accent)] hidden sm:block">
             ZAR
@@ -92,11 +90,10 @@ export const Header = () => {
               key={item.name}
               id={item.id}
               onClick={() => handleNavigation(item.path)}
-              className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 hover:text-[var(--accent)] ${
-                location.pathname === (item.path.startsWith("/") ? item.path : "/" + item.path)
+              className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 hover:text-[var(--accent)] ${location.pathname === (item.path.startsWith("/") ? item.path : "/" + item.path)
                   ? "text-[var(--accent)]"
                   : "text-[var(--text-secondary)]"
-              }`}
+                }`}
             >
               <span className="text-lg">{item.icon}</span>
               <span>{item.name}</span>
@@ -121,7 +118,7 @@ export const Header = () => {
           >
             {theme === "dark" ? <FaSun size={16} /> : <FaMoon size={16} />}
           </button>
-          
+
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="p-2 rounded-full bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-sm hover:text-[var(--accent)] transition-colors"
@@ -133,31 +130,29 @@ export const Header = () => {
 
       {/* Mobile Navigation Dropdown */}
       <div
-        className={`absolute top-full left-0 right-0 md:hidden transition-all duration-300 ease-out ${
-          isMenuOpen 
-            ? "opacity-100 translate-y-0 pointer-events-auto" 
+        className={`absolute top-full left-0 right-0 md:hidden transition-all duration-300 ease-out ${isMenuOpen
+            ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 -translate-y-4 pointer-events-none"
-        }`}
+          }`}
       >
         <div className="flex justify-end px-4">
           <nav className="w-full max-w-[280px] mt-2 bg-[var(--bg-primary)] rounded-2xl shadow-2xl border border-[var(--text-secondary)]/10 overflow-hidden">
-          <div className="p-4 space-y-2">
-            {navItems.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => handleNavigation(item.path)}
-                className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-300 ${
-                  location.pathname === (item.path.startsWith("/") ? item.path : "/" + item.path)
-                    ? "bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30"
-                    : "text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent)]"
-                }`}
-              >
-                <span className="text-lg">{item.icon}</span>
-                <span className="text-sm font-medium">{item.name}</span>
-              </button>
-            ))}
-          </div>
-        </nav>
+            <div className="p-4 space-y-2">
+              {navItems.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => handleNavigation(item.path)}
+                  className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-300 ${location.pathname === (item.path.startsWith("/") ? item.path : "/" + item.path)
+                      ? "bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30"
+                      : "text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent)]"
+                    }`}
+                >
+                  <span className="text-lg">{item.icon}</span>
+                  <span className="text-sm font-medium">{item.name}</span>
+                </button>
+              ))}
+            </div>
+          </nav>
         </div>
       </div>
     </header>

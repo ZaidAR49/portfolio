@@ -6,6 +6,7 @@ import { Projects } from "../components/projects";
 import { About } from "../components/about-section";
 import { getSkills, getUser, getProjects } from "../data/portfolio-data";
 import { toast } from "react-toastify";
+import { Loading } from "../components/loading";
 export const Home = () => {
   const location = useLocation();
   const [user, setUser] = useState<any>(null);
@@ -49,7 +50,7 @@ export const Home = () => {
 
   return (
     <>
-      {isLoading ? <div>Loading...</div> : (
+      {isLoading ? <Loading /> : (
         <>
           <Hero userInfo={user} skillsData={skills} />
           <Projects projects={projects} />

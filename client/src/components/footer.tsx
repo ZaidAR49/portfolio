@@ -8,6 +8,7 @@ import { FaPaperPlane } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { useContext } from "react";
 import { DashbordSecretKeyContext } from "../contexts/dashbord-secret-key";
+import { Loading } from "./loading";
 
 export const Footer = ({ userInfo }: any) => {
   const { setSecretKey } = useContext(DashbordSecretKeyContext);
@@ -78,7 +79,7 @@ export const Footer = ({ userInfo }: any) => {
   };
 
   return (
-    !userInfo ? <div>Loading...</div> :
+    !userInfo ? <Loading /> :
       <footer id="footer" className="relative pt-20 pb-10 overflow-hidden">
         {/* Background Decoration */}
         <div className="absolute bottom-0 left-0 w-full h-[500px] bg-gradient-to-t from-[var(--accent)]/5 to-transparent -z-10" />

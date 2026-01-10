@@ -4,6 +4,7 @@ import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getPortfolios } from "../../data/portfolio-data";
+import { Loading } from "../loading";
 export const PortfolioManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
     const [portfolios, setPortfolios] = useState<any[]>([]);
@@ -152,7 +153,7 @@ export const PortfolioManager = () => {
                 />
 
                 {isLoading ? (
-                    <div className="text-center py-10 text-[var(--text-secondary)]">Loading...</div>
+                    <Loading />
                 ) : (
                     <div className="space-y-4">
                         {portfolios.length === 0 && (

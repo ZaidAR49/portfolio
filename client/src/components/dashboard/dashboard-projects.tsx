@@ -4,6 +4,7 @@ import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getProjects } from "../../data/portfolio-data";
+import { Loading } from "../loading";
 
 export const ProjectsManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
@@ -382,7 +383,7 @@ export const ProjectsManager = () => {
                 setIsAdding(true);
             }} />
             {isLoading ? (
-                <div className="text-center py-10 text-[var(--text-secondary)]">Loading...</div>
+                <Loading />
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {projects.length === 0 && (

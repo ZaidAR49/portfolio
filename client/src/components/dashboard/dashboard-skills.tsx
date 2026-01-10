@@ -5,6 +5,7 @@ import { SectionHeader, ConfirmDialog } from "./dashboard-shared";
 import { getIconForTechnology, availableTechnologies } from "../../helpers/icon-mapper";
 import { getSkills } from "../../data/portfolio-data";
 import { toast } from "react-toastify";
+import { Loading } from "../loading";
 import axios from "axios";
 
 export const SkillsManager = () => {
@@ -87,7 +88,7 @@ export const SkillsManager = () => {
     };
 
     if (isLoading) {
-        return <div className="text-center py-10 text-[var(--text-secondary)]">Loading skills...</div>;
+        return <Loading />;
     }
 
     return (
