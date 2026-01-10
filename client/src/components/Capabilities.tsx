@@ -1,7 +1,6 @@
-import { userInfo,skillsData } from "../data/about-data";
 import { motion } from "framer-motion";
-
-export const Capabilities = () => {
+import { getIconForTechnology } from "../helpers/icon-mapper";
+export const Capabilities = ({ skillsData, userInfo }: { skillsData: { main: any[], secondary: any[] }, userInfo: any }) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -27,7 +26,7 @@ export const Capabilities = () => {
     <section id="capabilities" className="py-20 lg:py-32 relative">
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -35,7 +34,7 @@ export const Capabilities = () => {
           >
             My Skills
           </motion.h2>
-          <motion.h3 
+          <motion.h3
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -44,21 +43,21 @@ export const Capabilities = () => {
           >
             Capabilities
           </motion.h3>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             className="text-[var(--text-secondary)] text-lg leading-relaxed"
           >
-            {userInfo.descCapabilities}
+            {userInfo.capabilities_description}
           </motion.p>
         </div>
 
         <div className="flex flex-col gap-16">
           {/* Tech Stack */}
           <div>
-            <motion.h4 
+            <motion.h4
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -66,8 +65,8 @@ export const Capabilities = () => {
             >
               Tech Stack
             </motion.h4>
-            
-            <motion.div 
+
+            <motion.div
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
@@ -81,7 +80,7 @@ export const Capabilities = () => {
                   className="glass-panel p-6 rounded-xl flex flex-col items-center justify-center gap-4 hover:scale-105 hover:border-[var(--accent)]/50 transition-all duration-300 group cursor-default"
                 >
                   <div className="text-4xl text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors duration-300">
-                    {tech.icon}
+                    {getIconForTechnology(tech.name)}
                   </div>
                   <span className="font-medium text-[var(--text-primary)] text-center">
                     {tech.name}
@@ -92,9 +91,9 @@ export const Capabilities = () => {
           </div>
 
           {/* Tools & Others */}
-          {skillsData.Secondary && skillsData.Secondary.length > 0 && (
+          {skillsData.secondary && skillsData.secondary.length > 0 && (
             <div>
-              <motion.h4 
+              <motion.h4
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -102,22 +101,22 @@ export const Capabilities = () => {
               >
                 Tools & Others
               </motion.h4>
-              
-              <motion.div 
+
+              <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6"
               >
-                {skillsData.Secondary.map((item, index) => (
+                {skillsData.secondary.map((item, index) => (
                   <motion.div
                     key={index}
                     variants={itemVariants}
                     className="glass-panel p-6 rounded-xl flex flex-col items-center justify-center gap-4 hover:scale-105 hover:border-[var(--accent)]/50 transition-all duration-300 group cursor-default"
                   >
                     <div className="text-4xl text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors duration-300">
-                      {item.icon}
+                      {getIconForTechnology(item.name)}
                     </div>
                     <span className="font-medium text-[var(--text-primary)] text-center">
                       {item.name}

@@ -1,8 +1,9 @@
-import { userInfo,skillsData } from "../data/about-data";
+
 import { motion } from "framer-motion";
 import { FaArrowDown } from "react-icons/fa";
+import { getIconForTechnology } from "../helpers/icon-mapper";
 
-export const Hero = () => {
+export const Hero = ({ userInfo, skillsData }: any) => {
   return (
     <section className="relative min-h-screen flex flex-col justify-center pt-20 overflow-hidden">
       {/* Background Elements */}
@@ -20,7 +21,7 @@ export const Hero = () => {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <h2 className="text-[var(--accent)] font-bold tracking-wider uppercase mb-4 text-sm md:text-base">
-              {userInfo.jobTitle}
+              {userInfo.job_title}
             </h2>
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 leading-tight">
               Hi, I'm <br />
@@ -29,9 +30,9 @@ export const Hero = () => {
               </span>
             </h1>
             <p className="text-[var(--text-secondary)] text-lg sm:text-xl max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
-              {userInfo.descHero}
+              {userInfo.hero_description}
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button
                 className="btn-primary"
@@ -64,7 +65,7 @@ export const Hero = () => {
             <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[var(--accent)] to-purple-500 opacity-20 blur-2xl animate-pulse" />
             <img
               className="relative w-full h-full object-cover rounded-3xl shadow-2xl border-2 border-[var(--bg-secondary)] rotate-3 hover:rotate-0 transition-transform duration-500"
-              src={userInfo.picture}
+              src={userInfo.picture_url}
               alt={userInfo.name}
               draggable="false"
             />
@@ -75,22 +76,22 @@ export const Hero = () => {
       {/* Tech Stack Marquee */}
       <div className="w-full mt-20 mb-10 relative group">
         {/* Animated Border - Top & Bottom only */}
-         <div 
-            className="absolute -inset-y-[1px] inset-x-0 z-0 pointer-events-none"
-            style={{
-              mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-              maskComposite: 'exclude',
-              WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-              WebkitMaskComposite: 'xor',
-              padding: '2px 0'
-            }}
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 300, repeat: Infinity, ease: "linear" }}
-              className="w-full h-full bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,var(--accent)_90deg,transparent_180deg,var(--accent)_270deg,transparent_360deg)] opacity-60 group-hover:opacity-100 transition-opacity duration-500 scale-[2] origin-center"
-            />
-          </div>
+        <div
+          className="absolute -inset-y-[1px] inset-x-0 z-0 pointer-events-none"
+          style={{
+            mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            maskComposite: 'exclude',
+            WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            WebkitMaskComposite: 'xor',
+            padding: '2px 0'
+          }}
+        >
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 300, repeat: Infinity, ease: "linear" }}
+            className="w-full h-full bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,var(--accent)_90deg,transparent_180deg,var(--accent)_270deg,transparent_360deg)] opacity-60 group-hover:opacity-100 transition-opacity duration-500 scale-[2] origin-center"
+          />
+        </div>
 
         <div className="w-full overflow-hidden py-8 bg-[var(--bg-secondary)]/30 backdrop-blur-sm relative z-10">
           <div className="relative w-full flex overflow-x-hidden">
@@ -98,7 +99,7 @@ export const Hero = () => {
               {/* Double the list for seamless loop */}
               {[...skillsData.main, ...skillsData.main, ...skillsData.main].map((tech, index) => (
                 <div key={index} className="flex flex-col items-center gap-2 opacity-80 hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-3xl sm:text-4xl text-[var(--text-primary)]">{tech.icon}</span>
+                  <span className="text-3xl sm:text-4xl text-[var(--text-primary)]">{getIconForTechnology(tech.name)}</span>
                   <span className="text-xs font-medium text-[var(--text-secondary)]">{tech.name}</span>
                 </div>
               ))}
@@ -108,7 +109,7 @@ export const Hero = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}

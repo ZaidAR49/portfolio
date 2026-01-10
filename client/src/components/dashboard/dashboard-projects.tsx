@@ -3,6 +3,7 @@ import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
 import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getProjects } from "../../data/portfolio-data";
 
 export const ProjectsManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
@@ -43,27 +44,22 @@ export const ProjectsManager = () => {
         title: ""
     });
 
-    const fetchProjects = async () => {
-        try {
-            const user = await axios.get(`${server_url}/api/user/active`);
-            if (user.data && user.data.id) {
-                const response = await axios.get(`${server_url}/api/project/all/${user.data.id}`);
-                if (response.status === 200) {
-                    const data = response.data.data || response.data;
-                    setProjects(Array.isArray(data) ? data : []);
-                }
-            }
-        } catch (error) {
+    const fetchProjects = () => {
+        getProjects().then((data) => {
+            setProjects(data);
+            setIsLoading(false);
+        }).catch((error) => {
             console.error("Error fetching projects:", error);
             toast.error("Failed to load projects");
-        } finally {
-            setIsLoading(false);
-        }
+        });
     };
 
     useEffect(() => {
         fetchProjects();
     }, []);
+    useEffect(() => {
+        console.log("projects", projects);
+    }, [projects]);
 
     const handleEdit = (item: any) => {
         setFormData({

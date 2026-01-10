@@ -3,12 +3,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes, FaCode, FaSearch } from "react-icons/fa";
 import { SectionHeader, ConfirmDialog } from "./dashboard-shared";
 import { getIconForTechnology, availableTechnologies } from "../../helpers/icon-mapper";
+import { getSkills } from "../../data/portfolio-data";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 export const SkillsManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
-    const [skills, setSkills] = useState<{ main: any[], Secondary: any[] }>({ main: [], Secondary: [] });
+    const [skills, setSkills] = useState<{ main: any[], secondary: any[] }>({ main: [], secondary: [] });
     const [isAdding, setIsAdding] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [skillType, setSkillType] = useState<"primary" | "secondary">("primary");
@@ -24,30 +25,14 @@ export const SkillsManager = () => {
         tech.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const fetchSkills = async () => {
-        try {
-            const user = await axios.get(`${server_url}/api/user/active`);
-            console.log("user", user.data.id);
-            if (user.data && user.data.id) {
-                const response = await axios.get(`${server_url}/api/skill/all/${user.data.id}`);
-                const data = response.data.data || [];
-
-                // Group skills by type
-                const main = data.filter((s: any) => s.type === 'primary');
-                // Note: The UI expects 'Secondary' (capitalized) key based on previous code pattern
-                const secondary = data.filter((s: any) => s.type === 'secondary');
-
-                setSkills({
-                    main: main,
-                    Secondary: secondary
-                });
-            }
-        } catch (error) {
+    const fetchSkills = () => {
+        getSkills().then((data) => {
+            setSkills(data);
+            setIsLoading(false);
+        }).catch((error) => {
             console.error("Error fetching skills:", error);
             toast.error("Failed to load skills");
-        } finally {
-            setIsLoading(false);
-        }
+        });
     };
 
     useEffect(() => {
@@ -195,7 +180,7 @@ export const SkillsManager = () => {
             </AnimatePresence>
 
             <div className="space-y-12">
-                {['main', 'Secondary'].map((key) => (
+                {['main', 'secondary'].map((key) => (
                     <div key={key}>
                         <div className="flex items-center gap-4 mb-6">
                             <h3 className="text-xl font-bold capitalize">{key === 'main' ? 'Primary' : 'Secondary'} Skills</h3>

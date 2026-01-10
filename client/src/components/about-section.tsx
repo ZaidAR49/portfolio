@@ -1,13 +1,13 @@
-import {userInfo} from "../data/about-data";
+
 import { useNavigate } from "react-router-dom";
 import { ButtonsSocial } from "./buttons-social";
 import { motion } from "framer-motion";
 
-export const About= ({page} :{page:string}) => {
-   const navigate = useNavigate();
- return(
+export const About = ({ page, userInfo }: { page: string, userInfo: any }) => {
+  const navigate = useNavigate();
+  return (
     <>
-     <div id="about" className="flex lg:p-32 justify-between  flex-col gap-10 lg:gap-0 lg:flex-row my-16 sm:my-24 lg:mt-32 p-10">
+      <div id="about" className="flex lg:p-32 justify-between  flex-col gap-10 lg:gap-0 lg:flex-row my-16 sm:my-24 lg:mt-32 p-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -22,21 +22,21 @@ export const About= ({page} :{page:string}) => {
           transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
           className="flex flex-col gap-3 max-w-3xl"
         >
-<div className="header-tertiary text-xl sm:text-2xl ">{userInfo.titleAbout} </div>
-<p className={`break-words text-base sm:text-lg lg:text-xl ${page==="home" && "line-clamp-4"}`}>{userInfo.descAbout}</p>
-{ page === "about" ? 
-<div className="flex flex-col md:flex-row gap-10 xl:gap-20 py-10 "> <a href={userInfo.resuma} className="btn-primary"> download My resume</a> <ButtonsSocial len={2}/>  </div>:
-<button className="btn-primary mt-6 lg:mt-10 w-fit" onClick={()=>{navigate("/about",{state: {scrollTo:"main"}})}}>More about me</button>
-}
+          <div className="header-tertiary text-xl sm:text-2xl ">{userInfo.about_title} </div>
+          <p className={`break-words text-base sm:text-lg lg:text-xl ${page === "home" && "line-clamp-4"}`}>{userInfo.about_description}</p>
+          {page === "about" ?
+            <div className="flex flex-col md:flex-row gap-10 xl:gap-20 py-10 "> <a href={userInfo.resume_url} className="btn-primary"> download My resume</a> <ButtonsSocial len={2} github_url={userInfo.github_url} linkedin_url={userInfo.linkedin_url} />  </div> :
+            <button className="btn-primary mt-6 lg:mt-10 w-fit" onClick={() => { navigate("/about", { state: { scrollTo: "main" } }) }}>More about me</button>
+          }
         </motion.div>
-        
-         </div>
-         <div className={`w-full h-px background-oopposit opacity-30`}></div>
-            <div className="flex flex-col p-4 sm:p-6 lg:p-10 mt-10 gap-10 mb-12"></div>
 
-         </>
-    );
-  
+      </div>
+      <div className={`w-full h-px background-oopposit opacity-30`}></div>
+      <div className="flex flex-col p-4 sm:p-6 lg:p-10 mt-10 gap-10 mb-12"></div>
+
+    </>
+  );
+
 
 
 };

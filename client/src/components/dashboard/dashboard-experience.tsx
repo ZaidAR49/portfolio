@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
 import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
+import { getExperiences } from "../../data/portfolio-data";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -23,25 +24,20 @@ export const ExperienceManager = () => {
         id: null,
         role: ""
     });
+    // finally {
+    //             setIsLoading(false);
+    //         }
+    //          setExperiences(Array.isArray(data) ? data : []);
 
-    const fetchExperiences = async () => {
-        try {
-            const user = await axios.get(`${server_url}/api/user/active`);
-            if (user.data && user.data.id) {
-                const response = await axios.get(`${server_url}/api/experience/all/${user.data.id}`);
-                if (response.status === 200) {
-                    const data = response.data.data || response.data;
-                    setExperiences(Array.isArray(data) ? data : []);
-                }
-            }
-        } catch (error) {
+    const fetchExperiences = () => {
+        getExperiences().then(data => {
+            setExperiences(data);
+            setIsLoading(false);
+        }).catch(error => {
             console.error("Error fetching experiences:", error);
             toast.error("Failed to load experiences");
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
+        });
+    }
     useEffect(() => {
         fetchExperiences();
     }, []);

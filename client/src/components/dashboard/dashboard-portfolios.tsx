@@ -3,13 +3,12 @@ import { FaEdit, FaTrash, FaSave, FaExternalLinkAlt, FaCheck, FaBolt } from "rea
 import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-
+import { getPortfolios } from "../../data/portfolio-data";
 export const PortfolioManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
     const [portfolios, setPortfolios] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const navigate = useNavigate();
+
     // Form State
     const initialFormState = {
         portfolio_name: "",
@@ -40,20 +39,14 @@ export const PortfolioManager = () => {
         name: ""
     });
 
-    const fetchPortfolios = async () => {
-        try {
-            const response = await axios.get(`${server_url}/api/user/all`);
-            if (response.status === 200) {
-                // Supabase returns { data: [...], ... }
-                const data = response.data.data || response.data;
-                setPortfolios(Array.isArray(data) ? data : []);
-            }
-        } catch (error) {
+    const fetchPortfolios = () => {
+        getPortfolios().then((data) => {
+            setPortfolios(data);
+            setIsLoading(false);
+        }).catch((error) => {
             console.error("Error fetching portfolios:", error);
             toast.error("Failed to load portfolios");
-        } finally {
-            setIsLoading(false);
-        }
+        });
     };
 
     useEffect(() => {

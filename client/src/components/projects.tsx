@@ -1,10 +1,24 @@
-import { projects } from "../data/projects-data";
 import { FaGithub, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export const Projects = () => {
-  projects.sort((a, b) => a.order - b.order);
+export interface Project {
+  state: "completed" | "in progress" | "Suspend" | string;
+  title: string;
+  description: string;
+  images: string[];
+  role: string;
+  github_url: string;
+  year: number;
+  technologies: string;
+  client: string;
+  sort_order: number;
+  id: number;
+  user_id: number;
+}
+
+export const Projects = ({ projects }: { projects: Project[] }) => {
+  projects.sort((a, b) => a.sort_order - b.sort_order);
 
   return (
     <section id="projects" className="py-20 lg:py-32 relative overflow-hidden">
@@ -13,7 +27,7 @@ export const Projects = () => {
 
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -21,7 +35,7 @@ export const Projects = () => {
           >
             My Work
           </motion.h2>
-          <motion.h3 
+          <motion.h3
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -30,7 +44,7 @@ export const Projects = () => {
           >
             Featured Projects
           </motion.h3>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -59,7 +73,7 @@ export const Projects = () => {
                 <h3 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
                   {project.title}
                 </h3>
-                
+
                 <p className="text-[var(--text-secondary)] text-lg leading-relaxed">
                   {project.description}
                 </p>
@@ -74,20 +88,20 @@ export const Projects = () => {
                     <span className="font-semibold text-[var(--text-primary)]">{project.role}</span>
                   </div>
                   <div >
-                <div>   
-                   <span className="block text-xs uppercase tracking-wider text-[var(--text-secondary)] mb-1">Technologies</span>
-                    <span className="font-semibold text-[var(--accent)]">{project.tech}</span></div>
+                    <div>
+                      <span className="block text-xs uppercase tracking-wider text-[var(--text-secondary)] mb-1">Technologies</span>
+                      <span className="font-semibold text-[var(--accent)]">{project.technologies}</span></div>
                   </div>
                   <div >
                     <span className="block text-xs uppercase tracking-wider text-[var(--text-secondary)] mb-1">Client</span>
                     <span className="font-semibold text-[var(--text-primary)]">{project.client}</span>
                   </div>
-                  
+
                 </div>
 
                 <div className="flex gap-4 mt-2">
                   <a
-                    href={project.github}
+                    href={project.github_url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-primary flex items-center gap-2"
@@ -127,11 +141,11 @@ const variants = {
   })
 };
 
-const ProjectCarousel = ({ project }: { project: typeof projects[0] }) => {
+const ProjectCarousel = ({ project }: { project: Project }) => {
   const [[page, direction], setPage] = useState([0, 0]);
 
   // We only have 3 images, but we want infinite paging
-  const imageIndex = Math.abs(page % project.image.length);
+  const imageIndex = Math.abs(page % project.images.length);
 
   const paginate = (newDirection: number) => {
     setPage([page + newDirection, newDirection]);
@@ -170,11 +184,11 @@ const ProjectCarousel = ({ project }: { project: typeof projects[0] }) => {
         <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-md z-10 ${stateColor(project.state)}`}>
           {project.state}
         </div>
-        
+
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.img
             key={page}
-            src={project.image[imageIndex]}
+            src={project.images[imageIndex]}
             custom={direction}
             variants={variants}
             initial="enter"
@@ -219,18 +233,17 @@ const ProjectCarousel = ({ project }: { project: typeof projects[0] }) => {
 
         {/* Pagination Dots */}
         <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
-          {project.image.map((_, index) => (
+          {project.images.map((_, index) => (
             <button
               key={index}
               onClick={(e) => {
                 e.stopPropagation();
                 setPage([page + (index - imageIndex), index > imageIndex ? 1 : -1]);
               }}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === imageIndex 
-                  ? "bg-[var(--accent)] w-6" 
-                  : "bg-gray-500/50 hover:bg-white/80"
-              }`}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${index === imageIndex
+                ? "bg-[var(--accent)] w-6"
+                : "bg-gray-500/50 hover:bg-white/80"
+                }`}
             />
           ))}
         </div>

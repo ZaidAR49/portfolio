@@ -13,7 +13,7 @@ export const resetSecurityCode = async (securityCode) => {
 export const getStoredSecurityCode = async () => {
     try {
         const result = await sql.from("secret_key").select("secret").single();
-        console.log("Retrieved security code from database:", result.data.secret);
+        
         return result.data.secret;
     } catch (error) {
         console.error(error);

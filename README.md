@@ -1,6 +1,6 @@
 # Portfolio Website
 
-A modern, responsive portfolio website built with React, TypeScript,Tailwind CSS and node js. This project showcases professional work, skills, and experience with a beautiful, animated interface.
+This portfolio website showcases my projects and skills, built with React and Tailwind CSS. It features a responsive design, smooth animations, and a user-friendly interface. The site includes sections for project details, skills, and contact information, providing a comprehensive overview of my work.
 Demo: https://zar.onrender.com/
 ## ✨ Features
 
@@ -12,7 +12,12 @@ Demo: https://zar.onrender.com/
 - **Contact Form**: Backend integration with email functionality
 - **Fast Performance**: Optimized with Vite build tool
 
+## 🛠️ Backend & Security
 
+The project includes a fully functional backend to manage the portfolio content dynamically:
+- **Admin Dashboard**: A secure interface to add, update, and delete projects, skills, and experience data.
+- **Security Layer**: Integrated security measures to protect API endpoints and dashboard access.
+- **RESTful API**: Custom-built API using Node.js and Express to serve data to the frontend.
 
 ## 📁 Project Structure
 
