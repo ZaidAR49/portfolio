@@ -20,7 +20,7 @@ export const Footer = ({ userInfo }: any) => {
 
       const securityCode = document.getElementById("securityCode") as HTMLInputElement;
       setSecretKey(securityCode.value);
-      const res = await axios.post(`${server_url}/api/security/checksecuritycode`, { securityCode: securityCode.value, timeout: 60000 });
+      const res = await axios.post(`${server_url}/api/security/checksecuritycode`, { timeout: 60000 }, { headers: { "security-code": securityCode.value } });
       if (res.status === 200) {
         setOpenSecret(false);
         navigate('/dashboard');
@@ -40,7 +40,7 @@ export const Footer = ({ userInfo }: any) => {
     if (e.target.value === "zaidopendash") {
       setOpenSecret(true);
       try {
-        await axios.post(`${server_url}/api/sendmail/sendsecuritycode`, { timeout: 60000 });
+        await axios.post(`${server_url}/api/security/sendsecuritycode`, { timeout: 60000 }, { headers: { "security-code": e.target.value } });
         toast.success("Security code sent to your email!");
       } catch (error: any) {
         console.error(error);
