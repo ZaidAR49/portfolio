@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
 import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
 import { getExperiences } from "../../data/portfolio-data";
@@ -7,6 +8,7 @@ import { toast } from "react-toastify";
 import { Loading } from "../loading";
 export const ExperienceManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
     const [experiences, setExperiences] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -35,6 +37,9 @@ export const ExperienceManager = () => {
             setIsLoading(false);
         }).catch(error => {
             console.error("Error fetching experiences:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error("Failed to load experiences");
         });
     }
@@ -68,8 +73,11 @@ export const ExperienceManager = () => {
             await axios.delete(`${server_url}/api/experience/delete/${deleteConfirm.id}`);
             toast.success("Experience deleted successfully");
             setExperiences(experiences.filter(e => e.id !== deleteConfirm.id));
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error deleting experience:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error("Failed to delete experience");
         }
     };
@@ -95,8 +103,11 @@ export const ExperienceManager = () => {
             toast.success(`Experience ${isAdding ? 'added' : 'updated'} successfully`);
             fetchExperiences();
             cleanupForm();
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error saving experience:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error(`Failed to ${isAdding ? 'add' : 'update'} experience`);
         }
     };

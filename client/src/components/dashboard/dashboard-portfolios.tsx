@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaSave, FaExternalLinkAlt, FaCheck, FaBolt } from "react-icons/fa";
 import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
 import axios from "axios";
@@ -7,6 +8,7 @@ import { getPortfolios } from "../../data/portfolio-data";
 import { Loading } from "../loading";
 export const PortfolioManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
     const [portfolios, setPortfolios] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -46,6 +48,9 @@ export const PortfolioManager = () => {
             setIsLoading(false);
         }).catch((error) => {
             console.error("Error fetching portfolios:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error("Failed to load portfolios");
         });
     };
@@ -85,8 +90,11 @@ export const PortfolioManager = () => {
             await axios.delete(`${server_url}/api/user/delete/${deleteConfirm.id}`);
             toast.success("Portfolio deleted successfully");
             setPortfolios(portfolios.filter(p => p.id !== deleteConfirm.id));
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error deleting portfolio:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error("Failed to delete portfolio");
         }
     };
@@ -96,8 +104,11 @@ export const PortfolioManager = () => {
             await axios.post(`${server_url}/api/user/activate/${id}`);
             toast.success("Portfolio activated successfully");
             fetchPortfolios();
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error activating portfolio:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error("Failed to activate portfolio");
         }
     };
@@ -129,8 +140,11 @@ export const PortfolioManager = () => {
                 fetchPortfolios();
                 cleanupForm();
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error saving portfolio:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error(`Failed to ${isAdding ? 'create' : 'update'} portfolio`);
         }
     };

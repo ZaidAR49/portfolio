@@ -28,8 +28,11 @@ export const Footer = ({ userInfo }: any) => {
         toast.error("Invalid security code.");
       }
 
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      if (error.response && [401, 404, 500].includes(error.response.status)) {
+        navigate("/error", { replace: true, state: error.response.status });
+      }
       toast.error("Failed to check code.");
     }
   }
@@ -39,8 +42,11 @@ export const Footer = ({ userInfo }: any) => {
       try {
         await axios.post(`${server_url}/api/sendmail/sendsecuritycode`, { timeout: 60000 });
         toast.success("Security code sent to your email!");
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
+        if (error.response && [401, 404, 500].includes(error.response.status)) {
+          navigate("/error", { replace: true, state: error.response.status });
+        }
         toast.error("Failed to send code.");
       }
     }
@@ -72,8 +78,11 @@ export const Footer = ({ userInfo }: any) => {
       } else {
         toast.error("Failed to send message. Please try again later.");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error sending message:", error);
+      if (error.response && [401, 404, 500].includes(error.response.status)) {
+        navigate("/error", { replace: true, state: error.response.status });
+      }
       toast.error("Failed to send message. Please try again later.");
     }
   };

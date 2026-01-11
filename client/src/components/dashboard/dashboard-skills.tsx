@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes, FaCode, FaSearch } from "react-icons/fa";
 import { SectionHeader, ConfirmDialog } from "./dashboard-shared";
@@ -10,6 +11,7 @@ import axios from "axios";
 
 export const SkillsManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
     const [skills, setSkills] = useState<{ main: any[], secondary: any[] }>({ main: [], secondary: [] });
     const [isAdding, setIsAdding] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
@@ -32,6 +34,9 @@ export const SkillsManager = () => {
             setIsLoading(false);
         }).catch((error) => {
             console.error("Error fetching skills:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error("Failed to load skills");
         });
     };
@@ -61,6 +66,9 @@ export const SkillsManager = () => {
             }
         } catch (error: any) {
             console.error("Error adding skill:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             const errorMessage = error.response?.data?.error || "Failed to add skill";
             toast.error(errorMessage);
         }
@@ -83,6 +91,9 @@ export const SkillsManager = () => {
             fetchSkills(); // Re-fetch to sync state
         } catch (error: any) {
             console.error("Error deleting skill:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error("Failed to delete skill from server");
         }
     };

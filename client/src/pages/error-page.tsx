@@ -33,7 +33,7 @@ const Error = () => {
     const navigate = useNavigate();
     const lottieRef = useRef<any>(null);
     const location = useLocation();
-    const errorType: keyof typeof errorObject = location.state?.code || 404;
+    const errorType: keyof typeof errorObject = location.state || 404;
     useEffect(() => {
         lottieRef.current?.setSpeed(errorObject[errorType].speed);
     }, []);

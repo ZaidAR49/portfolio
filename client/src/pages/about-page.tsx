@@ -1,5 +1,5 @@
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react"
 import { About as Aboutpreview } from "../components/about-section";
 import { Capabilities } from "../components/Capabilities";
@@ -9,6 +9,7 @@ import { Loading } from "../components/loading";
 import { toast } from "react-toastify";
 export const About = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [experiences, setExperiences] = useState<any[]>([]);
@@ -25,8 +26,11 @@ export const About = () => {
                 setUserInfo(user);
                 setExperiences(experiences);
                 setSkills(skills);
-            } catch (error) {
+            } catch (error: any) {
                 console.error("Error fetching data:", error);
+                if (error.response && [401, 404, 500].includes(error.response.status)) {
+                    navigate("/error", { replace: true, state: error.response.status });
+                }
                 toast.error("Failed to load data");
             }
             finally {

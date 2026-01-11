@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Hero } from "../components/hero";
 import { Projects } from "../components/projects";
 import { About } from "../components/about-section";
@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { Loading } from "../components/loading";
 export const Home = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [skills, setSkills] = useState<{ main: any[], secondary: any[] }>({ main: [], secondary: [] });
   const [projects, setProjects] = useState<any[]>([]);
@@ -25,8 +26,11 @@ export const Home = () => {
         setUser(user);
         setProjects(projects);
         setSkills(skills);
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error fetching data:", error);
+        if (error.response && [401, 404, 500].includes(error.response.status)) {
+          navigate("/error", { replace: true, state: error.response.status });
+        }
         toast.error("Failed to load data");
       } finally {
         setIsLoading(false);

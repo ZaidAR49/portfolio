@@ -13,7 +13,7 @@ export const getExperiences = async () => {
         }
     } catch (error) {
         console.error("Error fetching experiences:", error);
-
+        throw error;
     }
 };
 
@@ -26,6 +26,7 @@ export const getPortfolios = async () => {
         }
     } catch (error) {
         console.error("Error fetching portfolios:", error);
+        throw error;
     }
 };
 
@@ -41,6 +42,7 @@ export const getProjects = async () => {
         }
     } catch (error) {
         console.error("Error fetching projects:", error);
+        throw error;
     }
 };
 export const getSkills = async () => {
@@ -63,6 +65,7 @@ export const getSkills = async () => {
         }
     } catch (error) {
         console.error("Error fetching skills:", error);
+        throw error;
     }
     return defaultData;
 };
@@ -75,6 +78,7 @@ export const getUser = async () => {
         }
     } catch (error) {
         console.error("Error fetching user:", error);
+        throw error;
     }
 };
 

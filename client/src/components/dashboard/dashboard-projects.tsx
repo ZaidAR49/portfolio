@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
 import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
 import axios from "axios";
@@ -8,6 +9,7 @@ import { Loading } from "../loading";
 
 export const ProjectsManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
     const [projects, setProjects] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -51,6 +53,9 @@ export const ProjectsManager = () => {
             setIsLoading(false);
         }).catch((error) => {
             console.error("Error fetching projects:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error("Failed to load projects");
         });
     };
@@ -127,8 +132,11 @@ export const ProjectsManager = () => {
             await axios.delete(`${server_url}/api/project/delete/${deleteConfirm.id}`);
             toast.success("Project deleted successfully");
             setProjects(projects.filter(p => p.id !== deleteConfirm.id));
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error deleting project:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error("Failed to delete project");
         }
     };
@@ -262,8 +270,11 @@ export const ProjectsManager = () => {
             toast.success(`Project ${isAdding ? 'added' : 'updated'} successfully`);
             fetchProjects();
             cleanupForm();
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error saving project:", error);
+            if (error.response && [401, 404, 500].includes(error.response.status)) {
+                navigate("/error", { replace: true, state: error.response.status });
+            }
             toast.error(`Failed to ${isAdding ? 'add' : 'update'} project`);
         }
     };
