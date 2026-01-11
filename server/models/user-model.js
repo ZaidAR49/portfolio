@@ -38,7 +38,7 @@ export const updateUser = (user) => {
     }).eq("id", user.id);
 }
 export const deleteUser = (id) => {
-    return sql.from("users").delete().eq("id", id).select();
+    return sql.from("users").delete().eq("id", id).eq("is_active", false).select();
 }
 export const updateUserPicture = (userID, url) => {
     return sql.from("users").update({ picture_url: url }).eq("id", userID);

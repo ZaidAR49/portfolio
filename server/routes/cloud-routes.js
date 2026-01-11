@@ -1,7 +1,7 @@
 import express from "express";
 import { uploadPicture, uploadImages } from "../controllers/cloud-controller.js";
 import multer from "multer";
-
+import { checksecuritycode } from "../middlewares/auth-middleware.js";
 const upload = multer({
     storage: multer.memoryStorage(),
     limits: {
@@ -12,7 +12,7 @@ const upload = multer({
 
 const router = express.Router();
 
-router.post("/upload/picture", uploadPicture);
-router.post("/upload/images/:projectID", upload.array("images", 5), uploadImages);
+router.post("/upload/picture", checksecuritycode, uploadPicture);
+router.post("/upload/images/:projectID", checksecuritycode, upload.array("images", 5), uploadImages);
 
 export default router;

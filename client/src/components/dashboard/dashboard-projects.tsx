@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
 import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
@@ -6,14 +6,21 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { getProjects } from "../../data/portfolio-data";
 import { Loading } from "../loading";
+import { DashbordSecretKeyContext } from "../../contexts/dashbord-secret-key";
+
 
 export const ProjectsManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
     const [projects, setProjects] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-
+    const { secretKey } = useContext(DashbordSecretKeyContext);
     // Initial state matching backend requirements
+    useEffect(() => {
+        console.log("secretKey", secretKey);
+    }, [secretKey]);
+
+
     const initialFormState = {
         title: "",
         client: "",
@@ -129,7 +136,7 @@ export const ProjectsManager = () => {
         if (!deleteConfirm.id) return;
 
         try {
-            await axios.delete(`${server_url}/api/project/delete/${deleteConfirm.id}`);
+            await axios.delete(`${server_url}/api/project/delete/${deleteConfirm.id}`, { headers: { "security-code": secretKey } });
             toast.success("Project deleted successfully");
             setProjects(projects.filter(p => p.id !== deleteConfirm.id));
         } catch (error: any) {
@@ -224,7 +231,7 @@ export const ProjectsManager = () => {
             };
 
             if (isAdding) {
-                const Project = await axios.post(`${server_url}/api/project/add`, payload);
+                const Project = await axios.post(`${server_url}/api/project/add`, payload, { headers: { "security-code": secretKey } });
                 console.log("Project added:", Project.data);
 
                 const formDataUpload = new FormData();
@@ -239,7 +246,8 @@ export const ProjectsManager = () => {
                 if (hasFiles) {
                     await axios.post(`${server_url}/api/cloud/upload/images/${Project.data.id}`, formDataUpload, {
                         headers: {
-                            'Content-Type': 'multipart/form-data'
+                            'Content-Type': 'multipart/form-data',
+                            "security-code": secretKey
                         }
                     });
                 }
@@ -248,7 +256,7 @@ export const ProjectsManager = () => {
                 await axios.put(`${server_url}/api/project/update/${editingId}`, {
                     id: editingId,
                     ...payload
-                });
+                }, { headers: { "security-code": secretKey } });
                 const formDataUpload = new FormData();
                 let hasNewFiles = false;
                 projectImages.forEach((img) => {
@@ -261,7 +269,8 @@ export const ProjectsManager = () => {
                 if (hasNewFiles) {
                     await axios.post(`${server_url}/api/cloud/upload/images/${editingId}`, formDataUpload, {
                         headers: {
-                            'Content-Type': 'multipart/form-data'
+                            'Content-Type': 'multipart/form-data',
+                            "security-code": secretKey
                         }
                     });
                 }

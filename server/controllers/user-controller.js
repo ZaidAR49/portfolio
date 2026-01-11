@@ -16,6 +16,10 @@ export const addUser = async (req, res) => {
         }
         // Logger.debug("All required fields present");
         const result = await adduser(user);
+        if (result.error) {
+            Logger.error("Failed to add user due to conflict", user);
+            return res.status(409).json({ error: "Failed to add user" });
+        }
         Logger.success("User added successfully", result);
         res.status(201).json(result);
     } catch (error) {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaSave, FaExternalLinkAlt, FaCheck, FaBolt } from "react-icons/fa";
 import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
@@ -6,7 +6,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { getPortfolios } from "../../data/portfolio-data";
 import { Loading } from "../loading";
+import { DashbordSecretKeyContext } from "../../contexts/dashbord-secret-key";
 export const PortfolioManager = () => {
+    const { secretKey } = useContext(DashbordSecretKeyContext);
     const server_url = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
     const [portfolios, setPortfolios] = useState<any[]>([]);
@@ -76,6 +78,10 @@ export const PortfolioManager = () => {
     };
 
     const handleDeleteClick = (item: any) => {
+        if (item.is_active) {
+            toast.error("Cannot delete the active portfolio");
+            return;
+        }
         setDeleteConfirm({
             isOpen: true,
             id: item.id,
@@ -87,7 +93,7 @@ export const PortfolioManager = () => {
         if (!deleteConfirm.id) return;
 
         try {
-            await axios.delete(`${server_url}/api/user/delete/${deleteConfirm.id}`);
+            await axios.delete(`${server_url}/api/user/delete/${deleteConfirm.id}`, { headers: { "security-code": secretKey } });
             toast.success("Portfolio deleted successfully");
             setPortfolios(portfolios.filter(p => p.id !== deleteConfirm.id));
         } catch (error: any) {
@@ -101,7 +107,7 @@ export const PortfolioManager = () => {
 
     const handleActivate = async (id: string | number) => {
         try {
-            await axios.post(`${server_url}/api/user/activate/${id}`);
+            await axios.post(`${server_url}/api/user/activate/${id}`, {}, { headers: { "security-code": secretKey } });
             toast.success("Portfolio activated successfully");
             fetchPortfolios();
         } catch (error: any) {
@@ -116,12 +122,23 @@ export const PortfolioManager = () => {
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // Check for unique portfolio name
+        const nameExists = portfolios.some(p =>
+            p.portfolio_name === formData.portfolio_name &&
+            (!isEditing || p.portfolio_name !== isEditing) // Exclude current if editing (though editing ID might be disabled, this is safe)
+        );
+
+        if (nameExists) {
+            toast.error("Portfolio Name (ID) must be unique");
+            return;
+        }
+
         try {
             let response;
             if (isAdding) {
-                response = await axios.post(`${server_url}/api/user/add`, formData);
+                response = await axios.post(`${server_url}/api/user/add`, formData, { headers: { "security-code": secretKey } });
             } else if (isEditing) {
-                response = await axios.put(`${server_url}/api/user/update/${isEditing}`, formData);
+                response = await axios.put(`${server_url}/api/user/update/${isEditing}`, formData, { headers: { "security-code": secretKey } });
             }
 
             if (response?.status === 200 || response?.status === 201) {
@@ -133,7 +150,7 @@ export const PortfolioManager = () => {
                     await axios.post(`${server_url}/api/cloud/upload/picture`, {
                         userID: userID,
                         picture: base64Picture
-                    });
+                    }, { headers: { "security-code": secretKey } });
                 }
 
                 toast.success(`Portfolio ${isAdding ? 'created' : 'updated'} successfully`);
@@ -213,9 +230,16 @@ export const PortfolioManager = () => {
                                             <FaBolt />
                                         </button>
                                     )}
-                                    <button onClick={() => window.open(`http://localhost:5173/${item.portfolio_name}`, '_blank')} className="p-2 text-[var(--text-primary)] hover:bg-[var(--text-secondary)]/10 rounded-lg" title="View Live"><FaExternalLinkAlt /></button>
+                                    <button onClick={() => window.open(`/`)} className="p-2 text-[var(--text-primary)] hover:bg-[var(--text-secondary)]/10 rounded-lg" title="View Live"><FaExternalLinkAlt /></button>
                                     <button onClick={() => handleEdit(item)} className="p-2 text-blue-400 hover:bg-blue-400/10 rounded-lg" title="Edit"><FaEdit /></button>
-                                    <button onClick={() => handleDeleteClick(item)} className="p-2 text-red-400 hover:bg-red-400/10 rounded-lg" title="Delete"><FaTrash /></button>
+                                    <button
+                                        onClick={() => handleDeleteClick(item)}
+                                        disabled={item.is_active}
+                                        className={`p-2 rounded-lg ${item.is_active ? 'text-[var(--text-secondary)]/30 cursor-not-allowed' : 'text-red-400 hover:bg-red-400/10'}`}
+                                        title={item.is_active ? "Cannot delete active portfolio" : "Delete"}
+                                    >
+                                        <FaTrash />
+                                    </button>
                                 </div>
                             </div>
                         ))}
@@ -331,6 +355,7 @@ export const PortfolioManager = () => {
                             )}
                             <input
                                 type="file"
+                                required
                                 accept="image/*"
                                 onChange={(e) => {
                                     const file = e.target.files?.[0];

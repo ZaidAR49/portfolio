@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
 import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
@@ -6,7 +6,9 @@ import { getExperiences } from "../../data/portfolio-data";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Loading } from "../loading";
+import { DashbordSecretKeyContext } from "../../contexts/dashbord-secret-key";
 export const ExperienceManager = () => {
+    const { secretKey } = useContext(DashbordSecretKeyContext);
     const server_url = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
     const [experiences, setExperiences] = useState<any[]>([]);
@@ -70,7 +72,11 @@ export const ExperienceManager = () => {
         if (!deleteConfirm.id) return;
 
         try {
-            await axios.delete(`${server_url}/api/experience/delete/${deleteConfirm.id}`);
+            await axios.delete(`${server_url}/api/experience/delete/${deleteConfirm.id}`, {
+                headers: {
+                    "security-code": secretKey
+                }
+            });
             toast.success("Experience deleted successfully");
             setExperiences(experiences.filter(e => e.id !== deleteConfirm.id));
         } catch (error: any) {
@@ -91,12 +97,20 @@ export const ExperienceManager = () => {
                 await axios.post(`${server_url}/api/experience/add`, {
                     userID: userId,
                     ...formData
+                }, {
+                    headers: {
+                        "security-code": secretKey
+                    }
                 });
             } else if (editingId) {
                 await axios.put(`${server_url}/api/experience/update/${editingId}`, {
                     id: editingId,
                     user_id: userId,
                     ...formData
+                }, {
+                    headers: {
+                        "security-code": secretKey
+                    }
                 });
             }
 

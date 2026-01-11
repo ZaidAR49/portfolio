@@ -7,6 +7,8 @@ import { getIconForTechnology, availableTechnologies } from "../../helpers/icon-
 import { getSkills } from "../../data/portfolio-data";
 import { toast } from "react-toastify";
 import { Loading } from "../loading";
+import { useContext } from "react";
+import { DashbordSecretKeyContext } from "../../contexts/dashbord-secret-key";
 import axios from "axios";
 
 export const SkillsManager = () => {
@@ -17,7 +19,7 @@ export const SkillsManager = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [skillType, setSkillType] = useState<"primary" | "secondary">("primary");
     const [isLoading, setIsLoading] = useState(true);
-
+    const { secretKey } = useContext(DashbordSecretKeyContext);
     const [deleteConfirm, setDeleteConfirm] = useState<{ isOpen: boolean; id: number | null; name: string }>({
         isOpen: false,
         id: null,
@@ -27,7 +29,6 @@ export const SkillsManager = () => {
     const filteredTechs = availableTechnologies.filter(tech =>
         tech.toLowerCase().includes(searchQuery.toLowerCase())
     );
-
     const fetchSkills = () => {
         getSkills().then((data) => {
             setSkills(data);
@@ -56,7 +57,7 @@ export const SkillsManager = () => {
                 user_id: userId
             };
 
-            const response = await axios.post(`${server_url}/api/skill/add`, newSkill);
+            const response = await axios.post(`${server_url}/api/skill/add`, newSkill, { headers: { "security-code": secretKey } });
 
             if (response.status === 200 || response.status === 201) {
                 toast.success(`${techName} added successfully`);
@@ -86,7 +87,7 @@ export const SkillsManager = () => {
         if (!deleteConfirm.id) return;
 
         try {
-            await axios.delete(`${server_url}/api/skill/delete/${deleteConfirm.id}`);
+            await axios.delete(`${server_url}/api/skill/delete/${deleteConfirm.id}`, { headers: { "security-code": secretKey } });
             toast.success("Skill deleted");
             fetchSkills(); // Re-fetch to sync state
         } catch (error: any) {

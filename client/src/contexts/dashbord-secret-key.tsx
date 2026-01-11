@@ -1,5 +1,4 @@
-import { createContext } from "react";
-import { useState } from "react";
+import { createContext, useState } from "react";
 
 interface secretKeyContextType {
     secretKey: string | null;
@@ -11,7 +10,19 @@ export const DashbordSecretKeyContext = createContext<secretKeyContextType>(
 );
 
 export const DashbordSecretKeyContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const [secretKey, setSecretKey] = useState<string | null>(null);
+    const [secretKey, setSecretKeyState] = useState<string | null>(() => {
+        return localStorage.getItem("dashboardSecretKey");
+    });
+
+    const setSecretKey = (key: string | null) => {
+        setSecretKeyState(key);
+        if (key) {
+            localStorage.setItem("dashboardSecretKey", key);
+        } else {
+            localStorage.removeItem("dashboardSecretKey");
+        }
+    };
+
     return (
         <DashbordSecretKeyContext.Provider value={{ secretKey, setSecretKey }}>
             {children}

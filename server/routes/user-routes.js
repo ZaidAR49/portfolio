@@ -3,17 +3,17 @@ import {
     activateUser, addUser, getAllUsers, getUserByPortfolioName, getActiveUser, updateUser,
     deleteUser, deactivateUser
 } from "../controllers/user-controller.js";
-
+import { checksecuritycode } from "../middlewares/auth-middleware.js";
 const router = express.Router();
 
-router.post("/add", addUser);
+router.post("/add", checksecuritycode, addUser);
 router.get("/all", getAllUsers);
-router.post("/activate/:id", activateUser);
-router.post("/deactivate/:id", deactivateUser);
+router.post("/activate/:id", checksecuritycode, activateUser);
+router.post("/deactivate/:id", checksecuritycode, deactivateUser);
 router.get("/active", getActiveUser);
 router.get("/:portfolioName", getUserByPortfolioName);
-router.put("/update/:portfolioName", updateUser);
-router.delete("/delete/:id", deleteUser);
+router.put("/update/:portfolioName", checksecuritycode, updateUser);
+router.delete("/delete/:id", checksecuritycode, deleteUser);
 
 //router.get("/:portfolioName", getUserByPortfolioName);
 
