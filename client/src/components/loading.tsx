@@ -5,7 +5,7 @@ export const Loading = () => {
         <div className="flex justify-center items-center h-screen ">
             <Lottie animationData={loading}
                 loop={true}
-                style={{ width: 250, height: 250 }}
+                style={{ width: 200, height: 200 }}
             />
         </div>
     );
