@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaSave, FaExternalLinkAlt, FaCheck, FaBolt } from "react-icons/fa";
-import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
+import { InputGroup, SectionHeader, ConfirmDialog, LoadingButton } from "./dashboard-shared";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getPortfolios } from "../../data/portfolio-data";
@@ -31,6 +31,7 @@ export const PortfolioManager = () => {
     const [formData, setFormData] = useState(initialFormState);
     const [isEditing, setIsEditing] = useState<string | null>(null); // Stores portfolio_name of item being edited
     const [isAdding, setIsAdding] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Picture State
     const [picture, setPicture] = useState({
@@ -133,6 +134,7 @@ export const PortfolioManager = () => {
             return;
         }
 
+        setIsSubmitting(true);
         try {
             let response;
             if (isAdding) {
@@ -163,6 +165,8 @@ export const PortfolioManager = () => {
                 navigate("/error", { replace: true, state: error.response.status });
             }
             toast.error(`Failed to ${isAdding ? 'create' : 'update'} portfolio`);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -272,9 +276,9 @@ export const PortfolioManager = () => {
                     <button type="button" onClick={cleanupForm} className="px-6 py-2 rounded-xl border border-[var(--text-secondary)]/30 hover:bg-[var(--text-secondary)]/10 text-[var(--text-secondary)]">
                         Cancel
                     </button>
-                    <button type="submit" className="btn-primary flex items-center gap-2">
+                    <LoadingButton type="submit" isLoading={isSubmitting} loadingText="Saving...">
                         <FaSave /> Save Changes
-                    </button>
+                    </LoadingButton>
                 </div>
             </div>
 
@@ -355,7 +359,6 @@ export const PortfolioManager = () => {
                             )}
                             <input
                                 type="file"
-                                required
                                 accept="image/*"
                                 onChange={(e) => {
                                     const file = e.target.files?.[0];

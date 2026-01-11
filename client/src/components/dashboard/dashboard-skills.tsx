@@ -19,6 +19,7 @@ export const SkillsManager = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [skillType, setSkillType] = useState<"primary" | "secondary">("primary");
     const [isLoading, setIsLoading] = useState(true);
+    const [addingSkill, setAddingSkill] = useState<string | null>(null);
     const { secretKey } = useContext(DashbordSecretKeyContext);
     const [deleteConfirm, setDeleteConfirm] = useState<{ isOpen: boolean; id: number | null; name: string }>({
         isOpen: false,
@@ -47,6 +48,8 @@ export const SkillsManager = () => {
     }, []);
 
     const handleAdd = async (techName: string) => {
+        if (addingSkill) return; // Prevent multiple adds at once
+        setAddingSkill(techName);
         try {
             const user = await axios.get(`${server_url}/api/user/active`);
             const userId = user.data.id;
@@ -72,6 +75,8 @@ export const SkillsManager = () => {
             }
             const errorMessage = error.response?.data?.error || "Failed to add skill";
             toast.error(errorMessage);
+        } finally {
+            setAddingSkill(null);
         }
     };
 
@@ -172,10 +177,15 @@ export const SkillsManager = () => {
                                     <button
                                         key={tech}
                                         onClick={() => handleAdd(tech)}
-                                        className="p-3 rounded-lg border border-[var(--text-secondary)]/10 hover:border-[var(--accent)]/50 hover:bg-[var(--accent)]/5 transition-all flex flex-col items-center gap-2 group"
+                                        disabled={addingSkill !== null}
+                                        className={`p-3 rounded-lg border border-[var(--text-secondary)]/10 hover:border-[var(--accent)]/50 hover:bg-[var(--accent)]/5 transition-all flex flex-col items-center gap-2 group ${addingSkill === tech ? 'opacity-70 cursor-wait' : ''}`}
                                     >
-                                        <div className="text-2xl text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors">
-                                            {getIconForTechnology(tech)}
+                                        <div className="text-2xl text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors relative">
+                                            {addingSkill === tech ? (
+                                                <div className="animate-spin h-6 w-6 border-2 border-[var(--accent)] border-t-transparent rounded-full" />
+                                            ) : (
+                                                getIconForTechnology(tech)
+                                            )}
                                         </div>
                                         <span className="text-sm font-medium text-center">{tech}</span>
                                     </button>

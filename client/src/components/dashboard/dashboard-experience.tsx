@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
-import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
+import { InputGroup, SectionHeader, ConfirmDialog, LoadingButton } from "./dashboard-shared";
 import { getExperiences } from "../../data/portfolio-data";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -23,6 +23,7 @@ export const ExperienceManager = () => {
     const [formData, setFormData] = useState(initialFormState);
     const [editingId, setEditingId] = useState<number | null>(null);
     const [isAdding, setIsAdding] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [deleteConfirm, setDeleteConfirm] = useState<{ isOpen: boolean; id: number | null; role: string }>({
         isOpen: false,
         id: null,
@@ -89,6 +90,7 @@ export const ExperienceManager = () => {
     };
 
     const handleSave = async () => {
+        setIsSubmitting(true);
         try {
             const user = await axios.get(`${server_url}/api/user/active`);
             const userId = user.data.id;
@@ -123,6 +125,8 @@ export const ExperienceManager = () => {
                 navigate("/error", { replace: true, state: error.response.status });
             }
             toast.error(`Failed to ${isAdding ? 'add' : 'update'} experience`);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -152,7 +156,9 @@ export const ExperienceManager = () => {
                 </div>
                 <div className="flex justify-end gap-3">
                     <button onClick={cleanupForm} className="px-6 py-2 rounded-xl border border-[var(--text-secondary)]/30 hover:bg-[var(--text-secondary)]/10 text-[var(--text-secondary)]">Cancel</button>
-                    <button onClick={handleSave} className="btn-primary flex items-center gap-2"><FaSave /> Save</button>
+                    <LoadingButton isLoading={isSubmitting} onClick={handleSave} loadingText="Saving...">
+                        <FaSave /> Save
+                    </LoadingButton>
                 </div>
             </div>
         );

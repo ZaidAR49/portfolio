@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
-import { InputGroup, SectionHeader, ConfirmDialog } from "./dashboard-shared";
+import { InputGroup, SectionHeader, ConfirmDialog, LoadingButton } from "./dashboard-shared";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getProjects } from "../../data/portfolio-data";
@@ -37,6 +37,7 @@ export const ProjectsManager = () => {
     const [formData, setFormData] = useState(initialFormState);
     const [editingId, setEditingId] = useState<number | null>(null);
     const [isAdding, setIsAdding] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Image State
     // We store objects to handle both new files (for preview) and existing URLs
@@ -222,6 +223,7 @@ export const ProjectsManager = () => {
 
         if (!validateForm()) return;
 
+        setIsSubmitting(true);
         try {
             const user = await axios.get(`${server_url}/api/user/active`);
             const userId = user.data.id;
@@ -285,6 +287,8 @@ export const ProjectsManager = () => {
                 navigate("/error", { replace: true, state: error.response.status });
             }
             toast.error(`Failed to ${isAdding ? 'add' : 'update'} project`);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -388,7 +392,9 @@ export const ProjectsManager = () => {
                     </div>
                     <div className="flex justify-end gap-3">
                         <button type="button" onClick={cleanupForm} className="px-6 py-2 rounded-xl border border-[var(--text-secondary)]/30 hover:bg-[var(--text-secondary)]/10 text-[var(--text-secondary)]">Cancel</button>
-                        <button type="submit" className="btn-primary flex items-center gap-2"><FaSave /> Save</button>
+                        <LoadingButton isLoading={isSubmitting} type="submit" loadingText="Saving...">
+                            <FaSave /> Save
+                        </LoadingButton>
                     </div>
                 </form>
             </div>
