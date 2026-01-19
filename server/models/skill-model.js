@@ -25,3 +25,7 @@ export const deleteSkill = (id) => {
     return sql.from("skills").delete().eq("id", id).select("id");
 };
 
+export const activeSkills = () => {
+    return sql.from("skills").select("*,users!inner(is_active)").eq("users.is_active", true);
+}
+

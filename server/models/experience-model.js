@@ -29,3 +29,7 @@ export const updateExperience = (experience) => {
         .eq("id", experience.id)
         .select();
 };
+
+export const getActiveExperiences = () => {
+    return sql.from('experiences').select('*, users!inner(is_active)').eq('users.is_active', true);
+};

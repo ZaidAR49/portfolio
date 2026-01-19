@@ -1,5 +1,5 @@
 
-import { addExperience as addexperience, getExperienceByUserId as getallExperiences, getExperienceById as getexperienceById, deleteExperience as deleteexperience, updateExperience as updateexperience } from "../models/experience-model.js";
+import { addExperience as addexperience, getExperienceByUserId as getallExperiences, getExperienceById as getexperienceById, deleteExperience as deleteexperience, updateExperience as updateexperience, getActiveExperiences as getactiveExperiences } from "../models/experience-model.js";
 
 export const addExperience = async (req, res) => {
     try {
@@ -84,5 +84,16 @@ export const updateExperience = async (req, res) => {
     } catch (error) {
         console.error("Error updating experience:", error);
         res.status(500).json({ message: "Failed to update experience" });
+    }
+};
+
+export const getActiveExperiences = async (req, res) => {
+    try {
+        const experiences = await getactiveExperiences();
+        console.log("Active experiences:", experiences);
+        res.status(200).json(experiences);
+    } catch (error) {
+        console.error("Error getting active experiences:", error);
+        res.status(500).json({ message: "Failed to get active experiences" });
     }
 };

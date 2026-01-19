@@ -26,6 +26,10 @@ export const SkillsManager = () => {
         id: null,
         name: ""
     });
+    // test
+    useEffect(() => {
+        console.log("secret key :", secretKey);
+    }, [secretKey]);
 
     const filteredTechs = availableTechnologies.filter(tech =>
         tech.toLowerCase().includes(searchQuery.toLowerCase())

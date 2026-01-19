@@ -1,5 +1,5 @@
 import Logger from "../helpers/logger-helper.js";
-import { addSkill as addskill, getallSkills as getallskills, updateSkill as updateskill, deleteSkill as deleteskill } from "../models/skill-model.js";
+import { addSkill as addskill, getallSkills as getallskills, updateSkill as updateskill, deleteSkill as deleteskill, activeSkills as activeskill } from "../models/skill-model.js";
 
 export const addSkill = async (req, res) => {
     try {
@@ -71,5 +71,19 @@ export const deleteSkill = async (req, res) => {
     } catch (error) {
         Logger.error("Failed to delete skill: ", error);
         res.status(500).json({ error: "Failed to delete skill" });
+    }
+};
+
+export const activeSkills = async (req, res) => {
+    try {
+        const result = await activeskill();
+        const data = result.data;
+        if (result) {
+            Logger.success("Skills retrieved successfully: ", result);
+            return res.status(200).json({ data });
+        }
+    } catch (error) {
+        Logger.error("Failed to get skills: ", error);
+        res.status(500).json({ error: "Failed to get skills" });
     }
 };

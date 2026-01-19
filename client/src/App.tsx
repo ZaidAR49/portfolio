@@ -10,6 +10,7 @@ import ErrorPage from "./pages/error-page"; // Assuming you created this
 import { ThemeProvider, ThemeContext } from "./contexts/theme-context";
 import { DashbordSecretKeyContextProvider } from "./contexts/dashbord-secret-key";
 import { getUser } from "./data/portfolio-data";
+import { getFromCache } from "./helpers/storage-helper";
 import "react-toastify/dist/ReactToastify.css";
 
 // 1. Define the Layouts
@@ -39,9 +40,16 @@ function AppContent() {
   const [userInfo, setUserInfo] = useState<any>(null);
 
   useEffect(() => {
-    getUser()
-      .then((user) => setUserInfo(user))
-      .catch(() => toast.error("Failed to load user data"));
+    const user = getFromCache("user");
+    if (user) {
+      setUserInfo(user);
+    } else {
+      getUser()
+        .then((user) => {
+          setUserInfo(user);
+        })
+        .catch(() => toast.error("Failed to load user data"));
+    }
   }, []);
 
   useEffect(() => {

@@ -10,7 +10,7 @@ export const checksecuritycode = async (req, res, next) => {
         }
         const storedSecurityCode = await getStoredSecurityCode();
         if (securityCode === storedSecurityCode) {
-            Logger.success("Security code correct");
+            Logger.success("Security code correct:", securityCode);
             next();
 
         } else {

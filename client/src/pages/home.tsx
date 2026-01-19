@@ -7,6 +7,7 @@ import { About } from "../components/about-section";
 import { getSkills, getUser, getProjects } from "../data/portfolio-data";
 import { toast } from "react-toastify";
 import { Loading } from "../components/loading";
+import { getFromCache } from "../helpers/storage-helper";
 export const Home = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -18,24 +19,42 @@ export const Home = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const [user, projects, skills] = await Promise.all([
-          getUser(),
-          getProjects(),
-          getSkills()
-        ]);
-        setUser(user);
-        setProjects(projects);
-        setSkills(skills);
+        const user = getFromCache("user");
+        const projects = getFromCache("projects");
+        const skills = getFromCache("skills");
+        if (!user || !projects || !skills) {
+          const [user, projects, skills] = await Promise.all([
+            getUser(),
+            getProjects(),
+            getSkills()
+
+          ]);
+          console.log("fetching data");
+          setUser(user);
+          setProjects(projects);
+          setSkills(skills);
+        }
+        else {
+          console.log("using cache", getFromCache("user"));
+          setUser(user);
+          setProjects(projects);
+          setSkills(skills);
+        }
+
       } catch (error: any) {
         console.error("Error fetching data:", error);
         if (error.response && [401, 404, 500].includes(error.response.status)) {
           navigate("/error", { replace: true, state: error.response.status });
+        }
+        else {
+          navigate("/error", { replace: true, state: 1000 });
         }
         toast.error("Failed to load data");
       } finally {
         setIsLoading(false);
       }
     };
+
     load();
   }, []);
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
+import { addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, activeProjects as activeprojects, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
 import Logger from "../helpers/logger-helper.js";
 export const addProject = async (req, res) => {
     try {
@@ -83,5 +83,17 @@ export const updateProject = async (req, res) => {
     } catch (error) {
         Logger.error("Error updating project", error);
         res.status(500).json({ message: "Failed to update project" });
+    }
+};
+
+export const activeProjects = async (req, res) => {
+    try {
+        Logger.info("Fetching active projects");
+        const projects = await activeprojects();
+        Logger.success(`Fetched ${projects ? projects.length : 0} active projects`, projects);
+        res.status(200).json(projects);
+    } catch (error) {
+        Logger.error("Error getting active projects", error);
+        return res.status(500).json({ message: "Failed to get active projects" });
     }
 };

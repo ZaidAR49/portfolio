@@ -7,6 +7,7 @@ import { Experience } from "../components/experience";
 import { getUser, getExperiences, getSkills } from "../data/portfolio-data";
 import { Loading } from "../components/loading";
 import { toast } from "react-toastify";
+import { getFromCache } from "../helpers/storage-helper";
 export const About = () => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -18,18 +19,33 @@ export const About = () => {
     useEffect(() => {
         const load = async () => {
             try {
-                const [user, experiences, skills] = await Promise.all([
-                    getUser(),
-                    getExperiences(),
-                    getSkills()
-                ]);
-                setUserInfo(user);
-                setExperiences(experiences);
-                setSkills(skills);
+                const user = getFromCache("user");
+                const experiences = getFromCache("experiences");
+                const skills = getFromCache("skills");
+                if (!user || !experiences || !skills) {
+                    const [user, experiences, skills] = await Promise.all([
+                        getUser(),
+                        getExperiences(),
+                        getSkills()
+                    ]);
+                    setUserInfo(user);
+                    setExperiences(experiences);
+                    setSkills(skills);
+                    setIsLoading(false);
+                }
+                else {
+                    setUserInfo(user);
+                    setExperiences(experiences);
+                    setSkills(skills);
+                    setIsLoading(false);
+                }
             } catch (error: any) {
                 console.error("Error fetching data:", error);
                 if (error.response && [401, 404, 500].includes(error.response.status)) {
                     navigate("/error", { replace: true, state: error.response.status });
+                }
+                else {
+                    navigate("/error", { replace: true, state: 1000 });
                 }
                 toast.error("Failed to load data");
             }

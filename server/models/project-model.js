@@ -48,3 +48,7 @@ export const updateProjectImages = (projectID, urls) => {
         .eq("id", projectID)
         .select();
 };
+
+export const activeProjects = () => {
+    return sql.from("projects").select("*,users!inner(is_active)").eq("users.is_active", true);
+};

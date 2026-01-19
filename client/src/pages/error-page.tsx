@@ -26,6 +26,13 @@ const errorObject = {
         code: 401,
         title: "Authentication Error",
         description: "You are not authorized to access this page. Please log in to continue."
+    },
+    1000: {
+        speed: 1,
+        animation: serverErrorAnimation,
+        code: 1000,
+        title: "Server Error",
+        description: "unknown error,please try again later."
     }
 }
 
