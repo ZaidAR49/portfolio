@@ -3,7 +3,6 @@ import { updateProjectImages, getProjectById } from "../models/project-model.js"
 import { uploadPictureHelper, uploadImagesHelper, deletePictureHelper, deleteImagesHelper } from "../helpers/cloud-helper.js";
 import { filesToBase64 } from "../helpers/file-to-base64-helper.js";
 import Logger from "../helpers/logger-helper.js";
-
 export const uploadPicture = async (req, res) => {
     try {
         const { userID, picture } = req.body;
@@ -32,23 +31,16 @@ export const uploadImages = async (req, res) => {
             Logger.warn("No file or project data uploaded");
             return res.status(400).json({ error: "No file or project data uploaded" });
         }
-
-        // 1. Upload New Files
         const base64Images = filesToBase64(files);
         const newUrls = await uploadImagesHelper(base64Images);
-
-        // 2. Fetch Existing Images
-        const currentProject = await getProjectById(projectID);
-        let existingImages = [];
-        if (currentProject && currentProject.data && currentProject.data[0] && currentProject.data[0].images) {
-            existingImages = currentProject.data[0].images;
-        }
-
-        // 3. Merge Lists
-        const urls = [...existingImages, ...newUrls];
-
-        await updateProjectImages(projectID, urls);
-        Logger.success("Project images uploaded and updated successfully", { urls });
+        const data = await getProjectById(projectID);
+        const oldUrls = data.data[0].images;
+        // console.log("oldUrls", oldUrls);
+        // console.log("newUrls", newUrls);
+        // console.log("count", oldUrls.length + newUrls.length);
+        const result = await updateProjectImages(projectID, [...oldUrls, ...newUrls]);
+        //  console.log("result", result);
+        Logger.success("Project images uploaded and updated successfully", { urls: newUrls });
         res.status(200).json({ message: "Files uploaded successfully" });
     } catch (error) {
         Logger.error("Error uploading file", error);
@@ -74,14 +66,20 @@ export const deletePicture = async (req, res) => {
 
 export const deleteImages = async (req, res) => {
     try {
-        const { urls } = req.body;
+        const { urls, projectID } = req.body;
         Logger.info(`Starting images deletion for URLs: ${urls}`);
-        if (!urls || !Array.isArray(urls)) {
-            Logger.warn("No URLs provided");
-            return res.status(400).json({ error: "No URLs provided" });
+        if (!urls || !Array.isArray(urls) || !projectID) {
+            Logger.warn("No URLs or project data provided");
+            return res.status(400).json({ error: "No URLs or project data provided" });
         }
         const results = await deleteImagesHelper(urls);
-        Logger.success("Images deleted successfully", { results });
+        Logger.success("Images deleted from cloud successfully", { results });
+        // from db
+        const data = await getProjectById(projectID);
+        const oldUrls = data.data[0].images;
+        const newUrls = oldUrls.filter((url) => !urls.includes(url));
+        await updateProjectImages(projectID, newUrls);
+        Logger.success("Images deleted from db successfully", { newUrls });
         res.status(200).json({ message: "Files deleted successfully" });
     } catch (error) {
         Logger.error("Error deleting files", error);

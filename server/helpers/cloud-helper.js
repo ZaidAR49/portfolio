@@ -18,19 +18,12 @@ export const uploadImagesHelper = async (files) => {
     }
 }
 export const deletePictureHelper = async (url) => {
-    console.log("Attempting to delete image with URL:", url);
-
-    // Safety check: if it's a blob url or obviously not cloudinary, skip it.
-    if (!url || !url.includes('/upload/')) {
-        console.warn("Skipping deletion for invalid or non-Cloudinary URL:", url);
-        return null;
-    }
-
+    console.log("here url", url);
     const regex = /\/upload\/(?:v\d+\/)?([^\.]+)+\.\w+$/
     const match = url.match(regex);
     if (!match) {
-        console.warn("URL format did not match regex, skipping:", url);
-        return null; // Don't throw, just skip
+        console.error("Invalid URL format");
+        throw new Error("Invalid URL format");
     }
     const id = match[1];
     try {

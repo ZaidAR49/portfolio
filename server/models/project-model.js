@@ -19,7 +19,7 @@ export const getProjectByUserId = (id) => {
     return sql.from("projects").select("*").eq("user_id", id).select("*");
 };
 export const getProjectById = (id) => {
-    return sql.from("projects").select("*").eq("id", id).select("*"); // Select all fields
+    return sql.from("projects").select("*").eq("id", id).select("*");
 };
 export const deleteProject = (id) => {
     return sql.from("projects").delete().eq("id", id).select("*");

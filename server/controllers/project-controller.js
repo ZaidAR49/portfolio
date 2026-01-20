@@ -12,8 +12,8 @@ export const addProject = async (req, res) => {
         }
         const result = await addproject(project);
         // Log the sanitized result from DB, which is the source of truth
-        Logger.success("Project added successfully", result.data[0]);
-        res.status(201).json(result.data[0]);
+        Logger.success("Project added successfully", result);
+        res.status(201).json(result);
     } catch (error) {
         Logger.error("Error adding project", error);
         return res.status(500).json({ message: "Failed to add project" });

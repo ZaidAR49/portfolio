@@ -15,10 +15,11 @@ export const ProjectsManager = () => {
     const [projects, setProjects] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const { secretKey } = useContext(DashbordSecretKeyContext);
+    const [deletedImages, setDeletedImages] = useState<string[]>([]);
     // Initial state matching backend requirements
     useEffect(() => {
-        console.log("secretKey", secretKey);
-    }, [secretKey]);
+        console.log("deletedImages", deletedImages);
+    }, [deletedImages]);
 
 
     const initialFormState = {
@@ -123,6 +124,7 @@ export const ProjectsManager = () => {
 
     const handleImageDelete = (id: string) => {
         setProjectImages(projectImages.filter(img => img.id !== id));
+        setDeletedImages([...deletedImages, projectImages.find(img => img.id === id)?.preview || ""]);
     };
 
     const handleDeleteClick = (item: any) => {
@@ -275,6 +277,9 @@ export const ProjectsManager = () => {
                             "security-code": secretKey
                         }
                     });
+                }
+                if (deletedImages.length > 0) {
+                    await axios.delete(`${server_url}/api/cloud/delete/images`, { data: { urls: deletedImages, projectID: editingId }, headers: { "security-code": secretKey } });
                 }
             }
 
