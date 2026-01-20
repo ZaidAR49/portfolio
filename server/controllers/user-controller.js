@@ -4,6 +4,7 @@ import {
     deactivateUser as deactivateuser, getActiveUser as getactiveuser
 } from "../models/user-model.js";
 import Logger from "../helpers/logger-helper.js";
+import { deletePictureHelper } from "../helpers/cloud-helper.js";
 
 export const addUser = async (req, res) => {
     try {
@@ -63,7 +64,8 @@ export const updateUser = async (req, res) => {
         }
         // Logger.debug("All required fields present for update");
         const result = await updateuser(user);
-        Logger.success("User updated successfully", result);
+        const result2 = await deletePictureHelper(result.data[0].picture_url);
+        Logger.success("User updated successfully", result.data[0], result2);
         res.status(201).json(result);
     } catch (error) {
         Logger.error("Error updating user", error);
@@ -78,11 +80,21 @@ export const deleteUser = async (req, res) => {
             return res.status(400).json({ error: "Missing required fields" });
         }
         Logger.info(`Deleting user ID: ${req.params.id}`);
-        const { data, error } = await deleteuser(req.params.id);
+        const { data, error1 } = await deleteuser(req.params.id);
+        const { result, error2 } = await deletePictureHelper(data[0].picture_url);
+        Logger.info("Deleted user successfully", data, result);
 
-        if (error) {
-            Logger.error("Supabase delete error", error);
-            throw error;
+        if (error1) {
+            Logger.error("Supabase delete error", error1);
+            throw error1;
+        }
+
+        if (error2) {
+            // rollback
+            Logger.info("Rolling back user deletion");
+            await adduser(data[0]);
+            Logger.error("Cloudinary delete error", error2);
+            throw error2;
         }
 
         if (!data || data.length === 0) {
@@ -93,6 +105,9 @@ export const deleteUser = async (req, res) => {
         Logger.success("Deleted user successfully", data);
         res.status(200).json({ message: "Deleted successfully", data });
     } catch (error) {
+        // rollback
+        Logger.info("Rolling back user deletion");
+        await adduser(data[0]);
         Logger.error("Error deleting user", error);
         res.status(500).json({ error: "Failed to delete user" });
     }

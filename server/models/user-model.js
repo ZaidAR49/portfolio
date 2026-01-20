@@ -35,7 +35,7 @@ export const updateUser = (user) => {
         github_url: user.github_url,
         resume_url: user.resume_url,
         portfolio_name: user.portfolio_name
-    }).eq("id", user.id);
+    }).eq("id", user.id).select("*");
 }
 export const deleteUser = (id) => {
     return sql.from("users").delete().eq("id", id).eq("is_active", false).select();

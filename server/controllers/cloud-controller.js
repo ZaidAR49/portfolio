@@ -1,8 +1,9 @@
 import { updateUserPicture } from "../models/user-model.js";
-import { updateProjectImages } from "../models/project-model.js";
-import { uploadPictureHelper, uploadImagesHelper } from "../helpers/cloud-helper.js";
+import { updateProjectImages, getProjectById } from "../models/project-model.js";
+import { uploadPictureHelper, uploadImagesHelper, deletePictureHelper, deleteImagesHelper } from "../helpers/cloud-helper.js";
 import { filesToBase64 } from "../helpers/file-to-base64-helper.js";
 import Logger from "../helpers/logger-helper.js";
+
 export const uploadPicture = async (req, res) => {
     try {
         const { userID, picture } = req.body;
@@ -31,13 +32,59 @@ export const uploadImages = async (req, res) => {
             Logger.warn("No file or project data uploaded");
             return res.status(400).json({ error: "No file or project data uploaded" });
         }
+
+        // 1. Upload New Files
         const base64Images = filesToBase64(files);
-        const urls = await uploadImagesHelper(base64Images);
+        const newUrls = await uploadImagesHelper(base64Images);
+
+        // 2. Fetch Existing Images
+        const currentProject = await getProjectById(projectID);
+        let existingImages = [];
+        if (currentProject && currentProject.data && currentProject.data[0] && currentProject.data[0].images) {
+            existingImages = currentProject.data[0].images;
+        }
+
+        // 3. Merge Lists
+        const urls = [...existingImages, ...newUrls];
+
         await updateProjectImages(projectID, urls);
         Logger.success("Project images uploaded and updated successfully", { urls });
         res.status(200).json({ message: "Files uploaded successfully" });
     } catch (error) {
         Logger.error("Error uploading file", error);
         res.status(500).json({ error: "Failed to upload file" });
+    }
+}
+export const deletePicture = async (req, res) => {
+    try {
+        const { url } = req.body;
+        Logger.info(`Starting picture deletion for URL: ${url}`);
+        if (!url) {
+            Logger.warn("No URL provided");
+            return res.status(400).json({ error: "No URL provided" });
+        }
+        const { result } = await deletePictureHelper(url);
+        Logger.success("Picture deleted successfully", { result });
+        res.status(200).json({ message: "File deleted successfully" });
+    } catch (error) {
+        Logger.error("Error deleting file", error);
+        res.status(500).json({ error: "Failed to delete file" });
+    }
+}
+
+export const deleteImages = async (req, res) => {
+    try {
+        const { urls } = req.body;
+        Logger.info(`Starting images deletion for URLs: ${urls}`);
+        if (!urls || !Array.isArray(urls)) {
+            Logger.warn("No URLs provided");
+            return res.status(400).json({ error: "No URLs provided" });
+        }
+        const results = await deleteImagesHelper(urls);
+        Logger.success("Images deleted successfully", { results });
+        res.status(200).json({ message: "Files deleted successfully" });
+    } catch (error) {
+        Logger.error("Error deleting files", error);
+        res.status(500).json({ error: "Failed to delete files" });
     }
 }

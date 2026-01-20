@@ -1,4 +1,5 @@
 import { addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, activeProjects as activeprojects, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
+import { deleteImagesHelper } from "../helpers/cloud-helper.js";
 import Logger from "../helpers/logger-helper.js";
 export const addProject = async (req, res) => {
     try {
@@ -47,15 +48,28 @@ export const getProjectById = async (req, res) => {
 };
 
 export const deleteProject = async (req, res) => {
+    let project;
     try {
         if (!req.params.id) {
             return res.status(400).json({ message: "Missing required fields" });
         }
         Logger.info(`Deleting project ID: ${req.params.id}`);
-        const project = await deleteproject(req.params.id);
-        Logger.success("Project deleted successfully", project);
+        project = await deleteproject(req.params.id);
+        console.log("projects :", project.data[0], "and its images :", project.data[0].images);
+        const { result, error2 } = await deleteImagesHelper(project.data[0].images);
+        Logger.success("Project deleted successfully", project, result);
+        if (error2) {
+            // rollback
+            Logger.info("Rolling back project deletion");
+            await addproject(project);
+            Logger.error("Cloudinary delete error", error2);
+            throw error2;
+        }
         res.status(200).json(project);
     } catch (error) {
+        // rollback
+        Logger.info("Rolling back project deletion");
+        await addproject(project);
         Logger.error("Error deleting project", error);
         res.status(500).json({ message: "Failed to delete project" });
     }
