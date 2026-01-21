@@ -1,15 +1,38 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaChartLine, FaUsers, FaCode, FaProjectDiagram, FaBriefcase } from "react-icons/fa";
+import { getExperiences, getProjects, getSkills, getUser } from "../../data/portfolio-data";
 import axios from "axios";
 
 export const AnalysisDashboard = () => {
+    const [data, setData] = useState({
+        user: {},
+        skills: {},
+        projects: {},
+        experiences: {}
+    });
     const [stats, setStats] = useState({
         portfolios: 0,
         skills: 0,
         projects: 0,
         experiences: 0
     });
+    useEffect(() => {
+        console.log("data:", data);
+        const downloadData = () => {
+            // Only download if we have actual data (checking user object as a proxy)
+            if (Object.keys(data.user).length > 0) {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+                const downloadAnchorNode = document.createElement('a');
+                downloadAnchorNode.setAttribute("href", dataStr);
+                downloadAnchorNode.setAttribute("download", "portfolio_data.json");
+                document.body.appendChild(downloadAnchorNode); // required for firefox
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
+            }
+        }
+        downloadData()
+    }, [data]);
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -35,6 +58,20 @@ export const AnalysisDashboard = () => {
 
         fetchStats();
     }, []);
+    const handleDownloadData = async () => {
+        try {
+            setData({
+                user: await getUser(),
+                skills: await getSkills(),
+                projects: await getProjects(),
+                experiences: await getExperiences()
+            })
+        } catch (error) {
+            console.error("Error fetching dashboard stats:", error);
+        }
+
+
+    };
 
     const statCards = [
         {
@@ -87,31 +124,22 @@ export const AnalysisDashboard = () => {
                 ))}
             </div>
 
-            {/* Fake Chart Area */}
-            <div className="glass-panel p-6 lg:p-10 rounded-3xl border border-[var(--text-secondary)]/10 bg-[var(--bg-secondary)]/20">
-                <h3 className="text-xl font-semibold mb-8 flex items-center gap-3">
-                    <FaChartLine className="text-[var(--accent)]" />
-                    Performance Analytics
-                </h3>
-                <div className="h-64 md:h-80 w-full flex items-end gap-2 md:gap-4 px-2">
-                    {[40, 65, 30, 80, 55, 90, 45, 60, 75, 50, 85, 95].map((h, i) => (
-                        <div key={i} className="flex-1 flex flex-col justify-end group h-full relative">
-                            <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 px-2 py-1 rounded text-xs">
-                                {h * 124} views
-                            </div>
-                            <motion.div
-                                initial={{ height: 0 }}
-                                animate={{ height: `${h}%` }}
-                                transition={{ duration: 0.8, delay: i * 0.05 }}
-                                className="w-full bg-gradient-to-t from-[var(--accent)]/10 to-[var(--accent)] rounded-t-lg hover:from-[var(--accent)] hover:to-[var(--accent)]/80 transition-all relative overflow-hidden"
-                            >
-                                <div className="absolute top-0 left-0 w-full h-[1px] bg-white/30" />
-                            </motion.div>
-                            <span className="text-xs text-[var(--text-secondary)] text-center mt-2 hidden md:block">
-                                {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][i]}
-                            </span>
-                        </div>
-                    ))}
+            {/* Export Data Area */}
+            <div className="glass-panel p-6 lg:p-10 rounded-3xl border border-[var(--text-secondary)]/10 bg-[var(--bg-secondary)]/20 flex flex-col items-center justify-center text-center">
+                <div className="max-w-md space-y-6">
+                    <div className="w-16 h-16 rounded-full bg-[var(--accent)]/10 flex items-center justify-center mx-auto text-[var(--accent)] text-2xl">
+                        <FaChartLine />
+                    </div>
+                    <div>
+                        <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2">Export User Data</h3>
+                        <p className="text-[var(--text-secondary)]">Download all your active portfolio data including skills, projects, and experiences in JSON format.</p>
+                    </div>
+                    <button
+                        className="px-8 py-3 rounded-xl bg-[var(--accent)] text-white font-medium hover:opacity-90 transition-all flex items-center gap-2 mx-auto"
+                        onClick={() => { handleDownloadData() }}
+                    >
+                        <span>Download Data</span>
+                    </button>
                 </div>
             </div>
         </div>
