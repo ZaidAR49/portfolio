@@ -1,5 +1,15 @@
 import sql from "../config/database-conection.js";
 
+export const getSkillsCount = async () => {
+    const { count, error } = await sql
+        .from('skills')
+        .select('*', { count: 'estimated' });
+    if (error) {
+        console.error('Error getting skills count:', error);
+        throw error;
+    }
+    return count;
+}
 export const addSkill = (skill) => {
     return sql.from("skills").insert([
         {

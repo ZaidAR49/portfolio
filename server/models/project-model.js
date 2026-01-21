@@ -1,5 +1,16 @@
 import sql from "../config/database-conection.js";
 
+export const getProjectsCount = async () => {
+    const { count, error } = await sql
+        .from('projects')
+        .select('*', { count: 'estimated' });
+    if (error) {
+        console.error('Error getting projects count:', error);
+        throw error;
+    }
+    return count;
+}
+
 export const addProject = (project) => {
     return sql.from("projects").insert([{
         user_id: project.user_id,

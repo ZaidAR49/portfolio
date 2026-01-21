@@ -1,10 +1,22 @@
 import {
+    getUsersCount as getuserscount,
     adduser, getUserByPortfolioName as getuserByPortfolioName, getAllUsers as getallusers
     , updateUser as updateuser, deleteUser as deleteuser, activateUser as activateuser,
     deactivateUser as deactivateuser, getActiveUser as getactiveuser
 } from "../models/user-model.js";
 import Logger from "../helpers/logger-helper.js";
 import { deletePictureHelper } from "../helpers/cloud-helper.js";
+
+export const getUsersCount = async (req, res) => {
+    try {
+        const usersCount = await getuserscount();
+        console.log("users count :", usersCount);
+        res.status(200).json(usersCount);
+    } catch (error) {
+        console.error("Error getting users count:", error);
+        res.status(500).json({ message: "Failed to get users count" });
+    }
+}
 
 export const addUser = async (req, res) => {
     try {

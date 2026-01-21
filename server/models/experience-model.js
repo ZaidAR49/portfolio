@@ -1,5 +1,15 @@
 import sql from "../config/database-conection.js";
 
+export const getExperiencesCount = async () => {
+    const { count, error } = await sql
+        .from('experiences')
+        .select('*', { count: 'estimated' });
+    if (error) {
+        console.error('Error getting experiences count:', error);
+        throw error;
+    }
+    return count;
+}
 export const addExperience = (experience) => {
     return sql.from("experiences").insert([{
         user_id: experience.userID,

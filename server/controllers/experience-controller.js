@@ -1,6 +1,17 @@
 
-import { addExperience as addexperience, getExperienceByUserId as getallExperiences, getExperienceById as getexperienceById, deleteExperience as deleteexperience, updateExperience as updateexperience, getActiveExperiences as getactiveExperiences } from "../models/experience-model.js";
+import { getExperiencesCount as getexperiencesCount, addExperience as addexperience, getExperienceByUserId as getallExperiences, getExperienceById as getexperienceById, deleteExperience as deleteexperience, updateExperience as updateexperience, getActiveExperiences as getactiveExperiences } from "../models/experience-model.js";
 import { getActiveUser } from "../models/user-model.js";
+
+export const getExperiencesCount = async (req, res) => {
+    try {
+        const experiencesCount = await getexperiencesCount();
+        console.log("experiences count :", experiencesCount);
+        res.status(200).json(experiencesCount);
+    } catch (error) {
+        console.error("Error getting experiences count:", error);
+        res.status(500).json({ message: "Failed to get experiences count" });
+    }
+}
 export const addExperience = async (req, res) => {
     try {
         const experience = req.body;

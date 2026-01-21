@@ -1,11 +1,11 @@
 import express from "express";
 import {
     activateUser, addUser, getAllUsers, getUserByPortfolioName, getActiveUser, updateUser,
-    deleteUser, deactivateUser
+    deleteUser, deactivateUser, getUsersCount
 } from "../controllers/user-controller.js";
 import { checksecuritycode } from "../middlewares/auth-middleware.js";
 const router = express.Router();
-
+router.get("/count", getUsersCount);
 router.post("/add", checksecuritycode, addUser);
 router.get("/all", getAllUsers);
 router.post("/activate/:id", checksecuritycode, activateUser);

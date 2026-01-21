@@ -1,7 +1,19 @@
-import { addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, activeProjects as activeprojects, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
+import { getProjectsCount as getprojectscount, addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, activeProjects as activeprojects, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
 import { getActiveUser } from "../models/user-model.js";
 import { deleteImagesHelper } from "../helpers/cloud-helper.js";
 import Logger from "../helpers/logger-helper.js";
+
+export const getProjectsCount = async (req, res) => {
+    try {
+        const projectsCount = await getprojectscount();
+        console.log("projects count :", projectsCount);
+        res.status(200).json(projectsCount);
+    } catch (error) {
+        console.error("Error getting projects count:", error);
+        res.status(500).json({ message: "Failed to get projects count" });
+    }
+}
+
 export const addProject = async (req, res) => {
     try {
         const project = req.body;

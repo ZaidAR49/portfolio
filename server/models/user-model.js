@@ -1,5 +1,15 @@
 import sql from "../config/database-conection.js";
 
+export const getUsersCount = async () => {
+    const { count, error } = await sql
+        .from('users')
+        .select('*', { count: 'estimated' });
+    if (error) {
+        console.error('Error getting users count:', error);
+        throw error;
+    }
+    return count;
+}
 export const getUserByPortfolioName = (portfolioName) => {
     return sql.from("users").select("*").eq("portfolio_name", portfolioName);
 }

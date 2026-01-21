@@ -1,6 +1,18 @@
 import Logger from "../helpers/logger-helper.js";
-import { addSkill as addskill, getallSkills as getallskills, updateSkill as updateskill, deleteSkill as deleteskill, activeSkills as activeskill } from "../models/skill-model.js";
+import { getSkillsCount as getskillscount, addSkill as addskill, getallSkills as getallskills, updateSkill as updateskill, deleteSkill as deleteskill, activeSkills as activeskill } from "../models/skill-model.js";
 import { getActiveUser } from "../models/user-model.js";
+
+export const getSkillsCount = async (req, res) => {
+    try {
+        const skillsCount = await getskillscount();
+        console.log("skills count :", skillsCount);
+        res.status(200).json(skillsCount);
+    } catch (error) {
+        console.error("Error getting skills count:", error);
+        res.status(500).json({ message: "Failed to get skills count" });
+    }
+}
+
 export const addSkill = async (req, res) => {
     try {
         const skill = req.body;
