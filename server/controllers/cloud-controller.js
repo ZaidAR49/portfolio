@@ -34,7 +34,9 @@ export const uploadImages = async (req, res) => {
         const base64Images = filesToBase64(files);
         const newUrls = await uploadImagesHelper(base64Images);
         const data = await getProjectById(projectID);
-        const oldUrls = data.data[0].images;
+        console.log("project id :", projectID);
+        console.log("data", data);
+        const oldUrls = data.data[0]?.images || [];
         // console.log("oldUrls", oldUrls);
         // console.log("newUrls", newUrls);
         // console.log("count", oldUrls.length + newUrls.length);

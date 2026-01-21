@@ -227,16 +227,13 @@ export const ProjectsManager = () => {
 
         setIsSubmitting(true);
         try {
-            const user = await axios.get(`${server_url}/api/user/active`);
-            const userId = user.data.id;
             const payload = {
                 ...formData,
-                user_id: userId,
             };
 
             if (isAdding) {
                 const Project = await axios.post(`${server_url}/api/project/add`, payload, { headers: { "security-code": secretKey } });
-                console.log("Project added:", Project.data);
+                console.log("Project added:", Project.data.data[0].id);
 
                 const formDataUpload = new FormData();
                 projectImages.forEach((img) => {
@@ -248,7 +245,7 @@ export const ProjectsManager = () => {
                 const hasFiles = projectImages.some(img => img.file !== null);
 
                 if (hasFiles) {
-                    await axios.post(`${server_url}/api/cloud/upload/images/${Project.data.id}`, formDataUpload, {
+                    await axios.post(`${server_url}/api/cloud/upload/images/${Project.data.data[0].id}`, formDataUpload, {
                         headers: {
                             'Content-Type': 'multipart/form-data',
                             "security-code": secretKey

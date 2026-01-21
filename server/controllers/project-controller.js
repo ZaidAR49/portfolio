@@ -1,16 +1,27 @@
 import { addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, activeProjects as activeprojects, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
+import { getActiveUser } from "../models/user-model.js";
 import { deleteImagesHelper } from "../helpers/cloud-helper.js";
 import Logger from "../helpers/logger-helper.js";
 export const addProject = async (req, res) => {
     try {
         const project = req.body;
         Logger.info("Adding new project", project); // Log sanitized input
-        if (!project.user_id || !project.title || !project.client || !project.role || !project.year || !project.state || !project.sort_order || !project.description || !project.github_url || !project.technologies || !project.images) {
+        if (!project.title || !project.client || !project.role || !project.year || !project.state || !project.sort_order || !project.description || !project.github_url || !project.technologies || !project.images) {
             Logger.warn("Missing required fields for invalid project attempt");
             return res.status(400).json({ message: "Missing required fields" });
 
         }
-        const result = await addproject(project);
+        if (!project.user_id) {
+            const user = await getActiveUser();
+            if (!user.data[0]) {
+                return res.status(400).json({ message: "User not found" });
+            }
+            project.user_id = user.data[0].id;
+        }
+        const result = await addproject({
+            ...project,
+            user_id: project.user_id
+        });
         // Log the sanitized result from DB, which is the source of truth
         Logger.success("Project added successfully", result);
         res.status(201).json(result);
