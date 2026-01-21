@@ -1,5 +1,5 @@
 import Logger from "../helpers/logger-helper.js";
-import { getSkillsCount as getskillscount, addSkill as addskill, getallSkills as getallskills, updateSkill as updateskill, deleteSkill as deleteskill, activeSkills as activeskill } from "../models/skill-model.js";
+import { addManySkills as addmanyskills, getSkillsCount as getskillscount, addSkill as addskill, getallSkills as getallskills, updateSkill as updateskill, deleteSkill as deleteskill, activeSkills as activeskill } from "../models/skill-model.js";
 import { getActiveUser } from "../models/user-model.js";
 
 export const getSkillsCount = async (req, res) => {
@@ -12,6 +12,47 @@ export const getSkillsCount = async (req, res) => {
         res.status(500).json({ message: "Failed to get skills count" });
     }
 }
+
+export const addManySkills = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const skills = req.body;
+        Logger.info("Adding skills: ", { skills });
+        if (!skills) {
+            return res.status(400).json({ error: "Invalid skills data" });
+        }
+        const mainSkills = skills.main
+        const secondarySkills = skills.secondary;
+        let parsedSkills = [];
+        if (mainSkills) {
+            mainSkills.forEach(skill => {
+                parsedSkills.push({
+                    name: skill.name,
+                    type: skill.type,
+                    user_id: userId
+                });
+            });
+        }
+        if (secondarySkills) {
+            secondarySkills.forEach(skill => {
+                parsedSkills.push({
+                    name: skill.name,
+                    type: skill.type,
+                    user_id: skill.user_id
+                });
+            });
+        }
+        console.log("parsedSkills: ", parsedSkills);
+        const result = await addmanyskills(parsedSkills);
+        if (result) {
+            Logger.success("Skills added successfully: ", result);
+            return res.status(200).json({ message: "Skills added successfully" });
+        }
+    } catch (error) {
+        Logger.error("Failed to add skills: ", error);
+        res.status(500).json({ error: "Failed to add skills" });
+    }
+};
 
 export const addSkill = async (req, res) => {
     try {

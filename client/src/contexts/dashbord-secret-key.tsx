@@ -11,15 +11,15 @@ export const DashbordSecretKeyContext = createContext<secretKeyContextType>(
 
 export const DashbordSecretKeyContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [secretKey, setSecretKeyState] = useState<string | null>(() => {
-        return localStorage.getItem("dashboardSecretKey");
+        return sessionStorage.getItem("dashboardSecretKey");
     });
 
     const setSecretKey = (key: string | null) => {
         setSecretKeyState(key);
         if (key) {
-            localStorage.setItem("dashboardSecretKey", key);
+            sessionStorage.setItem("dashboardSecretKey", key);
         } else {
-            localStorage.removeItem("dashboardSecretKey");
+            sessionStorage.removeItem("dashboardSecretKey");
         }
     };
 

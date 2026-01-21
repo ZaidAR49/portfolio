@@ -10,6 +10,9 @@ export const getExperiencesCount = async () => {
     }
     return count;
 }
+export const addManyExperiences = (experiences) => {
+    return sql.from("experiences").insert(experiences).select("id");
+}
 export const addExperience = (experience) => {
     return sql.from("experiences").insert([{
         user_id: experience.userID,

@@ -1,5 +1,5 @@
 
-import { getExperiencesCount as getexperiencesCount, addExperience as addexperience, getExperienceByUserId as getallExperiences, getExperienceById as getexperienceById, deleteExperience as deleteexperience, updateExperience as updateexperience, getActiveExperiences as getactiveExperiences } from "../models/experience-model.js";
+import { addManyExperiences as addmanymxperiences, getExperiencesCount as getexperiencesCount, addExperience as addexperience, getExperienceByUserId as getallExperiences, getExperienceById as getexperienceById, deleteExperience as deleteexperience, updateExperience as updateexperience, getActiveExperiences as getactiveExperiences } from "../models/experience-model.js";
 import { getActiveUser } from "../models/user-model.js";
 
 export const getExperiencesCount = async (req, res) => {
@@ -10,6 +10,31 @@ export const getExperiencesCount = async (req, res) => {
     } catch (error) {
         console.error("Error getting experiences count:", error);
         res.status(500).json({ message: "Failed to get experiences count" });
+    }
+}
+export const addManyExperiences = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const experiences = req.body;
+        if (!experiences.length) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
+        const parsedExperiences = experiences.map((experience) => {
+            return {
+                user_id: userId,
+                role: experience.role,
+                company: experience.company,
+                period: experience.period,
+                description: experience.description
+            }
+        });
+        console.log("experiences :", parsedExperiences);
+        const result = await addmanymxperiences(parsedExperiences);
+        console.log("result :", result);
+        res.status(201).json(result);
+    } catch (error) {
+        console.error("Error adding experiences:", error);
+        return res.status(500).json({ message: "Failed to add experiences" });
     }
 }
 export const addExperience = async (req, res) => {

@@ -10,7 +10,9 @@ export const getProjectsCount = async () => {
     }
     return count;
 }
-
+export const addManyProjects = (projects) => {
+    return sql.from("projects").insert(projects).select("id");
+}
 export const addProject = (project) => {
     return sql.from("projects").insert([{
         user_id: project.user_id,

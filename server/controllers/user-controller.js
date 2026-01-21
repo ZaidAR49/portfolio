@@ -34,7 +34,7 @@ export const addUser = async (req, res) => {
             return res.status(409).json({ error: "Failed to add user" });
         }
         Logger.success("User added successfully", result);
-        res.status(201).json(result);
+        res.status(201).json(result.data);
     } catch (error) {
         Logger.error("Error adding user", error);
         res.status(500).json({ error: "Failed to add user" });

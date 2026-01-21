@@ -1,8 +1,8 @@
 
 export const saveToCache = (key: string, value: any) => {
-    localStorage.setItem(key, JSON.stringify(value));
+    sessionStorage.setItem(key, JSON.stringify(value));
 };
 export const getFromCache = (key: string) => {
-    const value = localStorage.getItem(key);
+    const value = sessionStorage.getItem(key);
     return value ? JSON.parse(value) : null;
 };

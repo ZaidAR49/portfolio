@@ -1,8 +1,40 @@
-import { getProjectsCount as getprojectscount, addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, activeProjects as activeprojects, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
+import { getProjectsCount as getprojectscount, addManyProjects as addmanyprojects, addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, activeProjects as activeprojects, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
 import { getActiveUser } from "../models/user-model.js";
 import { deleteImagesHelper } from "../helpers/cloud-helper.js";
 import Logger from "../helpers/logger-helper.js";
 
+export const addManyProjects = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const projects = req.body;
+        Logger.info("Adding new projects", projects); // Log sanitized input
+        if (!projects) {
+            Logger.warn("Missing required fields for invalid project attempt");
+            return res.status(400).json({ message: "Missing required fields" });
+        }
+        const parsedProjects = projects.map(project => {
+            return {
+                user_id: userId,
+                title: project.title,
+                client: project.client,
+                role: project.role,
+                year: project.year,
+                state: project.state,
+                sort_order: project.sort_order,
+                description: project.description,
+                github_url: project.github_url,
+                technologies: project.technologies,
+                images: project.images
+            }
+        });
+        const result = await addmanyprojects(parsedProjects);
+        Logger.success("Projects added successfully", result);
+        res.status(201).json(result);
+    } catch (error) {
+        Logger.error("Error adding projects", error);
+        return res.status(500).json({ message: "Failed to add projects" });
+    }
+}
 export const getProjectsCount = async (req, res) => {
     try {
         const projectsCount = await getprojectscount();

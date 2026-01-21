@@ -20,6 +20,10 @@ export const addSkill = (skill) => {
     ]).select("id");
 }
 
+export const addManySkills = (skills) => {
+    return sql.from("skills").insert(skills).select("id");
+}
+
 export const getallSkills = (user_id) => {
     return sql.from("skills").select("*").eq("user_id", user_id).select("*");
 }
