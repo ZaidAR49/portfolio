@@ -96,6 +96,10 @@ export const AnalysisDashboard = () => {
     }, []);
 
     const downloadJSON = (dataToDownload: any) => {
+        if (!dataToDownload) {
+            toast.error("No data to download");
+            return;
+        }
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToDownload, null, 2));
         const downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
