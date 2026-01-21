@@ -1,12 +1,19 @@
 
 import { addExperience as addexperience, getExperienceByUserId as getallExperiences, getExperienceById as getexperienceById, deleteExperience as deleteexperience, updateExperience as updateexperience, getActiveExperiences as getactiveExperiences } from "../models/experience-model.js";
-
+import { getActiveUser } from "../models/user-model.js";
 export const addExperience = async (req, res) => {
     try {
         const experience = req.body;
-        if (!experience.userID || !experience.role || !experience.company || !experience.period || !experience.description) {
+        if (!experience.role || !experience.company || !experience.period || !experience.description) {
             return res.status(400).json({ message: "Missing required fields" });
         }
+        if (!experience.userID) {
+            console.log("user id is from db");
+            const user = await getActiveUser();
+            console.log("user id from db :", user.data[0].id);
+            experience.userID = user.data[0].id;
+        }
+
         const result = await addexperience(experience);
         console.log("result :", result);
         res.status(201).json(result);

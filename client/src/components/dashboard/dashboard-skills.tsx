@@ -55,15 +55,10 @@ export const SkillsManager = () => {
         if (addingSkill) return; // Prevent multiple adds at once
         setAddingSkill(techName);
         try {
-            const user = await axios.get(`${server_url}/api/user/active`);
-            const userId = user.data.id;
-            console.log("user id", userId);
             const newSkill = {
                 name: techName,
                 type: skillType,
-                user_id: userId
             };
-
             const response = await axios.post(`${server_url}/api/skill/add`, newSkill, { headers: { "security-code": secretKey } });
 
             if (response.status === 200 || response.status === 201) {

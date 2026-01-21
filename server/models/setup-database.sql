@@ -24,7 +24,7 @@ UPDATE USING (true);
 CREATE POLICY "Enable delete for users" ON users FOR DELETE USING (true);
 CREATE TABLE IF NOT EXISTS experiences (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
     role VARCHAR(255),
     period VARCHAR(100),
     description TEXT,
@@ -41,7 +41,7 @@ UPDATE USING (true);
 CREATE POLICY "Enable delete for experiences" ON experiences FOR DELETE USING (true);
 CREATE TABLE IF NOT EXISTS skills (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
     name VARCHAR(100),
     type VARCHAR(10),
     constraint check_type CHECK (type IN ('primary', 'secondary')),
@@ -58,7 +58,7 @@ UPDATE USING (true);
 CREATE POLICY "Enable delete for skills" ON skills FOR DELETE USING (true);
 CREATE TABLE IF NOT EXISTS projects (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE NOT NULL,
     title VARCHAR(255),
     client VARCHAR(255),
     role VARCHAR(255),

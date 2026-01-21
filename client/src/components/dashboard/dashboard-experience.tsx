@@ -15,6 +15,7 @@ export const ExperienceManager = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const initialFormState = {
+        user_id: "",
         role: "",
         company: "",
         period: "",
@@ -34,6 +35,10 @@ export const ExperienceManager = () => {
     //         }
     //          setExperiences(Array.isArray(data) ? data : []);
 
+    useEffect(() => {
+        console.log("from data:", formData)
+    }, [formData])
+
     const fetchExperiences = () => {
         getExperiences().then(data => {
             setExperiences(data);
@@ -52,6 +57,7 @@ export const ExperienceManager = () => {
 
     const handleEdit = (item: any) => {
         setFormData({
+            user_id: item.user_id,
             role: item.role,
             company: item.company || item.companey, // Handle potential legacy typo in data response if any
             period: item.period || item.peroid, // Handle potential legacy typo
@@ -92,12 +98,8 @@ export const ExperienceManager = () => {
     const handleSave = async () => {
         setIsSubmitting(true);
         try {
-            const user = await axios.get(`${server_url}/api/user/active`);
-            const userId = user.data.id;
-
             if (isAdding) {
                 await axios.post(`${server_url}/api/experience/add`, {
-                    userID: userId,
                     ...formData
                 }, {
                     headers: {
@@ -107,7 +109,6 @@ export const ExperienceManager = () => {
             } else if (editingId) {
                 await axios.put(`${server_url}/api/experience/update/${editingId}`, {
                     id: editingId,
-                    user_id: userId,
                     ...formData
                 }, {
                     headers: {

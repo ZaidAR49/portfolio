@@ -1,12 +1,17 @@
 import Logger from "../helpers/logger-helper.js";
 import { addSkill as addskill, getallSkills as getallskills, updateSkill as updateskill, deleteSkill as deleteskill, activeSkills as activeskill } from "../models/skill-model.js";
-
+import { getActiveUser } from "../models/user-model.js";
 export const addSkill = async (req, res) => {
     try {
         const skill = req.body;
         Logger.info("Adding skill: ", { skill });
-        if (!skill.user_id || !skill.name || !skill.type) {
+        if (!skill.name || !skill.type) {
             return res.status(400).json({ error: "Missing required fields" });
+        }
+        if (!skill.user_id) {
+            console.log("user id is from db")
+            const user = await getActiveUser();
+            skill.user_id = user.data[0].id;
         }
         const result = await addskill(skill);
         if (result) {
