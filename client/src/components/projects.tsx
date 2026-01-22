@@ -1,4 +1,4 @@
-import { projects } from "../data/projects-data";
+import { projects } from "../data/data";
 import { FaGithub, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";

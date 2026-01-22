@@ -6,14 +6,14 @@ export const userInfo = {
   name: data.user.name,
   jobTitle: data.user.job_title,
   email: data.user.email,
-  descHero: data.user.hero_description,
+  descHero: parse(data.user.hero_description),
   titleAbout: data.user.about_title,
   github: data.user.github_url,
   linkedin: data.user.linkedin_url,
   picture: data.user.picture_url,
-  descAbout: data.user.about_description,
+  descAbout: parse(data.user.about_description),
   resuma: data.user.resume_url,
-  descCapabilities: data.user.capabilities_description,
+  descCapabilities: parse(data.user.capabilities_description),
 };
 
 export const experience = data.experiences.map((exp) => ({
@@ -37,7 +37,7 @@ export const skillsData = {
 export const projects = data.projects.map((project) => ({
     state: project.state,
     title: project.title,
-    description: project.description,
+    description: parse(project.description),
     image: project.images,
     role: project.role,
     github: project.github_url,

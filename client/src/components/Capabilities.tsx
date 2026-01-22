@@ -1,4 +1,4 @@
-import { userInfo,skillsData } from "../data/about-data";
+import { userInfo,skillsData } from "../data/data";
 import { motion } from "framer-motion";
 
 export const Capabilities = () => {

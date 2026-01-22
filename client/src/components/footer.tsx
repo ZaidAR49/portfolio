@@ -1,4 +1,4 @@
-import { userInfo } from "../data/about-data";
+import { userInfo } from "../data/data";
 import { ButtonsSocial } from "./buttons-social";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";

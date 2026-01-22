@@ -1,4 +1,4 @@
-import {experience } from "../data/about-data";
+import {experience } from "../data/data";
 import { motion } from "framer-motion";
 import { FaBriefcase, FaGraduationCap } from "react-icons/fa";
 

@@ -1,5 +1,5 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { userInfo } from "../data/about-data";
+import { userInfo } from "../data/data";
 export const ButtonsSocial = ({len}:{len:number}) => {
   const social = [
     { link: userInfo.github, icon: <FaGithub />, name: "GitHub" },

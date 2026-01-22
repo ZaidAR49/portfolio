@@ -1,4 +1,4 @@
-import {userInfo} from "../data/about-data";
+import {userInfo} from "../data/data";
 import { useNavigate } from "react-router-dom";
 import { ButtonsSocial } from "./buttons-social";
 import { motion } from "framer-motion";
