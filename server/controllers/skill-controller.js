@@ -38,16 +38,26 @@ export const addManySkills = async (req, res) => {
                 parsedSkills.push({
                     name: skill.name,
                     type: skill.type,
-                    user_id: skill.user_id
+                    user_id: userId
                 });
             });
         }
         console.log("parsedSkills: ", parsedSkills);
-        const result = await addmanyskills(parsedSkills);
-        if (result) {
-            Logger.success("Skills added successfully: ", result);
-            return res.status(200).json({ message: "Skills added successfully" });
+
+        if (parsedSkills.length === 0) {
+            Logger.warn("No valid skills to add");
+            return res.status(200).json({ message: "No skills to add" });
         }
+
+        const result = await addmanyskills(parsedSkills);
+
+        if (result.error) {
+            Logger.error("Supabase error adding skills", result.error);
+            throw result.error;
+        }
+
+        Logger.success("Skills added successfully: ", result);
+        return res.status(200).json({ message: "Skills added successfully", data: result.data });
     } catch (error) {
         Logger.error("Failed to add skills: ", error);
         res.status(500).json({ error: "Failed to add skills" });

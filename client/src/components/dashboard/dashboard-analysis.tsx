@@ -117,6 +117,7 @@ export const AnalysisDashboard = () => {
                 projects: await getProjects(),
                 experiences: await getExperiences()
             };
+            freshData.user.is_active = false;
             setData(freshData);
             downloadJSON(freshData);
             toast.success("Data downloaded successfully");

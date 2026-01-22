@@ -29,7 +29,8 @@ export const adduser = async (user) => {
             linkedin_url: user.linkedin_url,
             github_url: user.github_url,
             resume_url: user.resume_url,
-            portfolio_name: user.portfolio_name
+            portfolio_name: user.portfolio_name,
+            picture_url: user.picture_url
         }]).select("id");
 }
 export const updateUser = (user) => {

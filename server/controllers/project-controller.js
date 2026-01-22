@@ -28,6 +28,9 @@ export const addManyProjects = async (req, res) => {
             }
         });
         const result = await addmanyprojects(parsedProjects);
+        if (result.error) {
+            throw result.error;
+        }
         Logger.success("Projects added successfully", result);
         res.status(201).json(result);
     } catch (error) {

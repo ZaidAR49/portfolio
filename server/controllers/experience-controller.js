@@ -30,6 +30,9 @@ export const addManyExperiences = async (req, res) => {
         });
         console.log("experiences :", parsedExperiences);
         const result = await addmanymxperiences(parsedExperiences);
+        if (result.error) {
+            throw result.error;
+        }
         console.log("result :", result);
         res.status(201).json(result);
     } catch (error) {
