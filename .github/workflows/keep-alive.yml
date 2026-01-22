@@ -39,4 +39,4 @@ jobs:
         run: npx wait-on tcp:3000
 
       - name: Call the API Endpoint
-        run: curl http://127.0.0.1:3000/api/project/count
+        run: curl http://127.0.0.1:3000/api/user/count
