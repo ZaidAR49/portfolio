@@ -4,6 +4,7 @@ A modern, responsive portfolio website built with React, TypeScript,Tailwind CSS
 Demo: https://zar.onrender.com/
 ## ✨ Features
 
+
 - **Responsive Design**: Optimized for all devices and screen sizes
 - **Dark/Light Theme**: Toggle between themes with smooth transitions
 - **Smooth Animations**: Powered by Framer Motion for engaging user experience
