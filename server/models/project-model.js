@@ -73,3 +73,9 @@ export const updateProjectImages = (projectID, urls) => {
 export const activeProjects = () => {
     return sql.from("projects").select("*,users!inner(is_active)").eq("users.is_active", true);
 };
+
+export const reorderProjectsForUser = (targetUserId) => {
+    return sql.rpc('reorder_projects_for_user', {
+        target_user_id: targetUserId
+    });
+};

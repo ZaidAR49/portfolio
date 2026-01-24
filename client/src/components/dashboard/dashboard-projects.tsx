@@ -157,6 +157,7 @@ export const ProjectsManager = () => {
         try {
             await axios.delete(`${server_url}/api/project/delete/${deleteConfirm.id}`, { headers: { "security-code": secretKey } });
             toast.success("Project deleted successfully");
+            fetchProjects();
             setProjects(projects.filter(p => p.id !== deleteConfirm.id));
         } catch (error: any) {
             console.error("Error deleting project:", error);

@@ -1,4 +1,4 @@
-import { updateProjectSortOrder as updateprojectSortOrder, getProjectsCount as getprojectscount, addManyProjects as addmanyprojects, addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, activeProjects as activeprojects, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
+import { reorderProjectsForUser, updateProjectSortOrder as updateprojectSortOrder, getProjectsCount as getprojectscount, addManyProjects as addmanyprojects, addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, activeProjects as activeprojects, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
 import { getActiveUser } from "../models/user-model.js";
 import { deleteImagesHelper } from "../helpers/cloud-helper.js";
 import Logger from "../helpers/logger-helper.js";
@@ -123,7 +123,15 @@ export const deleteProject = async (req, res) => {
             Logger.error("Cloudinary delete error", error2);
             throw error2;
         }
-        res.status(200).json(project);
+        //reorder projects
+        console.log("reordering projects for user", project.data[0].user_id);
+        const result2 = await reorderProjectsForUser(project.data[0].user_id);
+        if (result2.error) {
+            Logger.error("Error reordering projects", result2.error);
+            throw result2.error;
+        }
+        console.log("reordered projects for user", result2);
+        res.status(200).json(project.data[0]);
     } catch (error) {
         // rollback
         Logger.info("Rolling back project deletion");

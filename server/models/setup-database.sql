@@ -93,3 +93,18 @@ SELECT USING (true);
 CREATE POLICY "Enable update for secret_key" ON secret_key FOR
 UPDATE USING (true);
 CREATE POLICY "Enable delete for secret_key" ON secret_key FOR DELETE USING (true);
+CREATE OR REPLACE FUNCTION reorder_projects_for_user(target_user_id INT) RETURNS VOID AS $$ BEGIN WITH reordered AS (
+        SELECT id,
+            ROW_NUMBER() OVER (
+                ORDER BY sort_order ASC,
+                    id ASC
+            ) as new_rank
+        FROM projects
+        WHERE user_id = target_user_id
+    )
+UPDATE projects
+SET sort_order = reordered.new_rank
+FROM reordered
+WHERE projects.id = reordered.id;
+END;
+$$ LANGUAGE plpgsql;
