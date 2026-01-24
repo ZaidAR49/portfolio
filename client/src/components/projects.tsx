@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export interface Project {
-  state: "completed" | "in progress" | "Suspend" | string;
+  state: "completed" | "in progress" | "Suspended" | string;
   title: string;
   description: string;
   images: string[];
@@ -157,7 +157,7 @@ const ProjectCarousel = ({ project }: { project: Project }) => {
         return "bg-emerald-500/20 text-emerald-400 border-emerald-500/50";
       case "in progress":
         return "bg-amber-500/20 text-amber-400 border-amber-500/50";
-      case "suspend":
+      case "suspended":
         return "bg-rose-500/20 text-rose-400 border-rose-500/50";
       default:
         return "bg-slate-500/20 text-slate-400 border-slate-500/50";

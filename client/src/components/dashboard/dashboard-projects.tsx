@@ -9,6 +9,20 @@ import { Loading } from "../loading";
 import { DashbordSecretKeyContext } from "../../contexts/dashbord-secret-key";
 
 
+
+const stateColor = (state: string) => {
+    switch (state.toLowerCase()) {
+        case "completed":
+            return "bg-emerald-500/20 text-emerald-400 border-emerald-500/50";
+        case "in progress":
+            return "bg-amber-500/20 text-amber-400 border-amber-500/50";
+        case "suspended":
+            return "bg-rose-500/20 text-rose-400 border-rose-500/50";
+        default:
+            return "bg-slate-500/20 text-slate-400 border-slate-500/50";
+    }
+};
+
 export const ProjectsManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
@@ -457,10 +471,7 @@ export const ProjectsManager = () => {
                                         <span className="px-2 py-1 text-xs rounded border border-[var(--text-secondary)]/20 bg-[var(--bg-secondary)]/50 text-[var(--text-secondary)]">
                                             #{item.sort_order}
                                         </span>
-                                        <span className={`px-2 py-1 text-xs rounded border ${item.state === 'completed' ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10' :
-                                            item.state === 'in progress' ? 'border-amber-500/30 text-amber-400 bg-amber-500/10' :
-                                                'border-slate-500/30 text-slate-400 bg-slate-500/10'
-                                            }`}>
+                                        <span className={`px-2 py-1 text-xs rounded border ${stateColor(item.state)}`}>
                                             {item.state}
                                         </span>
                                     </div>
