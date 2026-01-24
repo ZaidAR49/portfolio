@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FaChartLine, FaUsers, FaCode, FaProjectDiagram, FaBriefcase, FaFileImport } from "react-icons/fa";
+import { FaChartLine, FaUsers, FaCode, FaProjectDiagram, FaBriefcase, FaFileImport, FaSignOutAlt } from "react-icons/fa";
 import { getExperiences, getProjects, getSkills, getUser } from "../../data/portfolio-data";
 import axios from "axios";
-import { useContext } from "react";
-import { DashbordSecretKeyContext } from "../../contexts/dashbord-secret-key";
+import { getSecurtKey, disableOwnerMode, removeSecretKey } from "../../helpers/storage-helper";
 import { toast } from "react-toastify";
-// test
+import { useNavigate } from "react-router-dom";
+
 export const AnalysisDashboard = () => {
-    const { secretKey } = useContext(DashbordSecretKeyContext);
     const server_url = import.meta.env.VITE_API_URL;
+    const secretKey = getSecurtKey();
+    const navigate = useNavigate();
     const [data, setData] = useState({
         user: {},
         skills: {},
@@ -205,7 +206,7 @@ export const AnalysisDashboard = () => {
             </div>
 
             {/* Import/Export Area */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Export Data Area */}
                 <div className="glass-panel p-6 lg:p-10 rounded-3xl border border-[var(--text-secondary)]/10 bg-[var(--bg-secondary)]/20 flex flex-col items-center justify-center text-center">
                     <div className="max-w-md space-y-6">
@@ -217,7 +218,7 @@ export const AnalysisDashboard = () => {
                             <p className="text-[var(--text-secondary)]">Download all your active portfolio data including skills, projects, and experiences in JSON format.</p>
                         </div>
                         <button
-                            className="px-8 py-3 rounded-xl bg-[var(--accent)] text-white font-medium hover:opacity-90 transition-all flex items-center gap-2 mx-auto"
+                            className="px-8 py-3 w-48 rounded-xl bg-[var(--accent)] text-white font-medium hover:opacity-90 transition-all flex items-center justify-center gap-2 mx-auto"
                             onClick={handleDownloadData}
                         >
                             <span>Download Data</span>
@@ -237,7 +238,7 @@ export const AnalysisDashboard = () => {
                         </div>
                         <label
                             htmlFor="import-file"
-                            className="px-8 py-3 rounded-xl bg-blue-600 text-white font-medium hover:opacity-90 transition-all flex items-center gap-2 mx-36 cursor-pointer"
+                            className="px-8 py-3 w-48 rounded-xl bg-blue-600 text-white font-medium hover:opacity-90 transition-all flex items-center justify-center gap-2 mx-auto cursor-pointer"
                         >
                             <span>Upload Data</span>
                         </label>
@@ -248,6 +249,25 @@ export const AnalysisDashboard = () => {
                             accept=".json"
                             className="hidden"
                         />
+                    </div>
+                </div>
+
+                {/* Sign Out Area */}
+                <div className="glass-panel p-6 lg:p-10 rounded-3xl border border-red-500/20 bg-red-500/5 flex flex-col items-center justify-center text-center">
+                    <div className="max-w-md space-y-6">
+                        <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mx-auto text-red-500 text-2xl">
+                            <FaSignOutAlt />
+                        </div>
+                        <div>
+                            <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2">Sign Out</h3>
+                            <p className="text-[var(--text-secondary)]">Securely end your session and return to the login screen<br /><br /></p>
+                        </div>
+                        <button
+                            className="px-8 py-3 w-48 rounded-xl bg-red-600 text-white font-medium hover:opacity-90 transition-all flex items-center justify-center gap-2 mx-auto"
+                            onClick={() => { disableOwnerMode(); removeSecretKey(); navigate("/"); }}
+                        >
+                            <span>Sign Out</span>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { getProjects } from "../../data/portfolio-data";
 import { Loading } from "../loading";
-import { DashbordSecretKeyContext } from "../../contexts/dashbord-secret-key";
+import { getSecurtKey } from "../../helpers/storage-helper";
 
 
 
@@ -28,7 +28,7 @@ export const ProjectsManager = () => {
     const navigate = useNavigate();
     const [projects, setProjects] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const { secretKey } = useContext(DashbordSecretKeyContext);
+    const secretKey = getSecurtKey();
     const [deletedImages, setDeletedImages] = useState<string[]>([]);
     const [projectToUpdate, setProjectToUpdate] = useState<any>(null);
     // Initial state matching backend requirements

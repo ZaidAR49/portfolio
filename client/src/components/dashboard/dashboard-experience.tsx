@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaSave } from "react-icons/fa";
 import { InputGroup, SectionHeader, ConfirmDialog, LoadingButton } from "./dashboard-shared";
@@ -6,9 +6,9 @@ import { getExperiences } from "../../data/portfolio-data";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Loading } from "../loading";
-import { DashbordSecretKeyContext } from "../../contexts/dashbord-secret-key";
+import { getSecurtKey } from "../../helpers/storage-helper";
 export const ExperienceManager = () => {
-    const { secretKey } = useContext(DashbordSecretKeyContext);
+    const secretKey = getSecurtKey();
     const server_url = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
     const [experiences, setExperiences] = useState<any[]>([]);

@@ -8,9 +8,8 @@ import { About } from "./pages/about-page";
 import { Dashboard } from "./pages/dashboard";
 import ErrorPage from "./pages/error-page"; // Assuming you created this
 import { ThemeProvider, ThemeContext } from "./contexts/theme-context";
-import { DashbordSecretKeyContextProvider } from "./contexts/dashbord-secret-key";
 import { getUser } from "./data/portfolio-data";
-import { getFromCache } from "./helpers/storage-helper";
+import { getFromCache, removeUserData, isOwnerModeEnabled } from "./helpers/storage-helper";
 import "react-toastify/dist/ReactToastify.css";
 
 // 1. Define the Layouts
@@ -38,7 +37,11 @@ const DashboardLayout = () => (
 function AppContent() {
   const { theme } = useContext(ThemeContext);
   const [userInfo, setUserInfo] = useState<any>(null);
-
+  useEffect(() => {
+    if (isOwnerModeEnabled()) {
+      removeUserData();
+    }
+  }, []);
   useEffect(() => {
     const user = getFromCache("user");
     if (user) {
@@ -80,11 +83,9 @@ function AppContent() {
 function App() {
   return (
     <ThemeProvider>
-      <DashbordSecretKeyContextProvider>
-        <Router>
-          <AppContent />
-        </Router>
-      </DashbordSecretKeyContextProvider>
+      <Router>
+        <AppContent />
+      </Router>
     </ThemeProvider>
   );
 }

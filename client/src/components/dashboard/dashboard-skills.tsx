@@ -7,8 +7,7 @@ import { getIconForTechnology, availableTechnologies } from "../../helpers/icon-
 import { getSkills } from "../../data/portfolio-data";
 import { toast } from "react-toastify";
 import { Loading } from "../loading";
-import { useContext } from "react";
-import { DashbordSecretKeyContext } from "../../contexts/dashbord-secret-key";
+import { getSecurtKey } from "../../helpers/storage-helper";
 import axios from "axios";
 
 export const SkillsManager = () => {
@@ -20,7 +19,7 @@ export const SkillsManager = () => {
     const [skillType, setSkillType] = useState<"primary" | "secondary">("primary");
     const [isLoading, setIsLoading] = useState(true);
     const [addingSkill, setAddingSkill] = useState<string | null>(null);
-    const { secretKey } = useContext(DashbordSecretKeyContext);
+    const secretKey = getSecurtKey();
     const [deleteConfirm, setDeleteConfirm] = useState<{ isOpen: boolean; id: number | null; name: string }>({
         isOpen: false,
         id: null,

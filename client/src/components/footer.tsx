@@ -6,12 +6,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaPaperPlane } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
-import { useContext } from "react";
-import { DashbordSecretKeyContext } from "../contexts/dashbord-secret-key";
+import { setSecurtKey, enableOwnerMode } from "../helpers/storage-helper";
 import { Loading } from "./loading";
 
 export const Footer = ({ userInfo }: any) => {
-  const { setSecretKey } = useContext(DashbordSecretKeyContext);
   const [openSecret, setOpenSecret] = useState<boolean>(false);
   const server_url = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
@@ -19,11 +17,12 @@ export const Footer = ({ userInfo }: any) => {
     try {
 
       const securityCode = document.getElementById("securityCode") as HTMLInputElement;
-      setSecretKey(securityCode.value);
+      setSecurtKey(securityCode.value);
       const res = await axios.post(`${server_url}/api/security/checksecuritycode`, { timeout: 60000 }, { headers: { "security-code": securityCode.value } });
       if (res.status === 200) {
         setOpenSecret(false);
-        navigate('/dashboard');
+        enableOwnerMode();
+        navigate("/");
       } else {
         toast.error("Invalid security code.");
       }
@@ -39,6 +38,7 @@ export const Footer = ({ userInfo }: any) => {
   const handelsecret = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.target.value === "zaidopendash") {
       setOpenSecret(true);
+
       try {
         await axios.post(`${server_url}/api/security/sendsecuritycode`, { timeout: 60000 }, { headers: { "security-code": e.target.value } });
         toast.success("Security code sent to your email!");

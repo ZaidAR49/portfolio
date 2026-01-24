@@ -8,15 +8,18 @@ import {
   FaTimes,
   FaSun,
   FaMoon,
+  FaTachometerAlt
 } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ThemeContext } from "../contexts/theme-context";
+import { isOwnerModeEnabled } from "../helpers/storage-helper";
 export const Header = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isOwnerMode, setIsOwnerMode] = useState<boolean>(false);
 
   useEffect(() => {
     // Check initial scroll position
@@ -36,6 +39,10 @@ export const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    setIsOwnerMode(isOwnerModeEnabled());
+    console.log("isOwnerMode", isOwnerMode);
+  }, [isOwnerMode]);
   // Reset scroll state when navigating to a new page
   useEffect(() => {
     setScrolled(window.scrollY > 20);
@@ -47,6 +54,11 @@ export const Header = () => {
     { name: "About", icon: <FaUser />, path: "about", id: "about-btn" },
     { name: "Contact", icon: <FaEnvelope />, path: "footer", id: "contact-btn" },
   ];
+
+  if (isOwnerModeEnabled()) {
+    console.log("Owner mode enabled");
+    navItems.push({ name: "Dashboard", icon: <FaTachometerAlt />, path: "dashboard", id: "dashboard-btn" });
+  }
 
   const handleNavigation = (path: string) => {
     if (path === "projects") {
@@ -65,8 +77,8 @@ export const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? "py-3 bg-slate-50 dark:bg-slate-900 border-b border-[var(--text-secondary)]/10"
-          : "py-5 bg-transparent"
+        ? "py-3 bg-slate-50 dark:bg-slate-900 border-b border-[var(--text-secondary)]/10"
+        : "py-5 bg-transparent"
         }`}
     >
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
@@ -91,8 +103,8 @@ export const Header = () => {
               id={item.id}
               onClick={() => handleNavigation(item.path)}
               className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 hover:text-[var(--accent)] ${location.pathname === (item.path.startsWith("/") ? item.path : "/" + item.path)
-                  ? "text-[var(--accent)]"
-                  : "text-[var(--text-secondary)]"
+                ? "text-[var(--accent)]"
+                : "text-[var(--text-secondary)]"
                 }`}
             >
               <span className="text-lg">{item.icon}</span>
@@ -131,8 +143,8 @@ export const Header = () => {
       {/* Mobile Navigation Dropdown */}
       <div
         className={`absolute top-full left-0 right-0 md:hidden transition-all duration-300 ease-out ${isMenuOpen
-            ? "opacity-100 translate-y-0 pointer-events-auto"
-            : "opacity-0 -translate-y-4 pointer-events-none"
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 -translate-y-4 pointer-events-none"
           }`}
       >
         <div className="flex justify-end px-4">
@@ -143,8 +155,8 @@ export const Header = () => {
                   key={item.name}
                   onClick={() => handleNavigation(item.path)}
                   className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-300 ${location.pathname === (item.path.startsWith("/") ? item.path : "/" + item.path)
-                      ? "bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30"
-                      : "text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent)]"
+                    ? "bg-[var(--accent)]/10 text-[var(--accent)] border border-[var(--accent)]/30"
+                    : "text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--accent)]"
                     }`}
                 >
                   <span className="text-lg">{item.icon}</span>
