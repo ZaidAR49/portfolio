@@ -16,10 +16,11 @@ export const ProjectsManager = () => {
     const [isLoading, setIsLoading] = useState(true);
     const { secretKey } = useContext(DashbordSecretKeyContext);
     const [deletedImages, setDeletedImages] = useState<string[]>([]);
+    const [projectToUpdate, setProjectToUpdate] = useState<any>(null);
     // Initial state matching backend requirements
     useEffect(() => {
-        console.log("deletedImages", deletedImages);
-    }, [deletedImages]);
+        console.log("projectToUpdate", projectToUpdate);
+    }, [projectToUpdate]);
 
 
     const initialFormState = {
@@ -58,6 +59,7 @@ export const ProjectsManager = () => {
 
     const fetchProjects = () => {
         getProjects().then((data) => {
+            data.sort((a: any, b: any) => a.sort_order - b.sort_order);
             setProjects(data);
             setIsLoading(false);
         }).catch((error) => {
@@ -233,7 +235,11 @@ export const ProjectsManager = () => {
 
             if (isAdding) {
                 const Project = await axios.post(`${server_url}/api/project/add`, payload, { headers: { "security-code": secretKey } });
-                console.log("Project added:", Project.data.data[0].id);
+                if (projectToUpdate) {
+                    await axios.patch(`${server_url}/api/project/sortOrder/${projectToUpdate.id}`, { sort_order: projects.length + 1 }, { headers: { "security-code": secretKey } }).catch((error) => {
+                        throw error;
+                    });
+                }
 
                 const formDataUpload = new FormData();
                 projectImages.forEach((img) => {
@@ -258,6 +264,11 @@ export const ProjectsManager = () => {
                     id: editingId,
                     ...payload
                 }, { headers: { "security-code": secretKey } });
+                if (projectToUpdate) {
+                    await axios.patch(`${server_url}/api/project/sortOrder/${projectToUpdate.id}`, { sort_order: projects.find(p => p.id === editingId)?.sort_order }, { headers: { "security-code": secretKey } }).catch((error) => {
+                        throw error;
+                    });
+                }
                 const formDataUpload = new FormData();
                 let hasNewFiles = false;
                 projectImages.forEach((img) => {
@@ -318,14 +329,24 @@ export const ProjectsManager = () => {
                             <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Sort Order</label>
                             <select
                                 value={formData.sort_order}
-                                onChange={(e) => setFormData({ ...formData, sort_order: parseInt(e.target.value) })}
+                                onChange={(e) => {
+                                    const newSortOrder = parseInt(e.target.value);
+                                    setFormData({ ...formData, sort_order: newSortOrder });
+
+                                    const conflictingProject = projects.find((p: any) => p.sort_order === newSortOrder && p.id !== editingId);
+                                    if (conflictingProject) {
+                                        setProjectToUpdate(conflictingProject);
+                                    } else {
+                                        setProjectToUpdate(null);
+                                    }
+                                }}
                                 className="w-full bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl px-4 py-3 text-[var(--text-primary)] outline-none focus:border-[var(--accent)] appearance-none"
                             >
                                 {Array.from({ length: projects.length + (isAdding ? 1 : 0) }, (_, i) => i + 1).map((num) => {
                                     const isTaken = projects.some((p: any) => p.sort_order === num && p.id !== editingId);
                                     return (
-                                        <option key={num} value={num} disabled={isTaken} className={isTaken ? "text-gray-400" : ""}>
-                                            {num} {isTaken ? '(Taken)' : ''}
+                                        <option key={num} value={num} className={isTaken ? "text-gray-400" : ""}>
+                                            {num}
                                         </option>
                                     );
                                 })}

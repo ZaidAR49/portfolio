@@ -1,4 +1,4 @@
-import { getProjectsCount as getprojectscount, addManyProjects as addmanyprojects, addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, activeProjects as activeprojects, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
+import { updateProjectSortOrder as updateprojectSortOrder, getProjectsCount as getprojectscount, addManyProjects as addmanyprojects, addProject as addproject, getProjectByUserId as getallProjects, getProjectById as getprojectById, activeProjects as activeprojects, deleteProject as deleteproject, updateProject as updateproject } from "../models/project-model.js";
 import { getActiveUser } from "../models/user-model.js";
 import { deleteImagesHelper } from "../helpers/cloud-helper.js";
 import Logger from "../helpers/logger-helper.js";
@@ -82,7 +82,7 @@ export const getProjectByUserId = async (req, res) => {
     try {
         Logger.info(`Fetching projects for user ID: ${req.params.id}`);
         const projects = await getallProjects(req.params.id);
-        Logger.success(`Fetched ${projects ? projects.length : 0} projects`, projects);
+        Logger.success(`Fetched ${projects ? projects.data.length : 0} projects`);
         res.status(200).json(projects);
     } catch (error) {
         Logger.error("Error getting projects", error);
@@ -158,11 +158,71 @@ export const updateProject = async (req, res) => {
     }
 };
 
+export const swapProjectSortOrder = async (req, res) => {
+    try {
+        let projects = req.body;
+        Logger.info(`Swapping project sort order for projects: ${projects}`);
+        if (!projects) {
+            Logger.warn("Missing projects in update", projects);
+            return res.status(400).json({ message: "Missing required fields" });
+        }
+        projects = {
+            first: {
+                id: projects.first_project_ID,
+                sort_order: projects.second_project_sort_order
+            },
+            second: {
+                id: projects.second_project_ID,
+                sort_order: projects.first_project_sort_order
+            }
+        }
+
+        const result1 = await updateprojectSortOrder(projects.first);
+        const result2 = await updateprojectSortOrder(projects.second);
+        if (result1.error || result2.error) {
+            throw result1.error || result2.error;
+        }
+        Logger.success(`Project sort orders swapped successfully`);
+        console.log(`project ${result1.data[0].id} is now ${result1.data[0].sort_order} and project ${result2.data[0].id} is now ${result2.data[0].sort_order}`)
+        res.status(200).json({
+            "first_project_ID": result1.data[0].id,
+            "first_project_sort_order": result1.data[0].sort_order,
+            "second_project_ID": result2.data[0].id,
+            "second_project_sort_order": result2.data[0].sort_order
+
+        });
+    } catch (error) {
+        Logger.error("Error updating project", error);
+        res.status(500).json({ message: "Failed to update project" });
+    }
+};
+
+export const updateProjectSortOrder = async (req, res) => {
+    try {
+        const { sort_order } = req.body;
+        const id = req.params.id;
+        console.log("update sort order", sort_order, id);
+        if (!sort_order || !id) {
+            Logger.warn("Missing sort_order or id in update", sort_order, id);
+            return res.status(400).json({ message: "Missing required fields" });
+        }
+        const result = await updateprojectSortOrder({ id, sort_order });
+        if (result.error) {
+            throw result.error;
+        }
+        Logger.success("Project sort order updated successfully", result);
+        res.status(200).json(result.data);
+    } catch (error) {
+        Logger.error("Error updating project sort order", error);
+        res.status(500).json({ message: "Failed to update project sort order" });
+    }
+};
+
 export const activeProjects = async (req, res) => {
     try {
         Logger.info("Fetching active projects");
         const projects = await activeprojects();
-        Logger.success(`Fetched ${projects ? projects.length : 0} active projects`, projects);
+        Logger.success(`Fetched ${projects && projects.data ? projects.data.length : 0} active projects`);
         res.status(200).json(projects);
     } catch (error) {
         Logger.error("Error getting active projects", error);

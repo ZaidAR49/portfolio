@@ -18,6 +18,10 @@ export const uploadImagesHelper = async (files) => {
     }
 }
 export const deletePictureHelper = async (url) => {
+    if (!url) {
+        console.log("No URL provided for deletion");
+        return "";
+    }
     console.log("here url", url);
     const regex = /\/upload\/(?:v\d+\/)?([^\.]+)+\.\w+$/
     const match = url.match(regex);
@@ -38,6 +42,10 @@ export const deletePictureHelper = async (url) => {
 
 export const deleteImagesHelper = async (urls) => {
     try {
+        if (!urls || urls.length === 0) {
+            console.log("No URLs provided for deletion");
+            return [];
+        }
         console.log("here urls", urls);
         const results = await Promise.all(urls.map(url => deletePictureHelper(url)));
         return results;

@@ -54,6 +54,14 @@ export const updateProject = (project, id) => {
         .eq("id", id)
         .select();
 };
+export const updateProjectSortOrder = (project) => {
+    console.log("Updating project sort order with data here", project);
+    return sql.from("projects").update({
+        sort_order: project.sort_order
+    })
+        .eq("id", project.id)
+        .select();
+};
 export const updateProjectImages = (projectID, urls) => {
     return sql.from("projects").update({
         images: urls

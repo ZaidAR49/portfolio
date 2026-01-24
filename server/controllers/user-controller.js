@@ -94,7 +94,7 @@ export const deleteUser = async (req, res) => {
         Logger.info(`Deleting user ID: ${req.params.id}`);
         const { data, error1 } = await deleteuser(req.params.id);
         const { result, error2 } = await deletePictureHelper(data[0].picture_url);
-        Logger.info("Deleted user successfully", data, result);
+        Logger.info("Deleted user successfully", data, result!=="" ? result : "no picture to delete");
 
         if (error1) {
             Logger.error("Supabase delete error", error1);
@@ -102,10 +102,10 @@ export const deleteUser = async (req, res) => {
         }
 
         if (error2) {
-            // rollback
-            Logger.info("Rolling back user deletion");
-            await adduser(data[0]);
             Logger.error("Cloudinary delete error", error2);
+            // rollback
+            Logger.info("Rolling back user deletion error2");
+            await adduser(data[0]);
             throw error2;
         }
 
@@ -117,10 +117,10 @@ export const deleteUser = async (req, res) => {
         Logger.success("Deleted user successfully", data);
         res.status(200).json({ message: "Deleted successfully", data });
     } catch (error) {
-        // rollback
-        Logger.info("Rolling back user deletion");
-        await adduser(data[0]);
         Logger.error("Error deleting user", error);
+        //rollback
+        Logger.info("Rolling back user deletion");
+        await adduser(data.data[0]);
         res.status(500).json({ error: "Failed to delete user" });
     }
 };
