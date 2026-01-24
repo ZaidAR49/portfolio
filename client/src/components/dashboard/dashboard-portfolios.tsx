@@ -234,7 +234,9 @@ export const PortfolioManager = () => {
                                             <FaBolt />
                                         </button>
                                     )}
-                                    <button onClick={() => window.open(`/`)} className="p-2 text-[var(--text-primary)] hover:bg-[var(--text-secondary)]/10 rounded-lg" title="View Live"><FaExternalLinkAlt /></button>
+                                    {item.is_active && (
+                                        <button onClick={() => window.open(`/`)} className="p-2 text-[var(--text-primary)] hover:bg-[var(--text-secondary)]/10 rounded-lg" title="View Live"><FaExternalLinkAlt /></button>
+                                    )}
                                     <button onClick={() => handleEdit(item)} className="p-2 text-blue-400 hover:bg-blue-400/10 rounded-lg" title="Edit"><FaEdit /></button>
                                     <button
                                         onClick={() => handleDeleteClick(item)}
