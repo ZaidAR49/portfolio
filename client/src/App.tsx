@@ -3,10 +3,11 @@ import { ToastContainer, toast } from "react-toastify";
 import { Header } from "./components/header";
 import { Footer } from "./components/footer";
 import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom"; // Added Outlet, useNavigate
-import { Home } from "./pages/home";
-import { About } from "./pages/about-page";
-import { Dashboard } from "./pages/dashboard";
-import ErrorPage from "./pages/error-page"; // Assuming you created this
+import { lazy, Suspense } from "react";
+const Home = lazy(() => import("./pages/home").then(module => ({ default: module.Home })));
+const About = lazy(() => import("./pages/about-page").then(module => ({ default: module.About })));
+const Dashboard = lazy(() => import("./pages/dashboard").then(module => ({ default: module.Dashboard })));
+const ErrorPage = lazy(() => import("./pages/error-page"));
 import { ThemeProvider, ThemeContext } from "./contexts/theme-context";
 import { StaticModeProvider } from "./contexts/static-mode-context";
 import { getUser } from "./data/portfolio-data";
@@ -80,19 +81,21 @@ function AppContent() {
 
   return (
     <div className={theme}>
-      <Routes>
-        <Route element={<MainLayout userInfo={userInfo} />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Route>
+      <Suspense fallback={<div className="flex h-screen w-full items-center justify-center"><span className="loading loading-spinner loading-lg text-primary"></span></div>}>
+        <Routes>
+          <Route element={<MainLayout userInfo={userInfo} />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
 
-        <Route element={<DashboardLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
+          <Route element={<DashboardLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
 
-        <Route path="/error" element={<ErrorPage />} />
-      </Routes>
+          <Route path="/error" element={<ErrorPage />} />
+        </Routes>
+      </Suspense>
 
       <ToastContainer position="bottom-right" theme="dark" />
     </div>
