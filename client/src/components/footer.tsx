@@ -38,7 +38,7 @@ export const Footer = ({ userInfo }: any) => {
     }
   }
   const handelsecret = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (e.target.value === "zaidopendash") {
+    if (e.target.value === "zaidopendash" && !staticMode) {
       setOpenSecret(true);
 
       try {
