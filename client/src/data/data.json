@@ -1,0 +1,285 @@
+{
+    "user": {
+        "id": 69,
+        "name": "Zaid Radaideh",
+        "job_title": "Software Engineer",
+        "email": "zaidradaideh.dev@gmail.com",
+        "hero_description": "focused on creating reliable web applications and ensuring software quality.",
+        "about_description": "I’m a <b>Jordanian web developer</b> passionate about building functional and user-friendly web applications. I specialize in <b>Full Stack Development</b> and <b> Quality Assurance</b> using modern technologies like <b> React</b>,<b> Node.js</b>, <b> PostgreSQL</b>, and<b>Tailwind CSS</b>. With a strong foundation in <b> both front-end and back-end development</b>, I strive to write clean, maintainable code and ensure software reliability through testing. I hold a Bachelor’s degree in Software Engineering from <b>Jordan University of Science and Technology</b> , where I developed my technical skills and deepened my passion for <b> full-stack development</b>",
+        "capabilities_description": "I specialize in building real-world applications through hands-on, practical projects. My core strengths lie in full-stack development and quality assurance, with a focus on writing clean and maintainable code.\n\nI am always eager to expand my skill set and stay current with modern technologies. So far, I’ve gained solid experience with tools and frameworks.",
+        "about_title": "I am a software engineer in Jordan. With a foundation in engineering and a passion for technology, I build functional end-to-end web applications and ensure they meet high quality standards.",
+        "linkedin_url": "https://www.linkedin.com/in/zaid-radaideh/",
+        "github_url": "https://github.com/ZaidAR49",
+        "resume_url": "https://drive.google.com/file/d/1kEZAfDHeaQqiS14Jo32vID2WCpJnkZ9u/view?usp=sharing",
+        "picture_url": "https://res.cloudinary.com/dxa0aylow/image/upload/v1769190731/me_a7kxgh.png",
+        "portfolio_name": "backend 2",
+        "is_active": true
+    },
+    "skills": {
+        "main": [
+            {
+                "id": 1,
+                "user_id": 69,
+                "name": "React",
+                "type": "primary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 2,
+                "user_id": 69,
+                "name": "Node.js",
+                "type": "primary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 3,
+                "user_id": 69,
+                "name": "PostgreSQL",
+                "type": "primary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 4,
+                "user_id": 69,
+                "name": "HTML",
+                "type": "primary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 5,
+                "user_id": 69,
+                "name": "CSS3",
+                "type": "primary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 6,
+                "user_id": 69,
+                "name": "Tailwind CSS",
+                "type": "primary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 7,
+                "user_id": 69,
+                "name": "JavaScript",
+                "type": "primary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 8,
+                "user_id": 69,
+                "name": "TypeScript",
+                "type": "primary",
+                "users": {
+                    "is_active": true
+                }
+            }
+        ],
+        "secondary": [
+            {
+                "id": 9,
+                "user_id": 69,
+                "name": "Git",
+                "type": "secondary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 10,
+                "user_id": 69,
+                "name": "GitHub",
+                "type": "secondary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 11,
+                "user_id": 69,
+                "name": "Cypress",
+                "type": "secondary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 12,
+                "user_id": 69,
+                "name": "Postman",
+                "type": "secondary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 13,
+                "user_id": 69,
+                "name": "Figma",
+                "type": "secondary",
+                "users": {
+                    "is_active": true
+                }
+            }
+        ]
+    },
+    "projects": [
+        {
+            "id": 1,
+            "user_id": 69,
+            "title": "Green Bridge",
+            "client": "University project",
+            "role": "full-stack developer",
+            "year": 2025,
+            "state": "completed",
+            "sort_order": 1,
+            "description": "Green Bridge is a web platform connecting agricultural landowners with farmers by enabling direct land rental. It features user authentication, real-time chat, and the ability to post and manage land offers. Farmers can search, filter, and book available lands while landowners track listings and communicate instantly.",
+            "github_url": "https://github.com/ZaidAR49/Green-Bridge.git",
+            "technologies": "React, Node.js, PostgreSQL",
+            "images": [
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1752396452/GB1_qyjrth.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1752396452/GB3_iz92qp.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1752396453/GB2_mpar4z.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1752396453/GB4_mkdvyh.jpg"
+            ],
+            "users": {
+                "is_active": true
+            }
+        },
+        {
+            "id": 2,
+            "user_id": 69,
+            "title": "Automated Mobile Testing for Android Using Appium",
+            "client": "ard group(arabia weather)",
+            "role": "Test Automation Engineer",
+            "year": 2025,
+            "state": "in_progress",
+            "sort_order": 2,
+            "description": "This project involved creating an automation framework for a mobile app using Appium. The focus was on automating sign-up and login flows, including email verification via OTP. The project aimed to make mobile testing more efficient and repeatable.",
+            "github_url": "https://github.com/ZaidAR49/Appium-ard.git",
+            "technologies": "Appium, Node.js, IMAP",
+            "images": [
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765289089/appium1_knr7if.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765289089/appium2_bzflu5.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765289092/appium3_gapbhk.jpg"
+            ],
+            "users": {
+                "is_active": true
+            }
+        },
+        {
+            "id": 3,
+            "user_id": 69,
+            "title": "Portfolio Website",
+            "client": "Personal project",
+            "role": "full-stack developer",
+            "year": 2025,
+            "state": "completed",
+            "sort_order": 3,
+            "description": "This portfolio website showcases my projects and skills, built with React and Tailwind CSS. It features a responsive design, smooth animations, and a user-friendly interface. The site includes sections for project details, skills, and contact information, providing a comprehensive overview of my work.",
+            "github_url": "https://github.com/ZaidAR49/portfolio.git",
+            "technologies": "React-TS, Tailwind CSS, Node.js",
+            "images": [
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p3_nrqoxp.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p2_etwj2t.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p1_fngjm1.jpg"
+            ],
+            "users": {
+                "is_active": true
+            }
+        },
+        {
+            "id": 5,
+            "user_id": 69,
+            "title": "2D Racing Game",
+            "client": "University project",
+            "role": "full-stack developer",
+            "year": 2023,
+            "state": "completed",
+            "sort_order": 5,
+            "description": "Developed a simple 2D racing game featuring 3 levels and 3 different maps. Includes both single-player and two-player modes. Focused on game logic, UI design, and player controls using Windows Forms in C#.",
+            "github_url": "https://github.com/ZaidAR49/car-game.git",
+            "technologies": "C#, Microsoft Windows Forms",
+            "images": [
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1752398007/car3_r4erps.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1752398007/car4_j0x8rm.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1752398007/car2_ic9kxb.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1752398007/car1_pmvker.jpg"
+            ],
+            "users": {
+                "is_active": true
+            }
+        },
+        {
+            "id": 4,
+            "user_id": 69,
+            "title": "Library Management System",
+            "client": "University project",
+            "role": "full-stack developer",
+            "year": 2024,
+            "state": "suspended",
+            "sort_order": 4,
+            "description": "Developed a web-based library management system using JSP and Java Servlets. Followed the MVC architecture to separate concerns and improve maintainability. Implemented features such as user login, book search, borrowing/returning books, and admin management functionalities.",
+            "github_url": "https://github.com/ZaidAR49/library-system.git",
+            "technologies": "JSP, Java servlet, Oracle",
+            "images": [
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1753178825/lib_1_cpsgsi.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1753178833/lib_2_x2c2zf.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1753178825/lib_3_bcfcq7.jpg"
+            ],
+            "users": {
+                "is_active": true
+            }
+        }
+    ],
+    "experiences": [
+        {
+            "id": 1,
+            "user_id": 69,
+            "role": "Internship in Quality Assurance",
+            "period": "Sep 2025 - present",
+            "description": "Ard Group (ArabiaWeather) is a leading weather technology company in the Middle East, known for its ArabiaWeather app that delivers hyper-localized forecasts and real-time alerts. My role was to test the app’s functionality, usability, and performance to ensure a smooth user experience and accurate delivery of weather data. I also built and worked on Appium automations.",
+            "company": "ARD(Arabia weather)",
+            "users": {
+                "is_active": true
+            }
+        },
+        {
+            "id": 2,
+            "user_id": 69,
+            "role": "Internship in Quality Assurance and Business Analysis",
+            "period": "Jun 2025 - Sep 2025",
+            "description": "Gained experience in business requirements and quality assurance by working on real-world problems. RealSoft is a leading company in Jordan that develops government applications, which gave me valuable insight into how large companies operate and maintain high-quality software standards",
+            "company": "Real Soft Advanced applications",
+            "users": {
+                "is_active": true
+            }
+        },
+        {
+            "id": 3,
+            "user_id": 69,
+            "role": "student",
+            "period": "sep 2021 - sep 2025",
+            "description": "As a recent computer science graduate, I gained hands-on experience through university and personal projects. Throughout my academic journey, we followed the complete software development life cycle from gathering requirements and planning, to development, testing, and deployment. These projects helped me apply real-world development practices in collaborative and individual settings.",
+            "company": "Jordan University of sinace and technology",
+            "users": {
+                "is_active": true
+            }
+        }
+    ]
+}

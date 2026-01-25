@@ -43,6 +43,10 @@ app.use("/api/cloud", cloud);
 app.use("/api/experience", experience);
 app.use("/api/project", project);
 app.use("/api/skill", skill);
+// touch
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Server is running" });
+});
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

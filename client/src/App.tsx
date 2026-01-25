@@ -8,12 +8,12 @@ import { About } from "./pages/about-page";
 import { Dashboard } from "./pages/dashboard";
 import ErrorPage from "./pages/error-page"; // Assuming you created this
 import { ThemeProvider, ThemeContext } from "./contexts/theme-context";
+import { StaticModeProvider } from "./contexts/static-mode-context";
 import { getUser } from "./data/portfolio-data";
 import { getFromCache, removeUserData, isOwnerModeEnabled } from "./helpers/storage-helper";
 import "react-toastify/dist/ReactToastify.css";
-
-// 1. Define the Layouts
-// Layout for standard pages (Header + Footer)
+import { StaticModeContext } from "./contexts/static-mode-context";
+import axios from "axios";
 const MainLayout = ({ userInfo }: { userInfo: any }) => (
   <>
     <Header />
@@ -24,7 +24,6 @@ const MainLayout = ({ userInfo }: { userInfo: any }) => (
   </>
 );
 
-// Layout for Dashboard (Header only, No Footer)
 const DashboardLayout = () => (
   <>
     <Header />
@@ -37,6 +36,26 @@ const DashboardLayout = () => (
 function AppContent() {
   const { theme } = useContext(ThemeContext);
   const [userInfo, setUserInfo] = useState<any>(null);
+  const { staticMode, setStaticMode } = useContext(StaticModeContext);
+  useEffect(() => {
+    const testServer = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/`);
+        console.log(res.data);
+        if (res.status === 200) {
+          console.log("Server is running");
+          setStaticMode(false);
+        } else {
+          setStaticMode(true);
+        }
+      } catch (error) {
+        setStaticMode(true);
+        return;
+      }
+    }
+    testServer();
+    console.log("staticMode", staticMode);
+  }, [staticMode]);
   useEffect(() => {
     if (isOwnerModeEnabled()) {
       removeUserData();
@@ -83,9 +102,11 @@ function AppContent() {
 function App() {
   return (
     <ThemeProvider>
-      <Router>
-        <AppContent />
-      </Router>
+      <StaticModeProvider>
+        <Router>
+          <AppContent />
+        </Router>
+      </StaticModeProvider>
     </ThemeProvider>
   );
 }
