@@ -12,6 +12,9 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            if (id.includes('framer-motion')) return 'vendor-framer';
+            if (id.includes('lottie-react')) return 'vendor-lottie';
+            if (id.includes('react')) return 'vendor-react';
             return 'vendor';
           }
         },
