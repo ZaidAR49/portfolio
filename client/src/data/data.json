@@ -1,25 +1,25 @@
 {
     "user": {
-        "id": 69,
+        "id": 100,
         "name": "Zaid Radaideh",
         "job_title": "Software Engineer",
         "email": "zaidradaideh.dev@gmail.com",
         "hero_description": "focused on creating reliable web applications and ensuring software quality.",
-        "about_description": "I’m a <b>Jordanian web developer</b> passionate about building functional and user-friendly web applications. I specialize in <b>Full Stack Development</b> and <b> Quality Assurance</b> using modern technologies like <b> React</b>,<b> Node.js</b>, <b> PostgreSQL</b>, and<b>Tailwind CSS</b>. With a strong foundation in <b> both front-end and back-end development</b>, I strive to write clean, maintainable code and ensure software reliability through testing. I hold a Bachelor’s degree in Software Engineering from <b>Jordan University of Science and Technology</b> , where I developed my technical skills and deepened my passion for <b> full-stack development</b>",
+        "about_description": "I’m a Jordanian web developer passionate about building functional and user-friendly web applications. I specialize in Full Stack Development and Quality Assurance using modern technologies like React, Node.js, PostgreSQL, and Tailwind CSS. With a strong foundation in both front-end and back-end development, I strive to write clean, maintainable code and ensure software reliability through testing. I hold a Bachelor’s degree in Software Engineering from Jordan University of Science and Technology , where I developed my technical skills and deepened my passion for full-stack development",
         "capabilities_description": "I specialize in building real-world applications through hands-on, practical projects. My core strengths lie in full-stack development and quality assurance, with a focus on writing clean and maintainable code.\n\nI am always eager to expand my skill set and stay current with modern technologies. So far, I’ve gained solid experience with tools and frameworks.",
         "about_title": "I am a software engineer in Jordan. With a foundation in engineering and a passion for technology, I build functional end-to-end web applications and ensure they meet high quality standards.",
         "linkedin_url": "https://www.linkedin.com/in/zaid-radaideh/",
         "github_url": "https://github.com/ZaidAR49",
-        "resume_url": "https://drive.google.com/file/d/1kEZAfDHeaQqiS14Jo32vID2WCpJnkZ9u/view?usp=sharing",
-        "picture_url": "https://res.cloudinary.com/dxa0aylow/image/upload/v1769190731/me_a7kxgh.png",
-        "portfolio_name": "backend 2",
-        "is_active": true
+        "resume_url": "https://drive.google.com/file/d/1kEZAfDHeaQqiS14Jo32vID2WCpJnkZ9u/view",
+        "picture_url": "https://res.cloudinary.com/dxa0aylow/image/upload/v1769254935/bx7qgmaxbuhnjwfksumk.png",
+        "portfolio_name": "main",
+        "is_active": false
     },
     "skills": {
         "main": [
             {
-                "id": 1,
-                "user_id": 69,
+                "id": 92,
+                "user_id": 100,
                 "name": "React",
                 "type": "primary",
                 "users": {
@@ -27,8 +27,8 @@
                 }
             },
             {
-                "id": 2,
-                "user_id": 69,
+                "id": 93,
+                "user_id": 100,
                 "name": "Node.js",
                 "type": "primary",
                 "users": {
@@ -36,8 +36,8 @@
                 }
             },
             {
-                "id": 3,
-                "user_id": 69,
+                "id": 94,
+                "user_id": 100,
                 "name": "PostgreSQL",
                 "type": "primary",
                 "users": {
@@ -45,8 +45,8 @@
                 }
             },
             {
-                "id": 4,
-                "user_id": 69,
+                "id": 95,
+                "user_id": 100,
                 "name": "HTML",
                 "type": "primary",
                 "users": {
@@ -54,8 +54,8 @@
                 }
             },
             {
-                "id": 5,
-                "user_id": 69,
+                "id": 96,
+                "user_id": 100,
                 "name": "CSS3",
                 "type": "primary",
                 "users": {
@@ -63,8 +63,8 @@
                 }
             },
             {
-                "id": 6,
-                "user_id": 69,
+                "id": 97,
+                "user_id": 100,
                 "name": "Tailwind CSS",
                 "type": "primary",
                 "users": {
@@ -72,8 +72,8 @@
                 }
             },
             {
-                "id": 7,
-                "user_id": 69,
+                "id": 98,
+                "user_id": 100,
                 "name": "JavaScript",
                 "type": "primary",
                 "users": {
@@ -81,9 +81,18 @@
                 }
             },
             {
-                "id": 8,
-                "user_id": 69,
+                "id": 99,
+                "user_id": 100,
                 "name": "TypeScript",
+                "type": "primary",
+                "users": {
+                    "is_active": true
+                }
+            },
+            {
+                "id": 106,
+                "user_id": 100,
+                "name": "Appium",
                 "type": "primary",
                 "users": {
                     "is_active": true
@@ -92,8 +101,8 @@
         ],
         "secondary": [
             {
-                "id": 9,
-                "user_id": 69,
+                "id": 100,
+                "user_id": 100,
                 "name": "Git",
                 "type": "secondary",
                 "users": {
@@ -101,8 +110,8 @@
                 }
             },
             {
-                "id": 10,
-                "user_id": 69,
+                "id": 101,
+                "user_id": 100,
                 "name": "GitHub",
                 "type": "secondary",
                 "users": {
@@ -110,8 +119,8 @@
                 }
             },
             {
-                "id": 11,
-                "user_id": 69,
+                "id": 102,
+                "user_id": 100,
                 "name": "Cypress",
                 "type": "secondary",
                 "users": {
@@ -119,8 +128,8 @@
                 }
             },
             {
-                "id": 12,
-                "user_id": 69,
+                "id": 103,
+                "user_id": 100,
                 "name": "Postman",
                 "type": "secondary",
                 "users": {
@@ -128,8 +137,8 @@
                 }
             },
             {
-                "id": 13,
-                "user_id": 69,
+                "id": 104,
+                "user_id": 100,
                 "name": "Figma",
                 "type": "secondary",
                 "users": {
@@ -140,8 +149,8 @@
     },
     "projects": [
         {
-            "id": 1,
-            "user_id": 69,
+            "id": 143,
+            "user_id": 100,
             "title": "Green Bridge",
             "client": "University project",
             "role": "full-stack developer",
@@ -162,8 +171,8 @@
             }
         },
         {
-            "id": 2,
-            "user_id": 69,
+            "id": 144,
+            "user_id": 100,
             "title": "Automated Mobile Testing for Android Using Appium",
             "client": "ard group(arabia weather)",
             "role": "Test Automation Engineer",
@@ -183,29 +192,8 @@
             }
         },
         {
-            "id": 3,
-            "user_id": 69,
-            "title": "Portfolio Website",
-            "client": "Personal project",
-            "role": "full-stack developer",
-            "year": 2025,
-            "state": "completed",
-            "sort_order": 3,
-            "description": "This portfolio website showcases my projects and skills, built with React and Tailwind CSS. It features a responsive design, smooth animations, and a user-friendly interface. The site includes sections for project details, skills, and contact information, providing a comprehensive overview of my work.",
-            "github_url": "https://github.com/ZaidAR49/portfolio.git",
-            "technologies": "React-TS, Tailwind CSS, Node.js",
-            "images": [
-                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p3_nrqoxp.jpg",
-                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p2_etwj2t.jpg",
-                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p1_fngjm1.jpg"
-            ],
-            "users": {
-                "is_active": true
-            }
-        },
-        {
-            "id": 5,
-            "user_id": 69,
+            "id": 146,
+            "user_id": 100,
             "title": "2D Racing Game",
             "client": "University project",
             "role": "full-stack developer",
@@ -226,8 +214,8 @@
             }
         },
         {
-            "id": 4,
-            "user_id": 69,
+            "id": 147,
+            "user_id": 100,
             "title": "Library Management System",
             "client": "University project",
             "role": "full-stack developer",
@@ -245,12 +233,35 @@
             "users": {
                 "is_active": true
             }
+        },
+        {
+            "id": 145,
+            "user_id": 100,
+            "title": "Portfolio Website",
+            "client": "Personal project",
+            "role": "full-stack developer",
+            "year": 2025,
+            "state": "completed",
+            "sort_order": 3,
+            "description": "Built with React and Tailwind, this secure MVC application utilizes Node.js API methods to manage data across Supabase and Cloudinary. Beyond its unique Multi-Portfolio system for switching profiles, it features high-performance data portability via JSON import/export and a stealth admin dashboard protected by a secure access code",
+            "github_url": "https://github.com/ZaidAR49/portfolio.git",
+            "technologies": "React-TS, Tailwind CSS, Node.js",
+            "images": [
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p2_etwj2t.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p1_fngjm1.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1769258121/yxfgxsxalpabshaagorb.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1769258121/hfnsxzfl2aauq6nnd6tl.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1769258121/qhrlrmkfjxkmtmh2atgi.jpg"
+            ],
+            "users": {
+                "is_active": true
+            }
         }
     ],
     "experiences": [
         {
-            "id": 1,
-            "user_id": 69,
+            "id": 56,
+            "user_id": 100,
             "role": "Internship in Quality Assurance",
             "period": "Sep 2025 - present",
             "description": "Ard Group (ArabiaWeather) is a leading weather technology company in the Middle East, known for its ArabiaWeather app that delivers hyper-localized forecasts and real-time alerts. My role was to test the app’s functionality, usability, and performance to ensure a smooth user experience and accurate delivery of weather data. I also built and worked on Appium automations.",
@@ -260,8 +271,8 @@
             }
         },
         {
-            "id": 2,
-            "user_id": 69,
+            "id": 57,
+            "user_id": 100,
             "role": "Internship in Quality Assurance and Business Analysis",
             "period": "Jun 2025 - Sep 2025",
             "description": "Gained experience in business requirements and quality assurance by working on real-world problems. RealSoft is a leading company in Jordan that develops government applications, which gave me valuable insight into how large companies operate and maintain high-quality software standards",
@@ -271,8 +282,8 @@
             }
         },
         {
-            "id": 3,
-            "user_id": 69,
+            "id": 58,
+            "user_id": 100,
             "role": "student",
             "period": "sep 2021 - sep 2025",
             "description": "As a recent computer science graduate, I gained hands-on experience through university and personal projects. Throughout my academic journey, we followed the complete software development life cycle from gathering requirements and planning, to development, testing, and deployment. These projects helped me apply real-world development practices in collaborative and individual settings.",

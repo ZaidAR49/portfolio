@@ -2,16 +2,18 @@ import { ButtonsSocial } from "./buttons-social";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaPaperPlane } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { setSecurtKey, enableOwnerMode } from "../helpers/storage-helper";
 import { Loading } from "./loading";
+import { StaticModeContext } from "../contexts/static-mode-context";
 
 export const Footer = ({ userInfo }: any) => {
   const [openSecret, setOpenSecret] = useState<boolean>(false);
   const server_url = import.meta.env.VITE_API_URL;
+  const { staticMode } = useContext(StaticModeContext);
   const navigate = useNavigate();
   const checksecuritycode = async () => {
     try {

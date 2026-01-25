@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FaChartLine, FaUsers, FaCode, FaProjectDiagram, FaBriefcase, FaFileImport, FaSignOutAlt } from "react-icons/fa";
+import { FaChartLine, FaUsers, FaCode, FaProjectDiagram, FaBriefcase, FaFileImport, FaSignOutAlt, FaSync } from "react-icons/fa";
 import { getExperiences, getProjects, getSkills, getUser } from "../../data/portfolio-data";
 import axios from "axios";
 import { getSecurtKey, disableOwnerMode, removeSecretKey } from "../../helpers/storage-helper";
@@ -126,7 +126,28 @@ export const AnalysisDashboard = () => {
 
             console.error("Error fetching dashboard stats:", error);
         }
+
     };
+
+    const handleRewriteData = async () => {
+        try {
+            const freshData = {
+                user: await getUser(),
+                skills: await getSkills(),
+                projects: await getProjects(),
+                experiences: await getExperiences()
+            };
+            freshData.user.is_active = false;
+
+            await axios.post(`${server_url}/api/data/rewrite`, freshData);
+
+            toast.success("Data rewritten successfully");
+        } catch (error) {
+            toast.error("Failed to rewrite data");
+            console.error("Error rewriting data:", error);
+        }
+    };
+
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -249,6 +270,25 @@ export const AnalysisDashboard = () => {
                             accept=".json"
                             className="hidden"
                         />
+                    </div>
+                </div>
+
+                {/* Rewrite Data Area */}
+                <div className="glass-panel p-6 lg:p-10 rounded-3xl border border-[var(--text-secondary)]/10 bg-[var(--bg-secondary)]/20 flex flex-col items-center justify-center text-center">
+                    <div className="max-w-md space-y-6">
+                        <div className="w-16 h-16 rounded-full bg-[var(--accent)]/10 flex items-center justify-center mx-auto text-[var(--accent)] text-2xl">
+                            <FaSync />
+                        </div>
+                        <div>
+                            <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-2">Rewrite Data</h3>
+                            <p className="text-[var(--text-secondary)]">Update the local data.json file with current database content. <span className="text-orange-400 font-bold">(Local Only)</span></p>
+                        </div>
+                        <button
+                            className="px-8 py-3 w-48 rounded-xl bg-orange-600 text-white font-medium hover:opacity-90 transition-all flex items-center justify-center gap-2 mx-auto"
+                            onClick={handleRewriteData}
+                        >
+                            <span>Rewrite File</span>
+                        </button>
                     </div>
                 </div>
 
