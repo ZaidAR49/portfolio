@@ -11,7 +11,7 @@
         "linkedin_url": "https://www.linkedin.com/in/zaid-radaideh/",
         "github_url": "https://github.com/ZaidAR49",
         "resume_url": "https://drive.google.com/file/d/1kEZAfDHeaQqiS14Jo32vID2WCpJnkZ9u/view",
-        "picture_url": "https://res.cloudinary.com/dxa0aylow/image/upload/v1769254935/bx7qgmaxbuhnjwfksumk.png",
+        "picture_url": "https://res.cloudinary.com/dxa0aylow/image/upload/v1769416147/qentbmtdh7xeslqkcs3a.png",
         "portfolio_name": "main",
         "is_active": false
     },
@@ -177,7 +177,7 @@
             "client": "ard group(arabia weather)",
             "role": "Test Automation Engineer",
             "year": 2025,
-            "status": "in_progress",
+            "status": "In Progress",
             "sort_order": 2,
             "description": "This project involved creating an automation framework for a mobile app using Appium. The focus was on automating sign-up and login flows, including email verification via OTP. The project aimed to make mobile testing more efficient and repeatable.",
             "github_url": "https://github.com/ZaidAR49/Appium-ard.git",
