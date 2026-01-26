@@ -68,7 +68,7 @@ export const Header = () => {
       document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
     } else if (path === "/") {
       navigate("/");
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'instant' });
     } else {
       navigate("/" + path);
     }

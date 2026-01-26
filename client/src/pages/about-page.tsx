@@ -53,6 +53,7 @@ export const About = () => {
                 setIsLoading(false);
             }
         };
+        window.scrollTo({ top: 0, behavior: "instant" });
         load();
     }, []);
     useEffect(() => {
