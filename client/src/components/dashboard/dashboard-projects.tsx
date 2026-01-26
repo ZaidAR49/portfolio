@@ -10,8 +10,8 @@ import { getSecurtKey } from "../../helpers/storage-helper";
 
 
 
-const stateColor = (state: string) => {
-    switch (state.toLowerCase()) {
+const stateColor = (status: string) => {
+    switch (status.toLowerCase()) {
         case "completed":
             return "bg-emerald-500/20 text-emerald-400 border-emerald-500/50";
         case "in progress":
@@ -42,7 +42,7 @@ export const ProjectsManager = () => {
         client: "",
         role: "",
         year: "",
-        state: "completed",
+        status: "completed",
         sort_order: 0,
         description: "",
         github_url: "",
@@ -98,7 +98,7 @@ export const ProjectsManager = () => {
             client: item.client,
             role: item.role || "",
             year: item.year,
-            state: item.state,
+            status: item.status,
             sort_order: item.sort_order || 0,
             description: item.description,
             github_url: item.github_url || item.github,
@@ -371,8 +371,8 @@ export const ProjectsManager = () => {
                         <div>
                             <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">Status</label>
                             <select
-                                value={formData.state}
-                                onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                                value={formData.status}
+                                onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                                 className="w-full bg-[var(--bg-primary)] border border-[var(--text-secondary)]/20 rounded-xl px-4 py-3 text-[var(--text-primary)] outline-none focus:border-[var(--accent)] appearance-none"
                             >
                                 <option value="completed">Completed</option>
@@ -472,8 +472,8 @@ export const ProjectsManager = () => {
                                         <span className="px-2 py-1 text-xs rounded border border-[var(--text-secondary)]/20 bg-[var(--bg-secondary)]/50 text-[var(--text-secondary)]">
                                             #{item.sort_order}
                                         </span>
-                                        <span className={`px-2 py-1 text-xs rounded border ${stateColor(item.state)}`}>
-                                            {item.state}
+                                        <span className={`px-2 py-1 text-xs rounded border ${stateColor(item.status)}`}>
+                                            {item.status}
                                         </span>
                                     </div>
                                 </div>

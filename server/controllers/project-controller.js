@@ -19,7 +19,7 @@ export const addManyProjects = async (req, res) => {
                 client: project.client,
                 role: project.role,
                 year: project.year,
-                state: project.state,
+                status: project.status,
                 sort_order: project.sort_order,
                 description: project.description,
                 github_url: project.github_url,
@@ -53,7 +53,7 @@ export const addProject = async (req, res) => {
     try {
         const project = req.body;
         Logger.info("Adding new project", project); // Log sanitized input
-        if (!project.title || !project.client || !project.role || !project.year || !project.state || !project.sort_order || !project.description || !project.github_url || !project.technologies || !project.images) {
+        if (!project.title || !project.client || !project.role || !project.year || !project.status || !project.sort_order || !project.description || !project.github_url || !project.technologies || !project.images) {
             Logger.warn("Missing required fields for invalid project attempt");
             return res.status(400).json({ message: "Missing required fields" });
 
@@ -147,7 +147,7 @@ export const updateProject = async (req, res) => {
         const id = req.params.id;
         Logger.info(`Updating project ID: ${id}`, project); // Log sanitized update data
 
-        if (!id || !project.title || !project.client || !project.role || !project.year || !project.state || !project.sort_order || !project.description || !project.github_url || !project.technologies || !project.images) {
+        if (!id || !project.title || !project.client || !project.role || !project.year || !project.status || !project.sort_order || !project.description || !project.github_url || !project.technologies || !project.images) {
             Logger.warn("Missing fields in update", project);
             return res.status(400).json({ message: "Missing required fields" });
         }

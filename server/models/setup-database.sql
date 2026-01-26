@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS projects (
     client VARCHAR(255),
     role VARCHAR(255),
     year INTEGER,
-    state VARCHAR(100),
+    status VARCHAR(100),
     sort_order INTEGER,
     description TEXT,
     github_url VARCHAR(500),

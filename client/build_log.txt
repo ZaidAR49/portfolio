@@ -1,0 +1,1 @@
+src/data/portfolio-data.tsx(65,17): error TS1005: ',' expected.

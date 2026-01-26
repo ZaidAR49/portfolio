@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export interface Project {
-  state: "completed" | "in progress" | "Suspended" | string;
+  status: "completed" | "in progress" | "Suspended" | string;
   title: string;
   description: string;
   images: string[];
@@ -151,8 +151,8 @@ const ProjectCarousel = ({ project }: { project: Project }) => {
     setPage([page + newDirection, newDirection]);
   };
 
-  const stateColor = (state: string) => {
-    switch (state.toLowerCase()) {
+  const stateColor = (status: string) => {
+    switch (status.toLowerCase()) {
       case "completed":
         return "bg-emerald-500/20 text-emerald-400 border-emerald-500/50";
       case "in progress":
@@ -181,8 +181,8 @@ const ProjectCarousel = ({ project }: { project: Project }) => {
       </div>
 
       <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--bg-secondary)] aspect-video bg-[var(--bg-secondary)] z-10">
-        <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-md z-10 ${stateColor(project.state)}`}>
-          {project.state}
+        <div className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-md z-10 ${stateColor(project.status)}`}>
+          {project.status}
         </div>
 
         <AnimatePresence initial={false} custom={direction} mode="popLayout">

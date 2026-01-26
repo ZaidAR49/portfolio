@@ -17,7 +17,7 @@ export const getExperiences = async () => {
             return parsedExperiences;
         }
     } catch (error) {
-        console.error("Error fetching experiences:", error);
+        //console.error("Error fetching experiences:", error);
         const parsedExperiences = data.experiences.map((exp: any) => ({
             ...exp,
             description: parse(exp.description)
@@ -42,7 +42,7 @@ export const getPortfolios = async () => {
             return parsedPortfolios;
         }
     } catch (error) {
-        console.error("Error fetching portfolios:", error);
+        //console.error("Error fetching portfolios:", error);
         const parsedPortfolios = {
             ...data.user,
             hero_description: parse(data.user.hero_description),
@@ -61,13 +61,14 @@ export const getProjects = async () => {
             const projects = response.data.data || response.data;
             const parsedProjects = projects.map((project: any) => ({
                 ...project,
-                description: parse(project.description)
+                description: parse(project.description),
+                status: project.status === "in_progress" ? "In Progress" : project.status
             }));
             saveToCache("projects", parsedProjects);
             return parsedProjects;
         }
     } catch (error) {
-        console.error("Error fetching projects:", error);
+        //console.error("Error fetching projects:", error);
         const parsedProjects = data.projects.map((project: any) => ({
             ...project,
             description: parse(project.description)
@@ -94,7 +95,7 @@ export const getSkills = async () => {
         };
 
     } catch (error) {
-        console.error("Error fetching skills:", error);
+        //console.error("Error fetching skills:", error);
         return data.skills;
     }
 };
