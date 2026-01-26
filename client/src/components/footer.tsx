@@ -13,6 +13,7 @@ import { StaticModeContext } from "../contexts/static-mode-context";
 export const Footer = ({ userInfo }: any) => {
   const [openSecret, setOpenSecret] = useState<boolean>(false);
   const server_url = import.meta.env.VITE_API_URL;
+  const google_app_url = import.meta.env.VITE_GOOGLE_APP_URL;
   const { staticMode } = useContext(StaticModeContext);
   const navigate = useNavigate();
   const checksecuritycode = async () => {
@@ -73,7 +74,14 @@ export const Footer = ({ userInfo }: any) => {
       //   timeout: 60000,
       // });
       // If using the backend server
-      const response = await axios.post(`${server_url}/api/sendmail/contact`, data, { timeout: 60000 });
+      let response;
+      if (staticMode) {
+        //google apps script
+        response = await axios.get(`${google_app_url}`, { params: data, timeout: 60000 });
+      }
+      else {
+        response = await axios.post(`${server_url}/api/sendmail/contact`, data, { timeout: 60000 });
+      }
       if (response.status === 200 || response.data.status === 200) {
         console.log("server:", response.data);
         toast.success("Message sent successfully!");

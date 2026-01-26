@@ -46,7 +46,7 @@ app.use("/api/project", project);
 app.use("/api/skill", skill);
 app.use("/api/data", dataRoutes);
 // touch
-app.get("/", (req, res) => {
+app.get("/health", (req, res) => {
   res.status(200).json({ message: "Server is running" });
 });
 

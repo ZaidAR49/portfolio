@@ -41,7 +41,7 @@ function AppContent() {
   useEffect(() => {
     const testServer = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/health`);
         console.log(res.data);
         if (res.status === 200) {
           console.log("Server is running");
