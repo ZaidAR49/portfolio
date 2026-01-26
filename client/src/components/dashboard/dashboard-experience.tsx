@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Loading } from "../loading";
 import { getSecurtKey } from "../../helpers/storage-helper";
+import { logger } from "../../helpers/logger.healper";
 export const ExperienceManager = () => {
     const secretKey = getSecurtKey();
     const server_url = import.meta.env.VITE_API_URL;
@@ -36,7 +37,7 @@ export const ExperienceManager = () => {
     //          setExperiences(Array.isArray(data) ? data : []);
 
     useEffect(() => {
-        console.log("from data:", formData)
+        logger.log("from data:", formData)
     }, [formData])
 
     const fetchExperiences = () => {
@@ -44,7 +45,7 @@ export const ExperienceManager = () => {
             setExperiences(data);
             setIsLoading(false);
         }).catch(error => {
-            console.error("Error fetching experiences:", error);
+            logger.error("Error fetching experiences:", error);
             if (error.response && [401, 404, 500].includes(error.response.status)) {
                 navigate("/error", { replace: true, state: error.response.status });
             }
@@ -87,7 +88,7 @@ export const ExperienceManager = () => {
             toast.success("Experience deleted successfully");
             setExperiences(experiences.filter(e => e.id !== deleteConfirm.id));
         } catch (error: any) {
-            console.error("Error deleting experience:", error);
+            logger.error("Error deleting experience:", error);
             if (error.response && [401, 404, 500].includes(error.response.status)) {
                 navigate("/error", { replace: true, state: error.response.status });
             }
@@ -121,7 +122,7 @@ export const ExperienceManager = () => {
             fetchExperiences();
             cleanupForm();
         } catch (error: any) {
-            console.error("Error saving experience:", error);
+            logger.error("Error saving experience:", error);
             if (error.response && [401, 404, 500].includes(error.response.status)) {
                 navigate("/error", { replace: true, state: error.response.status });
             }

@@ -13,6 +13,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { ThemeContext } from "../contexts/theme-context";
 import { isOwnerModeEnabled } from "../helpers/storage-helper";
+import { logger } from "../helpers/logger.healper";
 export const Header = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,7 +42,7 @@ export const Header = () => {
 
   useEffect(() => {
     setIsOwnerMode(isOwnerModeEnabled());
-    console.log("isOwnerMode", isOwnerMode);
+    logger.log("isOwnerMode", isOwnerMode);
   }, [isOwnerMode]);
   // Reset scroll state when navigating to a new page
   useEffect(() => {
@@ -56,7 +57,7 @@ export const Header = () => {
   ];
 
   if (isOwnerModeEnabled()) {
-    console.log("Owner mode enabled");
+    logger.log("Owner mode enabled");
     navItems.push({ name: "Dashboard", icon: <FaTachometerAlt />, path: "dashboard", id: "dashboard-btn" });
   }
 

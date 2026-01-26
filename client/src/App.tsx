@@ -15,6 +15,7 @@ import { getFromCache, removeUserData, isOwnerModeEnabled } from "./helpers/stor
 import "react-toastify/dist/ReactToastify.css";
 import { StaticModeContext } from "./contexts/static-mode-context";
 import axios from "axios";
+import { logger } from "./helpers/logger.healper";
 const MainLayout = ({ userInfo }: { userInfo: any }) => (
   <>
     <Header />
@@ -42,9 +43,9 @@ function AppContent() {
     const testServer = async () => {
       try {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/health`);
-        console.log(res.data);
+        logger.log(res.data);
         if (res.status === 200) {
-          console.log("Server is running");
+          logger.log("Server is running");
           setStaticMode(false);
         } else {
           setStaticMode(true);
@@ -55,7 +56,7 @@ function AppContent() {
       }
     }
     testServer();
-    console.log("staticMode", staticMode);
+    logger.log("staticMode", staticMode);
   }, [staticMode]);
   useEffect(() => {
     if (isOwnerModeEnabled()) {

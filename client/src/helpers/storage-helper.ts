@@ -1,4 +1,6 @@
 
+import { logger } from "./logger.healper";
+
 export const saveToCache = (key: string, value: any) => {
     sessionStorage.setItem(key, JSON.stringify(value));
 };
@@ -31,7 +33,7 @@ export const isOwnerModeEnabled = () => {
     return sessionStorage.getItem("owner-mode") === "true";
 };
 export const removeUserData = () => {
-    console.log("Removing user data from cache");
+    logger.log("Removing user data from cache");
     sessionStorage.removeItem("portfolios");
     sessionStorage.removeItem("experiences");
     sessionStorage.removeItem("projects");

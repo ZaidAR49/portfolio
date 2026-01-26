@@ -8,6 +8,7 @@ import { getSkills, getUser, getProjects } from "../data/portfolio-data";
 import { toast } from "react-toastify";
 import { Loading } from "../components/loading";
 import { getFromCache } from "../helpers/storage-helper";
+import { logger } from "../helpers/logger.healper";
 export const Home = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -29,13 +30,13 @@ export const Home = () => {
             getSkills()
 
           ]);
-          console.log("fetching data");
+          logger.log("fetching data");
           setUser(user);
           setProjects(projects);
           setSkills(skills);
         }
         else {
-          console.log("using cache", getFromCache("user"));
+          logger.log("using cache", getFromCache("user"));
           setUser(user);
           setProjects(projects);
           setSkills(skills);
@@ -58,7 +59,7 @@ export const Home = () => {
     load();
   }, []);
   useEffect(() => {
-    console.log("user", user, "skills", skills, "projects", projects);
+    logger.log("user", user, "skills", skills, "projects", projects);
   }, [user, skills, projects]);
 
 

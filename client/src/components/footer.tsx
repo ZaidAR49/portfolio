@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { setSecurtKey, enableOwnerMode } from "../helpers/storage-helper";
 import { Loading } from "./loading";
 import { StaticModeContext } from "../contexts/static-mode-context";
+import { logger } from "../helpers/logger.healper";
 
 export const Footer = ({ userInfo }: any) => {
   const [openSecret, setOpenSecret] = useState<boolean>(false);
@@ -31,7 +32,7 @@ export const Footer = ({ userInfo }: any) => {
       }
 
     } catch (error: any) {
-      console.error(error);
+      logger.error(error);
       if (error.response && [401, 404, 500].includes(error.response.status)) {
         navigate("/error", { replace: true, state: error.response.status });
       }
@@ -46,7 +47,7 @@ export const Footer = ({ userInfo }: any) => {
         await axios.post(`${server_url}/api/security/sendsecuritycode`, { timeout: 60000 }, { headers: { "security-code": e.target.value } });
         toast.success("Security code sent to your email!");
       } catch (error: any) {
-        console.error(error);
+        logger.error(error);
         if (error.response && [401, 404, 500].includes(error.response.status)) {
           navigate("/error", { replace: true, state: error.response.status });
         }
@@ -83,13 +84,13 @@ export const Footer = ({ userInfo }: any) => {
         response = await axios.post(`${server_url}/api/sendmail/contact`, data, { timeout: 60000 });
       }
       if (response.status === 200 || response.data.status === 200) {
-        console.log("server:", response.data);
+        logger.log("server:", response.data);
         toast.success("Message sent successfully!");
       } else {
         toast.error("Failed to send message. Please try again later.");
       }
     } catch (error: any) {
-      console.error("Error sending message:", error);
+      logger.error("Error sending message:", error);
       if (error.response && [401, 404, 500].includes(error.response.status)) {
         navigate("/error", { replace: true, state: error.response.status });
       }

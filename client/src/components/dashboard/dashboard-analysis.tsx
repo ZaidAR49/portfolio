@@ -6,6 +6,7 @@ import axios from "axios";
 import { getSecurtKey, disableOwnerMode, removeSecretKey } from "../../helpers/storage-helper";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { logger } from "../../helpers/logger.healper";
 
 export const AnalysisDashboard = () => {
     const server_url = import.meta.env.VITE_API_URL;
@@ -37,12 +38,12 @@ export const AnalysisDashboard = () => {
                 }
             });
             const userId = userRes.data[0].id;
-            console.log("User added", userId);
+            logger.log("User added", userId);
             if (!userId) {
                 toast.error("Failed to add user");
                 return;
             }
-            console.log(" final Data to store", finalData);
+            logger.log(" final Data to store", finalData);
             await Promise.all([
                 axios.post(`${server_url}/api/skill/addMany/${userId}`, finalData.skills, {
                     headers: {
@@ -61,15 +62,15 @@ export const AnalysisDashboard = () => {
                 })
             ])
             toast.success("Data stored in backend");
-            console.log("Data stored in backend");
+            logger.log("Data stored in backend");
         } catch (error) {
             toast.error("Failed to store data in backend");
-            console.error("Error storing data in backend:", error);
+            logger.error("Error storing data in backend:", error);
         }
     };
 
     useEffect(() => {
-        console.log("data", data);
+        logger.log("data", data);
     }, [data])
     useEffect(() => {
         const fetchStats = async () => {
@@ -89,7 +90,7 @@ export const AnalysisDashboard = () => {
                     experiences: experiencesRes.data || 0
                 });
             } catch (error) {
-                console.error("Error fetching dashboard stats:", error);
+                logger.error("Error fetching dashboard stats:", error);
             }
         };
 
@@ -144,7 +145,7 @@ export const AnalysisDashboard = () => {
             toast.success("Data rewritten successfully");
         } catch (error) {
             toast.error("Failed to rewrite data");
-            console.error("Error rewriting data:", error);
+            logger.error("Error rewriting data:", error);
         }
     };
 
@@ -162,11 +163,11 @@ export const AnalysisDashboard = () => {
                     setData(parsedData);
                     // to BE
                     storeInBackend(parsedData);
-                    console.log("Imported data stored in data obj:", parsedData);
+                    logger.log("Imported data stored in data obj:", parsedData);
 
                 }
             } catch (err) {
-                console.error("Error parsing JSON:", err);
+                logger.error("Error parsing JSON:", err);
 
             }
         };

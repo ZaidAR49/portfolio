@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { Loading } from "../loading";
 import { getSecurtKey } from "../../helpers/storage-helper";
 import axios from "axios";
+import { logger } from "../../helpers/logger.healper";
 
 export const SkillsManager = () => {
     const server_url = import.meta.env.VITE_API_URL;
@@ -27,7 +28,7 @@ export const SkillsManager = () => {
     });
     // test
     useEffect(() => {
-        console.log("secret key :", secretKey);
+        logger.log("secret key :", secretKey);
     }, [secretKey]);
 
     const filteredTechs = availableTechnologies.filter(tech =>
@@ -38,7 +39,7 @@ export const SkillsManager = () => {
             setSkills(data);
             setIsLoading(false);
         }).catch((error) => {
-            console.error("Error fetching skills:", error);
+            logger.error("Error fetching skills:", error);
             if (error.response && [401, 404, 500].includes(error.response.status)) {
                 navigate("/error", { replace: true, state: error.response.status });
             }
@@ -67,7 +68,7 @@ export const SkillsManager = () => {
                 fetchSkills(); // Re-fetch to sync state
             }
         } catch (error: any) {
-            console.error("Error adding skill:", error);
+            logger.error("Error adding skill:", error);
             if (error.response && [401, 404, 500].includes(error.response.status)) {
                 navigate("/error", { replace: true, state: error.response.status });
             }
@@ -94,7 +95,7 @@ export const SkillsManager = () => {
             toast.success("Skill deleted");
             fetchSkills(); // Re-fetch to sync state
         } catch (error: any) {
-            console.error("Error deleting skill:", error);
+            logger.error("Error deleting skill:", error);
             if (error.response && [401, 404, 500].includes(error.response.status)) {
                 navigate("/error", { replace: true, state: error.response.status });
             }

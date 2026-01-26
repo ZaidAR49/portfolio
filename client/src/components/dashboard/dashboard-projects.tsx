@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { getProjects } from "../../data/portfolio-data";
 import { Loading } from "../loading";
 import { getSecurtKey } from "../../helpers/storage-helper";
+import { logger } from "../../helpers/logger.healper";
 
 
 
@@ -33,7 +34,7 @@ export const ProjectsManager = () => {
     const [projectToUpdate, setProjectToUpdate] = useState<any>(null);
     // Initial state matching backend requirements
     useEffect(() => {
-        console.log("projectToUpdate", projectToUpdate);
+        logger.log("projectToUpdate", projectToUpdate);
     }, [projectToUpdate]);
 
 
@@ -77,7 +78,7 @@ export const ProjectsManager = () => {
             setProjects(data);
             setIsLoading(false);
         }).catch((error) => {
-            console.error("Error fetching projects:", error);
+            logger.error("Error fetching projects:", error);
             if (error.response && [401, 404, 500].includes(error.response.status)) {
                 navigate("/error", { replace: true, state: error.response.status });
             }
@@ -89,7 +90,7 @@ export const ProjectsManager = () => {
         fetchProjects();
     }, []);
     useEffect(() => {
-        console.log("projects", projects);
+        logger.log("projects", projects);
     }, [projects]);
 
     const handleEdit = (item: any) => {
@@ -160,7 +161,7 @@ export const ProjectsManager = () => {
             fetchProjects();
             setProjects(projects.filter(p => p.id !== deleteConfirm.id));
         } catch (error: any) {
-            console.error("Error deleting project:", error);
+            logger.error("Error deleting project:", error);
             if (error.response && [401, 404, 500].includes(error.response.status)) {
                 navigate("/error", { replace: true, state: error.response.status });
             }
@@ -310,7 +311,7 @@ export const ProjectsManager = () => {
             fetchProjects();
             cleanupForm();
         } catch (error: any) {
-            console.error("Error saving project:", error);
+            logger.error("Error saving project:", error);
             if (error.response && [401, 404, 500].includes(error.response.status)) {
                 navigate("/error", { replace: true, state: error.response.status });
             }
