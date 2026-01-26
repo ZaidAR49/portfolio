@@ -1,9 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    visualizer({
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
+    }),
+  ],
   base: '/',
   build: {
     outDir: 'dist',
@@ -11,10 +19,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
+          if (/[\\/]node_modules[\\/]/.test(id)) {
             if (id.includes('framer-motion')) return 'vendor-framer';
             if (id.includes('lottie-react')) return 'vendor-lottie';
             if (id.includes('react')) return 'vendor-react';
+            if (id.includes('daisyui')) return 'vendor-daisyui';
             return 'vendor';
           }
         },
