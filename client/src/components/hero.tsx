@@ -14,7 +14,7 @@ export const Hero = ({ userInfo, skillsData }: any) => {
 
       <div className="container mx-auto px-4 lg:px-8 flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-20">
         {/* Text Content */}
-        <div className="flex-1 text-center lg:text-left z-10">
+        <div className="ml-16 flex-1 text-center lg:text-left z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
