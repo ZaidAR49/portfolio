@@ -6,7 +6,7 @@ import { useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaPaperPlane } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
-import { setSecurtKey, enableOwnerMode } from "../helpers/storage-helper";
+import { setSecurtKey, enableOwnerMode, isOwnerModeEnabled } from "../helpers/storage-helper";
 import { Loading } from "./loading";
 import { StaticModeContext } from "../contexts/static-mode-context";
 import { logger } from "../helpers/logger.healper";
@@ -40,7 +40,7 @@ export const Footer = ({ userInfo }: any) => {
     }
   }
   const handelsecret = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (e.target.value === "zaidopendash" && !staticMode) {
+    if (e.target.value === "zaidopendash" && !staticMode && !isOwnerModeEnabled()) {
       setOpenSecret(true);
 
       try {
