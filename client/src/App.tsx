@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { StaticModeContext } from "./contexts/static-mode-context";
 import axios from "axios";
 import { logger } from "./helpers/logger.healper";
+import { NetworkBackground } from "./components/network-background";
 const MainLayout = ({ userInfo }: { userInfo: any }) => (
   <>
     <Header />
@@ -82,6 +83,7 @@ function AppContent() {
 
   return (
     <div className={theme}>
+      <NetworkBackground />
       <Suspense fallback={<div className="flex h-screen w-full items-center justify-center"><span className="loading loading-spinner loading-lg text-primary"></span></div>}>
         <Routes>
           <Route element={<MainLayout userInfo={userInfo} />}>
