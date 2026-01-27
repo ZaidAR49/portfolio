@@ -149,6 +149,27 @@
     },
     "projects": [
         {
+            "id": 144,
+            "user_id": 100,
+            "title": "Automated Mobile Testing for Android Using Appium",
+            "client": "ard group(arabia weather)",
+            "role": "Test Automation Engineer",
+            "year": 2025,
+            "status": "In Progress",
+            "sort_order": 3,
+            "description": "This project involved creating an automation framework for a mobile app using Appium. The focus was on automating sign-up and login flows, including email verification via OTP. The project aimed to make mobile testing more efficient and repeatable.",
+            "github_url": "https://github.com/ZaidAR49/Appium-ard.git",
+            "technologies": "Appium, Node.js, IMAP",
+            "images": [
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765289089/appium1_knr7if.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765289089/appium2_bzflu5.jpg",
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765289092/appium3_gapbhk.jpg"
+            ],
+            "users": {
+                "is_active": true
+            }
+        },
+        {
             "id": 143,
             "user_id": 100,
             "title": "Green Bridge",
@@ -165,27 +186,6 @@
                 "https://res.cloudinary.com/dxa0aylow/image/upload/v1752396452/GB3_iz92qp.jpg",
                 "https://res.cloudinary.com/dxa0aylow/image/upload/v1752396453/GB2_mpar4z.jpg",
                 "https://res.cloudinary.com/dxa0aylow/image/upload/v1752396453/GB4_mkdvyh.jpg"
-            ],
-            "users": {
-                "is_active": true
-            }
-        },
-        {
-            "id": 144,
-            "user_id": 100,
-            "title": "Automated Mobile Testing for Android Using Appium",
-            "client": "ard group(arabia weather)",
-            "role": "Test Automation Engineer",
-            "year": 2025,
-            "status": "In Progress",
-            "sort_order": 2,
-            "description": "This project involved creating an automation framework for a mobile app using Appium. The focus was on automating sign-up and login flows, including email verification via OTP. The project aimed to make mobile testing more efficient and repeatable.",
-            "github_url": "https://github.com/ZaidAR49/Appium-ard.git",
-            "technologies": "Appium, Node.js, IMAP",
-            "images": [
-                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765289089/appium1_knr7if.jpg",
-                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765289089/appium2_bzflu5.jpg",
-                "https://res.cloudinary.com/dxa0aylow/image/upload/v1765289092/appium3_gapbhk.jpg"
             ],
             "users": {
                 "is_active": true
@@ -242,7 +242,7 @@
             "role": "full-stack developer",
             "year": 2025,
             "status": "completed",
-            "sort_order": 3,
+            "sort_order": 2,
             "description": "Built with React and Tailwind, this secure MVC application utilizes Node.js API methods to manage data across Supabase and Cloudinary. Beyond its unique Multi-Portfolio system for switching profiles, it features high-performance data portability via JSON import/export and a stealth admin dashboard protected by a secure access code",
             "github_url": "https://github.com/ZaidAR49/portfolio.git",
             "technologies": "React-TS, Tailwind CSS, Node.js",
@@ -251,7 +251,7 @@
                 "https://res.cloudinary.com/dxa0aylow/image/upload/v1765302842/p1_fngjm1.jpg",
                 "https://res.cloudinary.com/dxa0aylow/image/upload/v1769258121/yxfgxsxalpabshaagorb.jpg",
                 "https://res.cloudinary.com/dxa0aylow/image/upload/v1769258121/hfnsxzfl2aauq6nnd6tl.jpg",
-                "https://res.cloudinary.com/dxa0aylow/image/upload/v1769258121/qhrlrmkfjxkmtmh2atgi.jpg"
+                "https://res.cloudinary.com/dxa0aylow/image/upload/v1769417963/m1lnijxwkv7qtcinuwce.jpg"
             ],
             "users": {
                 "is_active": true
