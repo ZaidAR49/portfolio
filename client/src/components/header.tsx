@@ -88,10 +88,10 @@ export const Header = () => {
           className="flex items-center gap-3 cursor-pointer group"
           onClick={() => handleNavigation("/")}
         >
-          <div className="relative w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-xl shadow-lg group-hover:scale-105 transition-transform duration-300">
+          <div className="relative w-20 h-20 md:w-24 md:h-24 overflow-hidden rounded-xl shadow-lg group-hover:scale-105 transition-transform duration-300">
             <img src="/favicon.svg" alt="Logo" className="w-full h-full object-cover" />
           </div>
-          <span className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[var(--accent)] hidden sm:block">
+          <span className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[var(--accent)] hidden sm:block">
             ZAR
           </span>
         </div>
