@@ -30,7 +30,11 @@ export default {
         'slide-down': 'slideDown 0.5s ease-out forwards',
         'scale-in': 'scaleIn 0.3s ease-out forwards',
         'breathing': 'breathing 3s ease-in-out infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'float-subtle': 'float-subtle 6s ease-in-out infinite',
+        'morph': 'morph 8s ease-in-out infinite',
         'marquee': 'marquee 40s linear infinite',
+        'spin-slow': 'spin 8s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -52,6 +56,18 @@ export default {
         breathing: {
           '0%, 100%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.05)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        'float-subtle': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-6px)' },
+        },
+        morph: {
+          '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+          '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
         },
         marquee: {
           '0%': { transform: 'translateX(0)' },

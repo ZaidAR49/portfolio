@@ -12,6 +12,8 @@ export const NetworkBackground = () => {
 
         let width = window.innerWidth;
         let height = window.innerHeight;
+        let mouseX = 0;
+        let mouseY = 0;
 
         // Set canvas size
         const handleResize = () => {
@@ -21,75 +23,137 @@ export const NetworkBackground = () => {
             canvas.height = height;
         };
 
+        const handleMouseMove = (e: MouseEvent) => {
+            mouseX = (e.clientX - width / 2) * 0.5; // Sensitivity
+            mouseY = (e.clientY - height / 2) * 0.5;
+        };
+
         handleResize();
         window.addEventListener('resize', handleResize);
+        window.addEventListener('mousemove', handleMouseMove);
 
-        // Particle configuration
-        const particleCount = Math.min(Math.floor((width * height) / 15000), 100);
+        // 3D Particle configuration
+        const particleCount = Math.min(Math.floor((width * height) / 12000), 150); // Increased density
         const connectionDistance = 150;
-        const particles: Particle[] = [];
+        const focalLength = 300; // FOV
+        const particles: Particle3D[] = [];
 
-        class Particle {
+        class Particle3D {
             x: number;
             y: number;
+            z: number;
             vx: number;
             vy: number;
-            size: number;
+            vz: number;
+            color: string;
 
             constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
+                this.x = (Math.random() - 0.5) * width * 1.5;
+                this.y = (Math.random() - 0.5) * height * 1.5;
+                this.z = Math.random() * focalLength * 2; // Depth
+
+                // Random 3D velocity
                 this.vx = (Math.random() - 0.5) * 0.5;
                 this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
+                this.vz = (Math.random() - 0.5) * 0.5;
+
+                const primary = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#38bdf8';
+                this.color = primary;
             }
 
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
+                this.z += this.vz;
 
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
+                // Wrap particles in 3D space to keep them coming
+                const depth = focalLength * 2;
+                if (this.z < -focalLength) this.z = depth;
+                if (this.z > depth) this.z = -focalLength;
+
+                // Keep xy bounds somewhat contained but allow fly-through
+                const boundX = width;
+                const boundY = height;
+                if (this.x < -boundX) this.x = boundX;
+                if (this.x > boundX) this.x = -boundX;
+                if (this.y < -boundY) this.y = boundY;
+                if (this.y > boundY) this.y = -boundY;
             }
 
-            draw() {
-                if (!ctx) return;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent') || '#38bdf8';
-                ctx.globalAlpha = 0.2;
-                ctx.fill();
+            project() {
+                // Apply parallax/mouse influence
+                // Translate world based on mouse
+                const dX = this.x + (mouseX * 0.1);
+                const dY = this.y + (mouseY * 0.1);
+
+                // Perspective projection
+                // Objects closer (lower z) are larger, further (higher z) are smaller
+                // We offset z by focalLength to avoid division by zero if z crosses 0 (camera plane)
+                const scale = focalLength / (focalLength + this.z);
+
+                const x2d = (width / 2) + dX * scale;
+                const y2d = (height / 2) + dY * scale;
+
+                return { x: x2d, y: y2d, scale, visible: this.z > -focalLength + 10 };
             }
         }
 
         // Initialize particles
         for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
+            particles.push(new Particle3D());
         }
 
         // Animation loop
         const animate = () => {
+            // Clear with a very slight fade for potential trails (optional), 
+            // but here we just clear for crisp movement
             ctx.clearRect(0, 0, width, height);
 
-            const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent') || '#38bdf8';
+            const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#38bdf8';
 
-            particles.forEach((particle, index) => {
-                particle.update();
-                particle.draw();
+            // Re-fetch color if it changes (theme switch)
+            // Ideally we'd do this less often but it works for now
+            ctx.fillStyle = accentColor;
+            ctx.strokeStyle = accentColor;
 
-                // Connect particles
-                for (let j = index + 1; j < particles.length; j++) {
-                    const dx = particle.x - particles[j].x;
-                    const dy = particle.y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+            particles.forEach((p, i) => {
+                p.update();
+                const proj = p.project();
 
-                    if (distance < connectionDistance) {
+                if (!proj.visible) return;
+
+                // Draw Particle
+                // Opacity based on Z (depth fog)
+                // Closer = more opacity, Further = less
+                const alpha = Math.max(0, Math.min(1, (1 - (p.z / (focalLength * 2))) * 0.8)); // increased base opacity
+                const size = Math.max(0.5, 3 * proj.scale);
+
+                ctx.beginPath();
+                ctx.arc(proj.x, proj.y, size, 0, Math.PI * 2);
+                ctx.fillStyle = accentColor;
+                ctx.globalAlpha = alpha;
+                ctx.fill();
+
+                // Connections
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const proj2 = p2.project();
+
+                    if (!proj2.visible) continue;
+
+                    // Calculate distance in 3D for logic, but draw 2D line
+                    // Actually, simple 2D distance often looks better/cleaner for "constellations"
+                    const dx = proj.x - proj2.x;
+                    const dy = proj.y - proj2.y;
+                    const dist2d = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist2d < connectionDistance) {
                         ctx.beginPath();
-                        ctx.strokeStyle = accentColor;
-                        ctx.globalAlpha = 0.1 * (1 - distance / connectionDistance);
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particle.x, particle.y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.moveTo(proj.x, proj.y);
+                        ctx.lineTo(proj2.x, proj2.y);
+                        // Line opacity based on both particles' depth and their 2d distance
+                        ctx.globalAlpha = alpha * 0.15 * (1 - dist2d / connectionDistance);
+                        ctx.lineWidth = 1 * proj.scale;
                         ctx.stroke();
                     }
                 }
@@ -102,6 +166,7 @@ export const NetworkBackground = () => {
 
         return () => {
             window.removeEventListener('resize', handleResize);
+            window.removeEventListener('mousemove', handleMouseMove);
             cancelAnimationFrame(animationId);
         };
     }, []);
@@ -109,7 +174,10 @@ export const NetworkBackground = () => {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed top-0 left-0 w-full h-full pointer-events-none opacity-50"
+            className="fixed top-0 left-0 w-full h-full pointer-events-none z-0"
+            style={{
+                background: 'transparent'
+            }}
         />
     );
 };

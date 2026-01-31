@@ -7,14 +7,12 @@ export const Hero = ({ userInfo, skillsData }: any) => {
   return (
     <section className="relative min-h-screen flex flex-col justify-center pt-20 overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-[var(--accent)]/10 blur-[100px] animate-breathing" />
-        <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-purple-500/10 blur-[100px] animate-breathing" style={{ animationDelay: "1.5s" }} />
-      </div>
+      {/* Background Elements - Removed in favor of global 3D background */}
+
 
       <div className="container mx-auto px-4 lg:px-8 flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-20">
         {/* Text Content */}
-        <div className="ml-16 flex-1 text-center lg:text-left z-10">
+        <div className="flex-1 text-center lg:text-left z-10 lg:ml-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -48,7 +46,7 @@ export const Hero = ({ userInfo, skillsData }: any) => {
                   document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                View Projects
+                Explore My Work
               </button>
             </div>
           </motion.div>
@@ -61,14 +59,37 @@ export const Hero = ({ userInfo, skillsData }: any) => {
           transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           className="flex-1 relative max-w-md lg:max-w-lg"
         >
-          <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[var(--accent)] to-purple-500 opacity-20 blur-2xl animate-pulse" />
-            <img
-              className="relative w-full h-full object-cover rounded-3xl shadow-2xl border-2 border-[var(--bg-secondary)] rotate-3 hover:rotate-0 transition-transform duration-500"
-              src={userInfo.picture_url}
-              alt={userInfo.name}
-              draggable="false"
-            />
+          <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto group perspective-1000">
+            {/* Backing Glow (Static & Stable) */}
+            <div className="absolute inset-4 bg-[var(--accent)] rounded-3xl opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-500" />
+
+            {/* Main Card Container */}
+            <div className="relative w-full h-full rounded-[2.5rem] bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-md border border-white/10 shadow-2xl p-3 transition-transform duration-500 group-hover:-translate-y-2">
+
+              {/* Inner Frame */}
+              <div className="w-full h-full rounded-[2rem] overflow-hidden border border-white/5 relative bg-[var(--bg-primary)]">
+                <img
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  src={userInfo.picture_url}
+                  alt={userInfo.name}
+                  draggable="false"
+                />
+
+                {/* Professional Overlay Gradient (Subtle at bottom) */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)]/80 via-transparent to-transparent opacity-60" />
+
+                {/* Name/Title Badge (Integrated) */}
+                <div className="absolute bottom-6 left-0 right-0 text-center transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                  <div className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10 shadow-lg">
+                    <span className="text-sm font-semibold tracking-wide text-white">Software Engineer</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Decorative 'Trust' Accent - Top Right */}
+            <div className="absolute -top-3 -right-3 w-16 h-16 border-t-4 border-r-4 border-[var(--accent)]/30 rounded-tr-3xl" />
+            <div className="absolute -bottom-3 -left-3 w-16 h-16 border-b-4 border-l-4 border-[var(--accent)]/30 rounded-bl-3xl" />
           </div>
         </motion.div>
       </div>

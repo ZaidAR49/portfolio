@@ -84,23 +84,25 @@ function AppContent() {
   return (
     <div className={theme}>
       <NetworkBackground />
-      <Suspense fallback={<div className="flex h-screen w-full items-center justify-center"><span className="loading loading-spinner loading-lg text-primary"></span></div>}>
-        <Routes>
-          <Route element={<MainLayout userInfo={userInfo} />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="*" element={<ErrorPage />} />
-          </Route>
+      <div className="relative z-10">
+        <Suspense fallback={<div className="flex h-screen w-full items-center justify-center"><span className="loading loading-spinner loading-lg text-primary"></span></div>}>
+          <Routes>
+            <Route element={<MainLayout userInfo={userInfo} />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="*" element={<ErrorPage />} />
+            </Route>
 
-          <Route element={<DashboardLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
+            <Route element={<DashboardLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
 
-          <Route path="/error" element={<ErrorPage />} />
-        </Routes>
-      </Suspense>
+            <Route path="/error" element={<ErrorPage />} />
+          </Routes>
+        </Suspense>
 
-      <ToastContainer position="bottom-right" theme="dark" />
+        <ToastContainer position="bottom-right" theme="dark" />
+      </div>
     </div>
   );
 }
